@@ -97,9 +97,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu3.setPreferredSize(new java.awt.Dimension(150, 50));
 
         jMenuItem6.setText("Nuevo Cliente");
+        jMenuItem6.setPreferredSize(new java.awt.Dimension(180, 30));
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setText("Gestionar Clientes");
+        jMenuItem7.setPreferredSize(new java.awt.Dimension(180, 30));
         jMenu3.add(jMenuItem7);
 
         jMenuBar1.add(jMenu3);
