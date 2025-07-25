@@ -256,7 +256,10 @@ public class FrmLogin extends javax.swing.JFrame {
             usuario.setUsuario(txt_usuario.getText().trim());
             usuario.setPassword(txt_password.getText().trim());
            if (controlUsuario.loginUser(usuario)){
-               JOptionPane.showMessageDialog(null, "Login Correcto... ");
+               //JOptionPane.showMessageDialog(null, "Login Correcto... ");
+               FrmMenu menu = new FrmMenu();
+               menu.setVisible(true);
+               this.dispose();
            }else{
                JOptionPane.showMessageDialog(null, "Usuario o Clave Incorrectos ");
            } 
