@@ -1,14 +1,25 @@
 
 package vista;
 
+import conexion.Conexion;
 import java.awt.Dimension;
+import java.sql.Connection;
+import javax.swing.table.DefaultTableModel;
+import java.sql.Statement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import javax.swing.JTable;
+
+
+
 
 /**
  *
  * @author Aide
  */
 public class InterGestionarCategoria extends javax.swing.JInternalFrame {
-
+    
+    private int idCategoria;
    
     public InterGestionarCategoria() {
         initComponents();
@@ -124,8 +135,32 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_categorias;
+    public static javax.swing.JScrollPane jScrollPane1;
+    public static javax.swing.JTable jTable_categorias;
     private javax.swing.JTextField txt_descripcion;
     // End of variables declaration//GEN-END:variables
+        
+    
+    private void CargarTablaCategorias(){
+        Connection con = Conexion.conectar(); 
+        DefaultTableModel model = new DefaultTableModel();
+        String sql = "select idCategoria, descripcion, estado from tb_categoria";
+        Statement st;
+        
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            InterGestionarCategoria.jTable_categorias = new JTable(model);
+            InterGestionarCategoria.jScrollPane1.setViewportView(InterGestionarCategoria.jTable_categorias);
+            
+            model.addColumn("idCategoria");
+            model.addColumn("descripcion");
+            model.addColumn("estado");
+            
+        } catch (SQLException e) {
+            System.out.println("Error al llenar la tabla categorías: " + e);
+        }
+    }
+
+
 }
