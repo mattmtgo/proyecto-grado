@@ -126,7 +126,6 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_gestionar_cliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jMenuItem_gestionar_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cliente.png"))); // NOI18N
         jMenuItem_gestionar_cliente.setText("Gestionar Clientes");
-        jMenuItem_gestionar_cliente.setPreferredSize(new java.awt.Dimension(180, 30));
         jMenu3.add(jMenuItem_gestionar_cliente);
 
         jMenuBar1.add(jMenu3);
@@ -140,6 +139,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_nueva_categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo.png"))); // NOI18N
         jMenuItem_nueva_categoria.setText("Nueva Categoria");
         jMenuItem_nueva_categoria.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenuItem_nueva_categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_nueva_categoriaActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem_nueva_categoria);
 
         jMenuItem_gestionar_categoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -259,6 +263,12 @@ public class FrmMenu extends javax.swing.JFrame {
     private void jMenuItem_reportes_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_reportes_ventasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem_reportes_ventasActionPerformed
+
+    private void jMenuItem_nueva_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nueva_categoriaActionPerformed
+       InterCategoria interCategoria = new InterCategoria();
+       jDestopPane_menu.add(interCategoria);
+       interCategoria.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_nueva_categoriaActionPerformed
 
     /**
      * @param args the command line arguments
