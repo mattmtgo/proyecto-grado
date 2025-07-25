@@ -1,8 +1,10 @@
-
 package vista;
 
+import java.sql.PreparedStatement;
 import conexion.Conexion;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Statement;
@@ -10,22 +12,21 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.JTable;
 
-
-
-
 /**
  *
  * @author Aide
  */
 public class InterGestionarCategoria extends javax.swing.JInternalFrame {
-    
+
     private int idCategoria;
-   
+
     public InterGestionarCategoria() {
         initComponents();
         this.setSize(new Dimension(600, 400));
         this.setTitle("Gestionar Categorías");
-        
+
+        this.CargarTablaCategorias();
+
     }
 
     /**
@@ -139,28 +140,67 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
     public static javax.swing.JTable jTable_categorias;
     private javax.swing.JTextField txt_descripcion;
     // End of variables declaration//GEN-END:variables
-        
-    
-    private void CargarTablaCategorias(){
-        Connection con = Conexion.conectar(); 
+
+    private void CargarTablaCategorias() {
+        Connection con = Conexion.conectar();
         DefaultTableModel model = new DefaultTableModel();
         String sql = "select idCategoria, descripcion, estado from tb_categoria";
         Statement st;
-        
+
         try {
             st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             InterGestionarCategoria.jTable_categorias = new JTable(model);
             InterGestionarCategoria.jScrollPane1.setViewportView(InterGestionarCategoria.jTable_categorias);
-            
+
             model.addColumn("idCategoria");
             model.addColumn("descripcion");
             model.addColumn("estado");
-            
+
+            while (rs.next()) {
+                Object fila[] = new Object[3];
+
+                for (int i = 0; i < 3; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                model.addRow(fila);
+
+            }
+
+            con.close();
+
         } catch (SQLException e) {
             System.out.println("Error al llenar la tabla categorías: " + e);
         }
+        jTable_categorias.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila_point = jTable_categorias.rowAtPoint(e.getPoint());
+                int columna_point = 0;
+
+                if (fila_point > -1) {
+                    idCategoria = (int) model.getValueAt(fila_point, columna_point);
+                    EnviarDatosCategoriaSelecionada(idCategoria);
+                }
+            }
+
+        });
     }
 
+    private void EnviarDatosCategoriaSelecionada(int idCategoria) {
+        try {
+            Connection con = Conexion.conectar();
+            PreparedStatement pst = con.prepareStatement(
+                    "select * from tb_categoria where idCategoria = ' " + idCategoria + "'");
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+                txt_descripcion.setText(rs.getString("descripcion"));
+            }
+            con.close();
 
+        } catch (SQLException e) {
+            System.out.println("Error al seleccionar categoria: " + e);
+        }
+    }
 }
