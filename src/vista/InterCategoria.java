@@ -75,19 +75,20 @@ public class InterCategoria extends javax.swing.JInternalFrame {
         if (txt_descripcion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         } else {
-            categoria.setDescripcion(txt_descripcion.getText().trim());
-            categoria.setEstado(1);
-            if (controlCategoria.guardar(categoria)) {
-                JOptionPane.showMessageDialog(null, "Registro guardado");
+            if (!controlCategoria.existeCategoria(txt_descripcion.getText().trim())) {
+                categoria.setDescripcion(txt_descripcion.getText().trim());
+                categoria.setEstado(1);
+                if (controlCategoria.guardar(categoria)) {
+                    JOptionPane.showMessageDialog(null, "Registro guardado");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al guardar");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Error al guardar");
+                JOptionPane.showMessageDialog(null, "La categoría ya está registrada en la Base de Datos");
             }
-
         }
-        
         //limpiar campo 
         txt_descripcion.setText("");
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

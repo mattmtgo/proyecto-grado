@@ -43,7 +43,7 @@ public class Ctrl_Categoria {
         return respuesta;
     }
     
-    
+     //metodo para consultar si existe la categoria 
      public boolean existeCategoria(String categoria){
         boolean respuesta = false;
         String sql ="select descripcion from tb_categoria where descripcion = '" + categoria+ "';";
