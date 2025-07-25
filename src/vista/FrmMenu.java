@@ -79,15 +79,15 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-producto.png"))); // NOI18N
         jMenuItem3.setText("Nuevo Producto");
-        jMenuItem3.setPreferredSize(new java.awt.Dimension(150, 30));
+        jMenuItem3.setPreferredSize(new java.awt.Dimension(200, 30));
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Gestionar Productos");
-        jMenuItem4.setPreferredSize(new java.awt.Dimension(150, 30));
+        jMenuItem4.setPreferredSize(new java.awt.Dimension(200, 30));
         jMenu2.add(jMenuItem4);
 
         jMenuItem5.setText("Actualizar Stock");
-        jMenuItem5.setPreferredSize(new java.awt.Dimension(150, 30));
+        jMenuItem5.setPreferredSize(new java.awt.Dimension(200, 30));
         jMenu2.add(jMenuItem5);
 
         jMenuBar1.add(jMenu2);

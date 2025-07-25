@@ -57,7 +57,7 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Nuevo Producto"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[150, 30]"/>
+                  <Dimension value="[200, 30]"/>
                 </Property>
               </Properties>
             </MenuItem>
@@ -65,7 +65,7 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gestionar Productos"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[150, 30]"/>
+                  <Dimension value="[200, 30]"/>
                 </Property>
               </Properties>
             </MenuItem>
@@ -73,7 +73,7 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Actualizar Stock"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[150, 30]"/>
+                  <Dimension value="[200, 30]"/>
                 </Property>
               </Properties>
             </MenuItem>
