@@ -143,9 +143,6 @@
                   <Image iconType="3" name="/img/cliente.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gestionar Clientes"/>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[180, 30]"/>
-                </Property>
               </Properties>
             </MenuItem>
           </SubComponents>

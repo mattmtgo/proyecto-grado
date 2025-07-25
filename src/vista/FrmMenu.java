@@ -2,12 +2,15 @@
 package vista;
 
 import java.awt.Dimension;
+import javax.swing.JDesktopPane;
 
 /**
  *
  * @author Aide
  */
 public class FrmMenu extends javax.swing.JFrame {
+    
+    public static JDesktopPane jDestopPane_menu;
 
    
     public FrmMenu() {
@@ -16,6 +19,14 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema de Ventas PYT");
+        
+        this.setLayout(null);
+        jDestopPane_menu = new JDesktopPane();
+        
+        int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+        int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+        this.jDestopPane_menu.setBounds(0, 0, ancho, (alto-110));
+        this.add(jDestopPane_menu);
     }
 
     /**
