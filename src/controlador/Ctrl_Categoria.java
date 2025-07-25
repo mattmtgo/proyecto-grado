@@ -1,10 +1,15 @@
 
 package controlador;
 
+import conexion.Conexion;
 import java.sql.PreparedStatement;
 import modelo.Categoria;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+
 
 /**
  *
@@ -38,4 +43,25 @@ public class Ctrl_Categoria {
         return respuesta;
     }
     
+    
+     public boolean existeCategoria(String categoria){
+        boolean respuesta = false;
+        String sql ="select descripcion from tb_categoria where descripcion = '" + categoria+ "';";
+        Statement st;
+        
+        try {
+            Connection cn = Conexion.conectar();
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                respuesta = true;
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Error al consultar categoría: " + e);
+                    
+        }
+        
+        return respuesta;
+    }
 }
