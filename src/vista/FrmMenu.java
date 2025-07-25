@@ -149,15 +149,19 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu6.setPreferredSize(new java.awt.Dimension(150, 50));
 
         jMenuItem12.setText("Reportes Clientes");
+        jMenuItem12.setPreferredSize(new java.awt.Dimension(200, 30));
         jMenu6.add(jMenuItem12);
 
         jMenuItem13.setText("Reportes Categorias");
+        jMenuItem13.setPreferredSize(new java.awt.Dimension(200, 30));
         jMenu6.add(jMenuItem13);
 
         jMenuItem14.setText("Reportes Productos ");
+        jMenuItem14.setPreferredSize(new java.awt.Dimension(200, 30));
         jMenu6.add(jMenuItem14);
 
         jMenuItem15.setText("Reportes Ventas");
+        jMenuItem15.setPreferredSize(new java.awt.Dimension(200, 30));
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem15ActionPerformed(evt);
@@ -169,9 +173,11 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/historial1.png"))); // NOI18N
         jMenu7.setText("Historial");
+        jMenu7.setMinimumSize(new java.awt.Dimension(180, 50));
         jMenu7.setPreferredSize(new java.awt.Dimension(150, 50));
 
         jMenuItem16.setText("Ver Historial");
+        jMenuItem16.setPreferredSize(new java.awt.Dimension(150, 30));
         jMenu7.add(jMenuItem16);
 
         jMenuBar1.add(jMenu7);
@@ -181,6 +187,7 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu8.setPreferredSize(new java.awt.Dimension(150, 50));
 
         jMenuItem17.setText("Cerrar Sesión");
+        jMenuItem17.setPreferredSize(new java.awt.Dimension(150, 30));
         jMenu8.add(jMenuItem17);
 
         jMenuBar1.add(jMenu8);
