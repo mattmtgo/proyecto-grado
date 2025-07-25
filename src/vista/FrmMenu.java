@@ -253,7 +253,9 @@ public class FrmMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem_gestionar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_categoriaActionPerformed
-        // TODO add your handling code here:
+       InterGestionarCategoria interGestionarCategoria = new InterGestionarCategoria();
+       jDestopPane_menu.add(interGestionarCategoria); 
+       interGestionarCategoria.setVisible(true);
     }//GEN-LAST:event_jMenuItem_gestionar_categoriaActionPerformed
 
     private void jMenuItem_gestionar_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_ventasActionPerformed
