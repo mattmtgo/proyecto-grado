@@ -111,9 +111,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu4.setPreferredSize(new java.awt.Dimension(150, 50));
 
         jMenuItem8.setText("Nueva Categoria");
+        jMenuItem8.setPreferredSize(new java.awt.Dimension(180, 30));
         jMenu4.add(jMenuItem8);
 
         jMenuItem9.setText("Gestionar Categorias");
+        jMenuItem9.setPreferredSize(new java.awt.Dimension(180, 30));
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem9ActionPerformed(evt);
