@@ -27,6 +27,9 @@ public class FrmMenu extends javax.swing.JFrame {
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
         this.jDestopPane_menu.setBounds(0, 0, ancho, (alto-110));
         this.add(jDestopPane_menu);
+        
+      
+    
     }
 
     /**

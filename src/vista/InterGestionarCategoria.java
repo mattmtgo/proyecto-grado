@@ -2,6 +2,7 @@ package vista;
 
 import java.sql.PreparedStatement;
 import conexion.Conexion;
+import controlador.Ctrl_Categoria;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,7 +11,9 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import modelo.Categoria;
 
 /**
  *
@@ -88,6 +91,11 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
         jButton_actualizar.setBackground(new java.awt.Color(51, 204, 0));
         jButton_actualizar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton_actualizar.setText("Actualizar");
+        jButton_actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_actualizarActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jButton_eliminar.setBackground(new java.awt.Color(255, 51, 51));
@@ -123,8 +131,47 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
-        // TODO add your handling code here:
+        if(!txt_descripcion.getText().isEmpty()){
+            Categoria categoria = new Categoria();
+            Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
+            
+            categoria.setDescripcion(txt_descripcion.getText().trim());
+            if (!controlCategoria.eliminar(idCategoria)) {
+                 JOptionPane.showMessageDialog(null, "Categoría Eliminada");
+                 txt_descripcion.setText("");
+                 this.CargarTablaCategorias();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar Categoría");
+            }
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione una Categoría");
+        }
     }//GEN-LAST:event_jButton_eliminarActionPerformed
+
+    private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
+       
+        if(!txt_descripcion.getText().isEmpty()){
+            Categoria categoria = new Categoria();
+            Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
+            
+            categoria.setDescripcion(txt_descripcion.getText().trim());
+            if (controlCategoria.actualizar(categoria, idCategoria)) {
+                 JOptionPane.showMessageDialog(null, "Categoría Actualizada");
+                 txt_descripcion.setText("");
+                 this.CargarTablaCategorias();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar Categoría");
+            }
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione una Categoría");
+        }
+            
+        
+    }//GEN-LAST:event_jButton_actualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
