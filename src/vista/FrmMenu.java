@@ -99,6 +99,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_nuevo_producto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-producto.png"))); // NOI18N
         jMenuItem_nuevo_producto.setText("Nuevo Producto");
         jMenuItem_nuevo_producto.setPreferredSize(new java.awt.Dimension(200, 30));
+        jMenuItem_nuevo_producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_nuevo_productoActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem_nuevo_producto);
 
         jMenuItem_gestionar_producto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -274,6 +279,12 @@ public class FrmMenu extends javax.swing.JFrame {
        jDestopPane_menu.add(interCategoria);
        interCategoria.setVisible(true);
     }//GEN-LAST:event_jMenuItem_nueva_categoriaActionPerformed
+
+    private void jMenuItem_nuevo_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nuevo_productoActionPerformed
+        InterProducto interProducto = new InterProducto();
+       jDestopPane_menu.add(interProducto); 
+       interProducto.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_nuevo_productoActionPerformed
 
     /**
      * @param args the command line arguments
