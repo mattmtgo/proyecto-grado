@@ -143,7 +143,7 @@ public class FrmLogin extends javax.swing.JFrame {
                         .addComponent(jLabel6)))
                 .addGap(40, 40, 40)
                 .addComponent(jButton_IniciarSesion)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 410, 500));
