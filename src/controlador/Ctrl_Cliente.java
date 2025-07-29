@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import modelo.Cliente;
+import modelo.Producto;
 
 /**
  *
@@ -59,6 +60,51 @@ public class Ctrl_Cliente {
         } catch (SQLException e) {
             System.out.println("Error al consultar el cliente: " + e);
         }
+        return respuesta;
+    }
+    
+      public boolean actualizar(Cliente objeto, int idCLiente){
+        boolean respuesta = false;
+        Connection cn = Conexion.conectar();
+        try {
+            
+            PreparedStatement consulta = cn.prepareStatement("update tb_cliente set empresa=?, nombre =?, cedula =?, telefono =?, direccion =?, estado =? where idCliente ='" + idCLiente + "'");
+            consulta.setString(1, objeto.getEmpresa());
+            consulta.setString(2, objeto.getNombre());
+            consulta.setString(3, objeto.getCedula());
+            consulta.setString(4, objeto.getTelefono());
+            consulta.setString(5, objeto.getDireccion());
+            consulta.setInt(6, objeto.getEstado());
+            
+            if (consulta.executeUpdate() >0) {
+                respuesta = true; 
+            }
+            cn.close();
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar cliente: " + e);
+        }
+        
+        return respuesta;
+    }
+    
+    
+     public boolean eliminar(int idCliente){
+        boolean respuesta = false;
+        Connection cn = Conexion.conectar();
+        try {
+            
+            PreparedStatement consulta = cn.prepareStatement(
+                    "delete from tb_cliente where idCliente ='" + idCliente + "'");
+            consulta.executeUpdate();
+            
+            if (consulta.executeUpdate() >0) {
+                respuesta = true;
+            }
+            cn.close();
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar cliente: " + e);
+        }
+        
         return respuesta;
     }
 }

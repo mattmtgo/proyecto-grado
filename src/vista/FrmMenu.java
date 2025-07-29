@@ -1,36 +1,31 @@
-
 package vista;
 
 import java.awt.Dimension;
 import javax.swing.JDesktopPane;
-
 
 /**
  *
  * @author Aide
  */
 public class FrmMenu extends javax.swing.JFrame {
-    
+
     public static JDesktopPane jDestopPane_menu;
 
-   
     public FrmMenu() {
         initComponents();
         this.setSize(new Dimension(1200, 700));
         this.setExtendedState(this.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setTitle("Gestión de Inventario PYT");
-        
+
         this.setLayout(null);
         jDestopPane_menu = new JDesktopPane();
-        
+
         int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-        this.jDestopPane_menu.setBounds(0, 0, ancho, (alto-110));
+        this.jDestopPane_menu.setBounds(0, 0, ancho, (alto - 110));
         this.add(jDestopPane_menu);
-        
-      
-    
+
     }
 
     /**
@@ -81,12 +76,22 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem1_nuevo_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-cliente.png"))); // NOI18N
         jMenuItem1_nuevo_usuario.setText("Nuevo Usuario");
         jMenuItem1_nuevo_usuario.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenuItem1_nuevo_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1_nuevo_usuarioActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1_nuevo_usuario);
 
         jMenuItem_gestionar_usuario.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_gestionar_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/configuraciones.png"))); // NOI18N
         jMenuItem_gestionar_usuario.setText("Gestionar Usuarios");
         jMenuItem_gestionar_usuario.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenuItem_gestionar_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_gestionar_usuarioActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem_gestionar_usuario);
 
         jMenuBar1.add(jMenu1);
@@ -158,6 +163,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_actualizar_stock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo.png"))); // NOI18N
         jMenuItem_actualizar_stock.setText("Actualizar Stock");
         jMenuItem_actualizar_stock.setPreferredSize(new java.awt.Dimension(200, 30));
+        jMenuItem_actualizar_stock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_actualizar_stockActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem_actualizar_stock);
 
         jMenuBar1.add(jMenu2);
@@ -233,7 +243,12 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuItem_gestionar_cliente.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_gestionar_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cliente.png"))); // NOI18N
-        jMenuItem_gestionar_cliente.setText("Gestionar Clientes");
+        jMenuItem_gestionar_cliente.setText("Administrar Clientes");
+        jMenuItem_gestionar_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_gestionar_clienteActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem_gestionar_cliente);
 
         jMenuBar1.add(jMenu3);
@@ -262,6 +277,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_cerrar_sesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/apagar.png"))); // NOI18N
         jMenuItem_cerrar_sesion.setText("Cerrar Sesión");
         jMenuItem_cerrar_sesion.setPreferredSize(new java.awt.Dimension(150, 30));
+        jMenuItem_cerrar_sesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_cerrar_sesionActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem_cerrar_sesion);
 
         jMenuBar1.add(jMenu8);
@@ -272,9 +292,9 @@ public class FrmMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem_gestionar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_categoriaActionPerformed
-       InterGestionarCategoria interGestionarCategoria = new InterGestionarCategoria();
-       jDestopPane_menu.add(interGestionarCategoria); 
-       interGestionarCategoria.setVisible(true);
+        InterGestionarCategoria interGestionarCategoria = new InterGestionarCategoria();
+        jDestopPane_menu.add(interGestionarCategoria);
+        interGestionarCategoria.setVisible(true);
     }//GEN-LAST:event_jMenuItem_gestionar_categoriaActionPerformed
 
     private void jMenuItem_gestionar_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_ventasActionPerformed
@@ -286,28 +306,56 @@ public class FrmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_reportes_ventasActionPerformed
 
     private void jMenuItem_nueva_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nueva_categoriaActionPerformed
-       InterCategoria interCategoria = new InterCategoria();
-       jDestopPane_menu.add(interCategoria);
-       interCategoria.setVisible(true);
+        InterCategoria interCategoria = new InterCategoria();
+        jDestopPane_menu.add(interCategoria);
+        interCategoria.setVisible(true);
     }//GEN-LAST:event_jMenuItem_nueva_categoriaActionPerformed
 
     private void jMenuItem_nuevo_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nuevo_productoActionPerformed
         InterProducto interProducto = new InterProducto();
-       jDestopPane_menu.add(interProducto); 
-       interProducto.setVisible(true);
+        jDestopPane_menu.add(interProducto);
+        interProducto.setVisible(true);
     }//GEN-LAST:event_jMenuItem_nuevo_productoActionPerformed
 
     private void jMenuItem_gestionar_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_productoActionPerformed
-       InterGestionarProducto interGestionarProducto = new InterGestionarProducto();
-       jDestopPane_menu.add(interGestionarProducto); 
-       interGestionarProducto.setVisible(true);
+        InterGestionarProducto interGestionarProducto = new InterGestionarProducto();
+        jDestopPane_menu.add(interGestionarProducto);
+        interGestionarProducto.setVisible(true);
     }//GEN-LAST:event_jMenuItem_gestionar_productoActionPerformed
 
     private void jMenuItem_nuevo_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nuevo_clienteActionPerformed
-       InterCliente interCliente = new InterCliente();
-       jDestopPane_menu.add(interCliente); 
-       interCliente.setVisible(true);
+        InterCliente interCliente = new InterCliente();
+        jDestopPane_menu.add(interCliente);
+        interCliente.setVisible(true);
     }//GEN-LAST:event_jMenuItem_nuevo_clienteActionPerformed
+
+    private void jMenuItem_gestionar_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_clienteActionPerformed
+        InterGestionarCliente interGestionarCliente = new InterGestionarCliente();
+        jDestopPane_menu.add(interGestionarCliente);
+        interGestionarCliente.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_gestionar_clienteActionPerformed
+
+    private void jMenuItem_actualizar_stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_actualizar_stockActionPerformed
+        InterActualizarStock interActualizarStock = new InterActualizarStock();
+        jDestopPane_menu.add(interActualizarStock);
+        interActualizarStock.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_actualizar_stockActionPerformed
+
+    private void jMenuItem_cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_cerrar_sesionActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem_cerrar_sesionActionPerformed
+
+    private void jMenuItem1_nuevo_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1_nuevo_usuarioActionPerformed
+        InterUsuario interUsuario = new InterUsuario();
+        jDestopPane_menu.add(interUsuario);
+        interUsuario.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1_nuevo_usuarioActionPerformed
+
+    private void jMenuItem_gestionar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_usuarioActionPerformed
+        InterGestionarUsuario interGestionarUsuario = new InterGestionarUsuario();
+        jDestopPane_menu.add(interGestionarUsuario);
+        interGestionarUsuario.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_gestionar_usuarioActionPerformed
 
     /**
      * @param args the command line arguments
