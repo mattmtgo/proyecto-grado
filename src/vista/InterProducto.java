@@ -57,75 +57,75 @@ public class InterProducto extends javax.swing.JInternalFrame {
         setIconifiable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nuevo Producto");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Nombre:");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 100, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Cantidad");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 100, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Precio:");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 100, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Descripción:");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 100, -1));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("IVA:");
         jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 100, -1));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Categorias:");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 100, -1));
 
-        txt_nombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_nombre.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         getContentPane().add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 170, -1));
 
-        txt_cantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_cantidad.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         getContentPane().add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 170, -1));
 
-        txt_precio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_precio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         getContentPane().add(txt_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 170, -1));
 
-        txt_descripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_descripcion.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         getContentPane().add(txt_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 170, -1));
 
-        jComboBox_iva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_iva.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jComboBox_iva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione IVA:", "No grava IVA", "19%" }));
         getContentPane().add(jComboBox_iva, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 170, -1));
 
-        jComboBox_categoria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_categoria.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Categorías:", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 170, -1));
 
         jButton_Guardar.setBackground(new java.awt.Color(255, 255, 153));
-        jButton_Guardar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton_Guardar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton_Guardar.setText("Guardar");
         jButton_Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

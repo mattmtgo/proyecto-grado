@@ -62,14 +62,14 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/candado1.png"))); // NOI18N
 
-        txt_usuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txt_usuario.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_usuarioKeyPressed(evt);
             }
         });
 
-        txt_password.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txt_password.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         txt_password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_passwordActionPerformed(evt);
@@ -82,7 +82,7 @@ public class FrmLogin extends javax.swing.JFrame {
         });
 
         jButton_IniciarSesion.setBackground(new java.awt.Color(40, 25, 6));
-        jButton_IniciarSesion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton_IniciarSesion.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton_IniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
         jButton_IniciarSesion.setText("Iniciar Sesión");
         jButton_IniciarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +91,7 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setText("¡Hola, Bienvenido!");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -114,11 +114,11 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addComponent(jLabel4)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addGap(110, 110, 110))
+                .addGap(118, 118, 118))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,23 +146,23 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 410, 500));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 420, 500));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gestión de Inventario");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/caja.jpg"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 150, 160));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("© Plaza Y Terraza ");
+        jLabel7.setText("© Plaza Y Terraza SAS");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
 
         jLabel_wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo6.png"))); // NOI18N
-        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 500));
+        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

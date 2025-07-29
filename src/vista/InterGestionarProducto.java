@@ -3,7 +3,9 @@ package vista;
 import java.sql.PreparedStatement;
 import conexion.Conexion;
 import controlador.Ctrl_Categoria;
+import controlador.Ctrl_Producto;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -16,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelo.Categoria;
+import modelo.Producto;
 
 /**
  *
@@ -77,15 +80,16 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
         setIconifiable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Administrar Productos");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTable_productos.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jTable_productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -108,17 +112,17 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton_actualizar.setBackground(new java.awt.Color(51, 204, 0));
-        jButton_actualizar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton_actualizar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jButton_actualizar.setText("Actualizar");
         jButton_actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_actualizarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        jPanel2.add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
 
         jButton_eliminar.setBackground(new java.awt.Color(255, 51, 51));
-        jButton_eliminar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton_eliminar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jButton_eliminar.setText("Eliminar");
         jButton_eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,53 +137,54 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Nombre:");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, -1));
 
-        txt_nombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_nombre.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel3.add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 170, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Cantidad:");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 100, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Precio:");
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 100, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Descripción:");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 100, -1));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("IVA:");
         jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 100, -1));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Categoría:");
         jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, 100, -1));
 
-        txt_cantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_cantidad.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txt_cantidad.setEnabled(false);
         jPanel3.add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 170, -1));
 
-        txt_precio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_precio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel3.add(txt_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 170, -1));
 
-        txt_descripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_descripcion.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel3.add(txt_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 170, -1));
 
-        jComboBox_iva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_iva.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jComboBox_iva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione IVA:", "No grava IVA", "19%" }));
         jPanel3.add(jComboBox_iva, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, 150, -1));
 
-        jComboBox_categoria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_categoria.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Categorías:", "Item 2", "Item 3", "Item 4" }));
         jPanel3.add(jComboBox_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 150, -1));
 
@@ -190,44 +195,96 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
-//        if(!txt_descripcion.getText().isEmpty()){
-//            Categoria categoria = new Categoria();
-//            Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
-//            
-//            categoria.setDescripcion(txt_descripcion.getText().trim());
-//            if (!controlCategoria.eliminar(idCategoria)) {
-//                 JOptionPane.showMessageDialog(null, "Categoría Eliminada");
-//                 txt_descripcion.setText("");
-//                 this.CargarTablaCategorias();
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Error al eliminar Categoría");
-//            }
-//            
-//            
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Selecione una Categoría");
-//        }
+        Ctrl_Producto controlProducto = new Ctrl_Producto();
+        if (idProducto == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un Producto");
+        } else {
+            if (controlProducto.eliminar(idProducto)) {
+                JOptionPane.showMessageDialog(null, "Producto Eliminado");
+                this.CargarTablaProductos();
+                this.CargarComboCategoria();
+                this.Limpiar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar el roducto");
+            }
+        }
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
 
-//        if(!txt_descripcion.getText().isEmpty()){
-//            Categoria categoria = new Categoria();
-//            Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
-//            
-//            categoria.setDescripcion(txt_descripcion.getText().trim());
-//            if (controlCategoria.actualizar(categoria, idCategoria)) {
-//                 JOptionPane.showMessageDialog(null, "Categoría Actualizada");
-//                 txt_descripcion.setText("");
-//                 this.CargarTablaCategorias();
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Error al actualizar Categoría");
-//            }
-//            
-//            
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Selecione una Categoría");
-//        }
+        Producto producto = new Producto();
+        Ctrl_Producto controlProducto = new Ctrl_Producto();
+        String iva = "";
+        String categoria = "";
+        iva = jComboBox_iva.getSelectedItem().toString().trim();
+        categoria = jComboBox_categoria.getSelectedItem().toString().trim();
+
+        //validar los campos//
+        if (txt_nombre.getText().isEmpty() || txt_cantidad.getText().isEmpty() || txt_precio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+        } else {
+
+            if (iva.equalsIgnoreCase("Seleccione IVA:")) {
+                JOptionPane.showMessageDialog(null, "Seleccione IVA");
+            } else {
+                if (categoria.equalsIgnoreCase("Seleccione Categoría:")) {
+                    JOptionPane.showMessageDialog(null, "Seleccione Categoría");
+                } else {
+                    try {
+                        producto.setNombre(txt_nombre.getText().trim());
+                        producto.setCantidad(Integer.parseInt(txt_cantidad.getText().trim()));
+                        String precioTXT = "";
+                        double Precio = 0.0;
+                        precioTXT = txt_precio.getText().trim();
+                        boolean aux = false;
+                        //si el usuario ingresa, como punto decimal lo transformamos a punto//
+
+                        for (int i = 0; i < precioTXT.length(); i++) {
+                            if (precioTXT.charAt(i) == ',') {
+                                String precioNuevo = precioTXT.replace(",", ".");
+                                Precio = Double.parseDouble(precioNuevo);
+                                aux = true;
+                            }
+                        }
+                        //evaluar la condicion//
+
+                        if (aux == true) {
+                            producto.setPrecio(Precio);
+                        } else {
+                            Precio = Double.parseDouble(precioTXT);
+                            producto.setPrecio(Precio);
+                        }
+
+                        producto.setDescripcion(txt_descripcion.getText().trim());
+                        //porcentaje IVA//
+                        if (iva.equalsIgnoreCase("No grava IVA")) {
+                            producto.setPorcentajeIva(0);
+                        } else if ((iva.equalsIgnoreCase("19%"))) {
+                            producto.setPorcentajeIva(19);
+                        }
+
+                        //idcategoria //
+                        this.IdCategoria();
+                        producto.setIdCategoria(obtenerIdCategoriaCombo);
+                        producto.setEstado(1);
+
+                        if (controlProducto.actualizar(producto, idProducto)) {
+                            JOptionPane.showMessageDialog(null, "Registro Actualizado");
+
+                            this.CargarComboCategoria();
+                            this.CargarTablaProductos();
+                            this.jComboBox_iva.setSelectedItem("Seleccione IVA:");
+                            this.Limpiar();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al Actualizar");
+                        }
+
+                    } catch (HeadlessException | NumberFormatException e) {
+                        System.out.println("Error en:" + e);
+                    }
+                }
+            }
+        }
 
     }//GEN-LAST:event_jButton_actualizarActionPerformed
 
@@ -255,6 +312,16 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_precio;
     // End of variables declaration//GEN-END:variables
+
+    private void Limpiar() {
+        txt_nombre.setText("");
+        txt_cantidad.setText("");
+        txt_precio.setText("");
+        txt_descripcion.setText("");
+        jComboBox_iva.setSelectedItem("Seleccione IVA:");
+        jComboBox_categoria.setSelectedItem("Seleccione Categorías:");
+
+    }
 
     //mtedodo para cargar las categorias//
     private void CargarComboCategoria() {
@@ -399,7 +466,7 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
 
     //metodo para relacionar categorias//
     private String relacionarCategoria(int idCategoria) {
-        
+
         String sql = "select descripcion from tb_categoria where idCategoria = '" + idCategoria + "'";
         Statement st;
         try {
@@ -408,7 +475,7 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
             st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-               descripcionCategoria = rs.getString("descripcion");
+                descripcionCategoria = rs.getString("descripcion");
             }
             cn.close();
 
@@ -416,5 +483,21 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
             System.out.println("Error al obtener el id de la Categoria");
         }
         return descripcionCategoria;
+    }
+
+    private int IdCategoria() {
+        String sql = "select * from tb_categoria where descripcion = '" + this.jComboBox_categoria.getSelectedItem() + "'";
+        Statement st;
+        try {
+            Connection cn = Conexion.conectar();
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                obtenerIdCategoriaCombo = rs.getInt("idCategoria");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener id categoría");
+        }
+        return obtenerIdCategoriaCombo;
     }
 }

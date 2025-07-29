@@ -57,7 +57,7 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
         setIconifiable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Administrar Categorías");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
@@ -66,6 +66,7 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTable_categorias.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jTable_categorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -88,17 +89,17 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton_actualizar.setBackground(new java.awt.Color(51, 204, 0));
-        jButton_actualizar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton_actualizar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jButton_actualizar.setText("Actualizar");
         jButton_actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_actualizarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        jPanel2.add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
 
         jButton_eliminar.setBackground(new java.awt.Color(255, 51, 51));
-        jButton_eliminar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton_eliminar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jButton_eliminar.setText("Eliminar");
         jButton_eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,12 +114,12 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Descripción:");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, -1));
 
-        txt_descripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_descripcion.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel3.add(txt_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 160, 190, 80));
