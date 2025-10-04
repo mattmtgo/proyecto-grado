@@ -124,7 +124,7 @@ public class InterProducto extends javax.swing.JInternalFrame {
         jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Categorías:", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 170, -1));
 
-        jButton_Guardar.setBackground(new java.awt.Color(255, 255, 153));
+        jButton_Guardar.setBackground(new java.awt.Color(255, 255, 102));
         jButton_Guardar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton_Guardar.setText("Guardar");
         jButton_Guardar.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +134,7 @@ public class InterProducto extends javax.swing.JInternalFrame {
         });
         getContentPane().add(jButton_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 90, 25));
 
-        jLabel_wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo6.png"))); // NOI18N
+        jLabel_wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo8.jpg"))); // NOI18N
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 280));
 
         pack();

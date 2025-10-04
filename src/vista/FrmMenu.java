@@ -19,7 +19,7 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setTitle("Gestión de Inventario PYT");
 
         this.setLayout(null);
-        jDestopPane_menu = new JDesktopPane();
+        jDestopPane_menu = new ImagenFondoDesktopPane();
 
         int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -67,10 +67,16 @@ public class FrmMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 102));
+
+        jMenu1.setBackground(new java.awt.Color(255, 255, 153));
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         jMenu1.setText("Usuarios");
         jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jMenu1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenu1.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem1_nuevo_usuario.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem1_nuevo_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-cliente.png"))); // NOI18N
@@ -96,10 +102,14 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu6.setBackground(new java.awt.Color(255, 255, 153));
         jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportee.png"))); // NOI18N
         jMenu6.setText("Informes");
         jMenu6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jMenu6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenu6.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_reportes_clientes.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_reportes_clientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clientee.png"))); // NOI18N
@@ -132,10 +142,14 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu6);
 
+        jMenu2.setBackground(new java.awt.Color(255, 255, 153));
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/producto.png"))); // NOI18N
         jMenu2.setText("Productos");
         jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jMenu2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenu2.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_nuevo_producto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_nuevo_producto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-producto.png"))); // NOI18N
@@ -172,10 +186,14 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu4.setBackground(new java.awt.Color(255, 255, 153));
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/category.png"))); // NOI18N
         jMenu4.setText("Categorías");
         jMenu4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jMenu4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenu4.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_nueva_categoria.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_nueva_categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo.png"))); // NOI18N
@@ -201,15 +219,24 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu5.setBackground(new java.awt.Color(255, 255, 153));
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/facturar.png"))); // NOI18N
         jMenu5.setText("Ventas");
         jMenu5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jMenu5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenu5.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_nueva_venta.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_nueva_venta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anadir.png"))); // NOI18N
         jMenuItem_nueva_venta.setText("Nueva Venta");
         jMenuItem_nueva_venta.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenuItem_nueva_venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_nueva_ventaActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem_nueva_venta);
 
         jMenuItem_gestionar_ventas.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -225,10 +252,14 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu3.setBackground(new java.awt.Color(255, 255, 153));
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/manos.png"))); // NOI18N
         jMenu3.setText("Clientes");
         jMenu3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jMenu3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenu3.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_nuevo_cliente.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_nuevo_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-cliente.png"))); // NOI18N
@@ -253,11 +284,15 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
+        jMenu7.setBackground(new java.awt.Color(255, 255, 153));
         jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hostorial.png"))); // NOI18N
         jMenu7.setText("Historial");
         jMenu7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jMenu7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenu7.setMinimumSize(new java.awt.Dimension(180, 50));
         jMenu7.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_ver_historial.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_ver_historial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/historial1.png"))); // NOI18N
@@ -267,6 +302,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu7);
 
+        jMenu8.setBackground(new java.awt.Color(255, 255, 153));
         jMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/apagar.png"))); // NOI18N
         jMenu8.setText("Cerrar Sesión ");
         jMenu8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -356,6 +392,12 @@ public class FrmMenu extends javax.swing.JFrame {
         jDestopPane_menu.add(interGestionarUsuario);
         interGestionarUsuario.setVisible(true);
     }//GEN-LAST:event_jMenuItem_gestionar_usuarioActionPerformed
+
+    private void jMenuItem_nueva_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nueva_ventaActionPerformed
+         InterFacturacion interFacturacion = new InterFacturacion();
+        jDestopPane_menu.add(interFacturacion);
+        interFacturacion.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_nueva_ventaActionPerformed
 
     /**
      * @param args the command line arguments

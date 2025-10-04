@@ -17,7 +17,7 @@ public class FrmLogin extends javax.swing.JFrame {
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setTitle("Login - SISTEMA DE VENTAS PYT");
+        this.setTitle("Login - Gestión de Inventario PYT");
         this.setSize(new Dimension(700, 500));
 
     }

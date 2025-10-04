@@ -38,7 +38,7 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
         this.CargarComboCategoria();
 
         //insertar imagen //
-        ImageIcon wallpaper = new ImageIcon("src/img/fondo6.png");
+        ImageIcon wallpaper = new ImageIcon("src/img/fondo8.jpg");
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(900, 500, WIDTH));
         jLabel_wallpaper.setIcon(icono);
         this.repaint();
@@ -131,7 +131,7 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
         });
         jPanel2.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 90, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 50, 130, 270));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 140, 130, 90));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());

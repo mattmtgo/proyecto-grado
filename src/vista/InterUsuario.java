@@ -98,7 +98,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         txt_usuario.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         getContentPane().add(txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 170, -1));
 
-        jButton_Guardar.setBackground(new java.awt.Color(255, 255, 153));
+        jButton_Guardar.setBackground(new java.awt.Color(255, 255, 102));
         jButton_Guardar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton_Guardar.setText("Guardar");
         jButton_Guardar.addActionListener(new java.awt.event.ActionListener() {
@@ -124,7 +124,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         txt_password_visible.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         getContentPane().add(txt_password_visible, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 170, -1));
 
-        jLabel_wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo6.png"))); // NOI18N
+        jLabel_wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo8.jpg"))); // NOI18N
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 270));
 
         pack();
