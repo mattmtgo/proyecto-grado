@@ -2,6 +2,7 @@ package vista;
 
 import conexion.Conexion;
 import controlador.Ctrl_RegistrarVenta;
+import controlador.VentaPDF;
 import java.awt.Dimension;
 import static java.awt.image.ImageObserver.WIDTH;
 import javax.swing.Icon;
@@ -475,7 +476,11 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
                 if (controlVenta.guardar(cabeceraVenta)) {
                     JOptionPane.showMessageDialog(null, "¡Venta Registrada!");
-
+                    
+                    VentaPDF pdf = new VentaPDF();
+                    pdf.DatosCliete(idCliente);
+                    pdf.generarFacturaPDF();
+                    
                     for (DetalleVenta elemento : listaProductos) {
                         detalleVenta.setIdDetalleVenta(0);
                         detalleVenta.setIdCabeceraVenta(0);
@@ -549,7 +554,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel_wallpaper;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    public static javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable_productos;
     private javax.swing.JTextField txt_cambio;
     private javax.swing.JTextField txt_cantidad;
@@ -558,7 +563,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_efectivo;
     private javax.swing.JTextField txt_iva;
     private javax.swing.JTextField txt_subtotal;
-    private javax.swing.JTextField txt_total_pagar;
+    public static javax.swing.JTextField txt_total_pagar;
     // End of variables declaration//GEN-END:variables
 
     //metodo para cargar clientes//

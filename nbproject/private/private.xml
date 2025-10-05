@@ -5,6 +5,8 @@
         <group>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterFacturacion.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarUsuario.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/controlador/Ctrl_RegistrarVenta.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/modelo/DetalleVenta.java</file>
         </group>
     </open-files>
 </project-private>
