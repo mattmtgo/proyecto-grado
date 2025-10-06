@@ -1,5 +1,6 @@
 package vista;
 
+import controlador.Reportes;
 import java.awt.Dimension;
 import javax.swing.JDesktopPane;
 
@@ -115,18 +116,33 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_reportes_clientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clientee.png"))); // NOI18N
         jMenuItem_reportes_clientes.setText("Reportes Clientes");
         jMenuItem_reportes_clientes.setPreferredSize(new java.awt.Dimension(200, 30));
+        jMenuItem_reportes_clientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_reportes_clientesActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem_reportes_clientes);
 
         jMenuItem_reportes_categorias.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_reportes_categorias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/categorias1.png"))); // NOI18N
         jMenuItem_reportes_categorias.setText("Reportes Categorias");
         jMenuItem_reportes_categorias.setPreferredSize(new java.awt.Dimension(200, 30));
+        jMenuItem_reportes_categorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_reportes_categoriasActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem_reportes_categorias);
 
         jMenuItem_reportes_productos.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_reportes_productos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportes.png"))); // NOI18N
         jMenuItem_reportes_productos.setText("Reportes Productos ");
         jMenuItem_reportes_productos.setPreferredSize(new java.awt.Dimension(200, 30));
+        jMenuItem_reportes_productos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_reportes_productosActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem_reportes_productos);
 
         jMenuItem_reportes_ventas.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -334,11 +350,14 @@ public class FrmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_gestionar_categoriaActionPerformed
 
     private void jMenuItem_gestionar_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_ventasActionPerformed
-        // TODO add your handling code here:
+        InterGestionarVentas interGestionarVentas = new InterGestionarVentas();
+        jDestopPane_menu.add(interGestionarVentas);
+        interGestionarVentas.setVisible(true);
     }//GEN-LAST:event_jMenuItem_gestionar_ventasActionPerformed
 
     private void jMenuItem_reportes_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_reportes_ventasActionPerformed
-        // TODO add your handling code here:
+        Reportes reporte = new Reportes();
+        reporte.ReportesVentas();
     }//GEN-LAST:event_jMenuItem_reportes_ventasActionPerformed
 
     private void jMenuItem_nueva_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nueva_categoriaActionPerformed
@@ -398,6 +417,21 @@ public class FrmMenu extends javax.swing.JFrame {
         jDestopPane_menu.add(interFacturacion);
         interFacturacion.setVisible(true);
     }//GEN-LAST:event_jMenuItem_nueva_ventaActionPerformed
+
+    private void jMenuItem_reportes_clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_reportes_clientesActionPerformed
+        Reportes reporte = new Reportes();
+        reporte.ReportesClientes();
+    }//GEN-LAST:event_jMenuItem_reportes_clientesActionPerformed
+
+    private void jMenuItem_reportes_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_reportes_productosActionPerformed
+        Reportes reporte = new Reportes();
+        reporte.ReportesProductos();
+    }//GEN-LAST:event_jMenuItem_reportes_productosActionPerformed
+
+    private void jMenuItem_reportes_categoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_reportes_categoriasActionPerformed
+        Reportes reporte = new Reportes();
+        reporte.ReportesCategorias();
+    }//GEN-LAST:event_jMenuItem_reportes_categoriasActionPerformed
 
     /**
      * @param args the command line arguments

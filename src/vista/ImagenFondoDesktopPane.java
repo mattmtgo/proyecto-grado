@@ -11,7 +11,7 @@ public class ImagenFondoDesktopPane extends JDesktopPane {
 
     public ImagenFondoDesktopPane() {
         // Asegúrate de que esta imagen esté en src/img/
-        imagen = new ImageIcon(getClass().getResource("/img/fondo6.png")).getImage();
+        imagen = new ImageIcon(getClass().getResource("/img/fondo6.1.png")).getImage();
     }
 
     @Override

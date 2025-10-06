@@ -83,7 +83,7 @@ public class VentaPDF {
             PdfWriter.getInstance(doc, archivo);
             doc.open();
             
-            Image img = Image.getInstance("src/img/Plazayterraza.jpg");
+            Image img = Image.getInstance("src/img/plaza1.1.png");
             Paragraph fecha = new Paragraph();
             Font negrita = new Font (Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLUE);
             fecha.add(Chunk.NEWLINE);
