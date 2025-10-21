@@ -78,7 +78,7 @@ public class InterGestionarUsuario extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gestionar Usuarios");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -276,12 +276,12 @@ public class InterGestionarUsuario extends javax.swing.JInternalFrame {
             InterGestionarUsuario.jScrollPane1.setViewportView(InterGestionarUsuario.jTable_usuarios);
 
             model.addColumn("N°");
-            model.addColumn("nombre");
-            model.addColumn("apellido");
-            model.addColumn("usuario");
-            model.addColumn("password");
-            model.addColumn("tefelono");
-            model.addColumn("estado");
+            model.addColumn("Nombre");
+            model.addColumn("Apellido");
+            model.addColumn("Usuario");
+            model.addColumn("Password");
+            model.addColumn("Teléfono");
+            model.addColumn("Estado");
 
             while (rs.next()) {
                 Object fila[] = new Object[7];

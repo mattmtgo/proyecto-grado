@@ -76,7 +76,7 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gestionar Clientes");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -266,12 +266,12 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
             InterGestionarCliente.jScrollPane1.setViewportView(InterGestionarCliente.jTable_clientes);
 
             model.addColumn("N°");
-            model.addColumn("empresa");
-            model.addColumn("nombre");
-            model.addColumn("cedula");
-            model.addColumn("telefono");
-            model.addColumn("direccion");
-            model.addColumn("estado");
+            model.addColumn("Empresa");
+            model.addColumn("Nombre");
+            model.addColumn("Cedula");
+            model.addColumn("Teléfono");
+            model.addColumn("Dirección");
+            model.addColumn("Estado");
 
             while (rs.next()) {
                 Object fila[] = new Object[7];

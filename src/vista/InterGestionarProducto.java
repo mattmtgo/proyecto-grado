@@ -83,7 +83,7 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Administrar Productos");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -361,13 +361,13 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
             InterGestionarProducto.jScrollPane1.setViewportView(InterGestionarProducto.jTable_productos);
 
             model.addColumn("N°");
-            model.addColumn("nombre");
-            model.addColumn("cantidad");
-            model.addColumn("precio");
-            model.addColumn("descripcion");
+            model.addColumn("Nombre");
+            model.addColumn("Cantidad");
+            model.addColumn("Precio");
+            model.addColumn("Descripción");
             model.addColumn("Iva");
             model.addColumn("Categoria");
-            model.addColumn("estado");
+            model.addColumn("Estado");
 
             while (rs.next()) {
 

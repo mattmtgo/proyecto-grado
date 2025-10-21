@@ -13,7 +13,7 @@ public class InterCliente extends javax.swing.JInternalFrame {
 
     public InterCliente() {
         initComponents();
-        this.setSize(new Dimension(400, 300));
+        this.setSize(new Dimension(440, 300));
         this.setTitle("Nuevo Cliente");
     }
 

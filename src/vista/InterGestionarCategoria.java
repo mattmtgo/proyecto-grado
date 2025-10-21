@@ -200,9 +200,9 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
             InterGestionarCategoria.jTable_categorias = new JTable(model);
             InterGestionarCategoria.jScrollPane1.setViewportView(InterGestionarCategoria.jTable_categorias);
 
-            model.addColumn("idCategoria");
-            model.addColumn("descripcion");
-            model.addColumn("estado");
+            model.addColumn("N°");
+            model.addColumn("Descripción");
+            model.addColumn("Estado");
 
             while (rs.next()) {
                 Object fila[] = new Object[3];
