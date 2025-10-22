@@ -1,15 +1,14 @@
-
 package vista;
 
 import conexion.Conexion;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
-
-
+import java.sql.ResultSet;
 
 /**
  *
@@ -17,34 +16,81 @@ import java.sql.PreparedStatement;
  */
 public class InterGraficaVentas extends javax.swing.JInternalFrame {
 
-    ArrayList<Integer>listaCantidad = new ArrayList<>();
+    ArrayList<Integer> listaCantidad = new ArrayList<>();
     ArrayList<String> listaFechas = new ArrayList<>();
     int cantidadResultados = 0;
     String[] vector_fechaVenta;
     int[] vector_estatus_cantidad;
-   
+
     public InterGraficaVentas() {
         initComponents();
         this.setSize(new Dimension(550, 650));
         this.setTitle("Historial de Ventas");
-        
-        
+        this.MetodoContador();
+        vector_fechaVenta = new String[cantidadResultados];
+        vector_estatus_cantidad = new int[cantidadResultados];
+        this.MetodoAlmacenaDatos();
+
     }
-    
-    
-    private void MetodoContador(){
+
+    private int MetodoContador() {
         try {
-            
+
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-            "select fechaVenta, count(fechaVenta) as Ventas from tb_cabecera_venta "
+                    "select fechaVenta, count(fechaVenta) as Ventas from tb_cabecera_venta "
                     + "where fechaVenta BETWEEN '" + InterGraficas.fecha_inicio + "' and '" + InterGraficas.fecha_fin + "' group by fechaVenta;");
-            
+
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                cantidadResultados++;
+            }
+            cn.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error en: " + e);
+        }
+        return cantidadResultados;
+    }
+
+    //Metodo para almacenar en las listas los datos a graficar
+    private void MetodoAlmacenaDatos() {
+        try {
+
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "select fechaVenta, count(fechaVenta) as Ventas from tb_cabecera_venta "
+                    + "where fechaVenta BETWEEN '" + InterGraficas.fecha_inicio + "' and '" + InterGraficas.fecha_fin + "' group by fechaVenta;");
+            ResultSet rs = pst.executeQuery();
+            int contador = 0;
+            while (rs.next()) {
+                vector_fechaVenta[contador] = rs.getString("fechaVenta");
+                listaFechas.add(vector_fechaVenta[contador]);
+                vector_estatus_cantidad[contador] = rs.getInt("Ventas");
+                listaCantidad.add(vector_estatus_cantidad[contador]);
+
+                contador++;
+            }
+            cn.close();
         } catch (SQLException e) {
             System.out.println("Error en: " + e);
         }
     }
-
+    
+    
+    public int MetodoMayorVenta(ArrayList<Integer> listaCantidad){
+        int mayor =0;
+        for (int i = 0; i < listaCantidad.size(); i++) {
+            if (listaCantidad.get(i) > mayor) {
+                mayor = listaCantidad.get(i);
+            }
+        }
+        return mayor;
+    }
+    
+    //metodo para graficar
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,4 +119,43 @@ public class InterGraficaVentas extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void paint(Graphics g){
+        super.paint(g);
+        
+        int mayorVenta = MetodoMayorVenta(listaCantidad);
+        int largo_NuevoIngreso = 0;
+        int parametro1 = 133;
+        int parametroFecha = 118;
+        int parametro3 = 100;
+        
+        for (int i = 0; i < listaCantidad.size(); i++) {
+            largo_NuevoIngreso = listaCantidad.get(i)* 400 / mayorVenta;
+            if (i == 0) {
+                g.setColor(new Color(131, 222, 129)); //color menta
+            } else if(i == 1){
+                g.setColor(new Color(161, 161, 161)); // color azul clarito
+            }else if(i == 2){
+                g.setColor(new Color(199, 129, 222)); //color morado clarito
+            }else if(i == 3){
+                g.setColor(new Color(222, 213, 129)); //color caquis
+            }else if(i == 4){
+                g.setColor(new Color(222, 129, 129)); // color rojo
+            }else if(i == 5){
+                g.setColor(new Color(222, 191, 129)); //color cafe clarito
+            }else if(i == 6){
+                g.setColor(new Color(129, 222, 157)); // color aguamarina  
+            }else {
+                g.setColor(new Color(235, 166, 66)); // color naranja  
+            }
+            
+            g.fillRect(100, parametro3, largo_NuevoIngreso, 40);
+            g.drawString(listaFechas.get(i), 10, parametroFecha);
+            g.drawString("Ventas: " + listaCantidad.get(i), 10, parametro1);
+            parametro1 += 50; 
+            parametroFecha += 50;
+            parametro3 += 50;
+        }
+    }
 }

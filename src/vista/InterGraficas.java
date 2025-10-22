@@ -65,11 +65,11 @@ public class InterGraficas extends javax.swing.JInternalFrame {
         });
         getContentPane().add(jButton_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 140, 25));
 
-        jDateChooser_fecha_inicio.setDateFormatString("dd-MM-yyyy\n");
+        jDateChooser_fecha_inicio.setDateFormatString("yyyy-MM-dd\n");
         jDateChooser_fecha_inicio.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         getContentPane().add(jDateChooser_fecha_inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 130, -1));
 
-        jDateChooser_fecha_fin.setDateFormatString("dd-MM-yyyy\n");
+        jDateChooser_fecha_fin.setDateFormatString("yyyy-MM-dd\n");
         jDateChooser_fecha_fin.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         getContentPane().add(jDateChooser_fecha_fin, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 130, -1));
 
