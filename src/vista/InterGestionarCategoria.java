@@ -131,23 +131,29 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
-        if(!txt_descripcion.getText().isEmpty()){
-            Categoria categoria = new Categoria();
-            Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
-            
-            categoria.setDescripcion(txt_descripcion.getText().trim());
-            if (!controlCategoria.eliminar(idCategoria)) {
-                 JOptionPane.showMessageDialog(null, "Categoría Eliminada");
-                 txt_descripcion.setText("");
-                 this.CargarTablaCategorias();
+        if (!txt_descripcion.getText().isEmpty()) {
+        Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
+
+        int confirmacion = JOptionPane.showConfirmDialog(
+            null,
+            "¿Está seguro que desea eliminar esta categoría?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            if (controlCategoria.eliminar(idCategoria)) {
+                JOptionPane.showMessageDialog(null, "Categoría eliminada correctamente.");
+                txt_descripcion.setText("");
+                this.CargarTablaCategorias();
+                idCategoria = 0;
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar Categoría");
+                JOptionPane.showMessageDialog(null, "Error al eliminar la categoría.");
             }
-            
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "Selecione una Categoría");
         }
+    } else {
+        JOptionPane.showMessageDialog(null, "Seleccione una categoría para eliminar.");
+    }
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
@@ -202,12 +208,11 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
 
             model.addColumn("N°");
             model.addColumn("Descripción");
-            model.addColumn("Estado");
 
             while (rs.next()) {
                 Object fila[] = new Object[3];
 
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 2; i++) {
                     fila[i] = rs.getObject(i + 1);
                 }
                 model.addRow(fila);

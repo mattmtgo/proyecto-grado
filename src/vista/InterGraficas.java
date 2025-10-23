@@ -53,7 +53,7 @@ public class InterGraficas extends javax.swing.JInternalFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Hasta:");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 100, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 100, -1));
 
         jButton_Guardar.setBackground(new java.awt.Color(255, 255, 102));
         jButton_Guardar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -63,7 +63,7 @@ public class InterGraficas extends javax.swing.JInternalFrame {
                 jButton_GuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 140, 25));
+        getContentPane().add(jButton_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 140, 25));
 
         jDateChooser_fecha_inicio.setDateFormatString("yyyy-MM-dd\n");
         jDateChooser_fecha_inicio.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
@@ -71,7 +71,7 @@ public class InterGraficas extends javax.swing.JInternalFrame {
 
         jDateChooser_fecha_fin.setDateFormatString("yyyy-MM-dd\n");
         jDateChooser_fecha_fin.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        getContentPane().add(jDateChooser_fecha_fin, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 130, -1));
+        getContentPane().add(jDateChooser_fecha_fin, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 130, -1));
 
         jLabel_wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo8.jpg"))); // NOI18N
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 270));

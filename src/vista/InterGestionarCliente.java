@@ -178,19 +178,30 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
 
-        Ctrl_Cliente contrlCliente = new Ctrl_Cliente();
-        if (idCliente == 0) {
-            JOptionPane.showMessageDialog(null, "Seleccione un cliente");
-        } else {
-            if (!contrlCliente.eliminar(idCliente)) {
-                JOptionPane.showMessageDialog(null, "Cliente Eliminado");
+        Ctrl_Cliente controlCliente = new Ctrl_Cliente();
+
+    if (idCliente == 0) {
+        JOptionPane.showMessageDialog(null, "Seleccione un cliente para eliminar.");
+    } else {
+        int confirmacion = JOptionPane.showConfirmDialog(
+            null,
+            "¿Está seguro que desea eliminar este cliente?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            if (controlCliente.eliminar(idCliente)) {
+                JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.");
                 this.CargarTablaClientes();
                 this.Limpiar();
+                idCliente = 0;
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar cliente");
+                JOptionPane.showMessageDialog(null, "Error al eliminar el cliente.");
                 this.Limpiar();
             }
         }
+    }
         
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
@@ -271,11 +282,11 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
             model.addColumn("Cedula");
             model.addColumn("Teléfono");
             model.addColumn("Dirección");
-            model.addColumn("Estado");
+            
 
             while (rs.next()) {
-                Object fila[] = new Object[7];
-                for (int i = 0; i < 7; i++) {
+                Object fila[] = new Object[6];
+                for (int i = 0; i < 6; i++) {
                     fila[i] = rs.getObject(i + 1);
                 }
                 model.addRow(fila);

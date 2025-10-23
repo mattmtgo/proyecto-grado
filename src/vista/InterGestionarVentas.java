@@ -30,7 +30,7 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
         initComponents();
         this.setSize(new Dimension(900, 500));
         this.setTitle("Gestionar Ventas");
-        
+
         this.CargarComboClientes();
         this.CargarTablaVentas();
 
@@ -57,15 +57,14 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
         jTable_ventas = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jButton_actualizar = new javax.swing.JButton();
+        jButton_eliminar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txt_total_pagar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         txt_fecha = new javax.swing.JTextField();
         jComboBox_cliente = new javax.swing.JComboBox<>();
-        jComboBox_estado = new javax.swing.JComboBox<>();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setClosable(true);
@@ -74,7 +73,7 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Gestionar Clientes");
+        jLabel1.setText("Gestionar Ventas");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -111,7 +110,17 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
                 jButton_actualizarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 90, -1));
+        jPanel2.add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
+
+        jButton_eliminar.setBackground(new java.awt.Color(255, 0, 0));
+        jButton_eliminar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jButton_eliminar.setText("Eliminar");
+        jButton_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_eliminarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 90, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 150, 130, 80));
 
@@ -136,12 +145,7 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Cliente:");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 100, -1));
-
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Estado:");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 100, -1));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, 100, -1));
 
         txt_fecha.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txt_fecha.setEnabled(false);
@@ -154,16 +158,7 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
                 jComboBox_clienteActionPerformed(evt);
             }
         });
-        jPanel3.add(jComboBox_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 165, -1));
-
-        jComboBox_estado.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jComboBox_estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
-        jComboBox_estado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_estadoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jComboBox_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 165, -1));
+        jPanel3.add(jComboBox_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 165, -1));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 870, 100));
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 470));
@@ -172,43 +167,41 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
-        
+
         CabeceraVenta cabeceraVenta = new CabeceraVenta();
         Ctrl_RegistrarVenta controlRegistrarVenta = new Ctrl_RegistrarVenta();
-        String cliente, estado;
+        String cliente;
+
         cliente = jComboBox_cliente.getSelectedItem().toString().trim();
-        estado = jComboBox_estado.getSelectedItem().toString().trim();
-        
-        
-        //cliente es del jComboBox
-        try{
+
+// Buscar el idCliente
+        try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                    "select idCliente, concat(empresa, ' ', nombre) as cliente from tb_cliente where concat(empresa, ' ', nombre) = '" + cliente + "'");
+                    "SELECT idCliente, CONCAT(empresa, ' ', nombre) AS cliente FROM tb_cliente WHERE CONCAT(empresa, ' ', nombre) = '" + cliente + "'"
+            );
             ResultSet rs = pst.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 idCliente = rs.getInt("idCliente");
             }
             cn.close();
-        }catch(SQLException e){
-            System.out.println("Error al Cargar el ID Cliente: " + e); 
+        } catch (SQLException e) {
+            System.out.println("Error al cargar el ID Cliente: " + e);
         }
+
+// Actualizar registro (sin estado)
         if (!cliente.equalsIgnoreCase("Seleccione Cliente:")) {
             cabeceraVenta.setIdCliente(idCliente);
-            if (estado.equalsIgnoreCase("Activo")) {
-                cabeceraVenta.setEstado(1);
-            }else{
-                cabeceraVenta.setEstado(0);
-            }
+
             if (controlRegistrarVenta.actualizar(cabeceraVenta, idVenta)) {
-                JOptionPane.showMessageDialog(null, "¡Registro Actualizado!");
+                JOptionPane.showMessageDialog(null, "¡Registro actualizado!");
             } else {
-                JOptionPane.showMessageDialog(null, "Error al Actualizar Datos");
+                JOptionPane.showMessageDialog(null, "Error al actualizar datos");
                 this.CargarTablaVentas();
                 this.Limpiar();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un Registro para Actualizar Datos");
+            JOptionPane.showMessageDialog(null, "Seleccione un registro para actualizar datos");
         }
     }//GEN-LAST:event_jButton_actualizarActionPerformed
 
@@ -216,20 +209,43 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_clienteActionPerformed
 
-    private void jComboBox_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_estadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox_estadoActionPerformed
+    private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
+                                                        
+    Ctrl_RegistrarVenta controlVenta = new Ctrl_RegistrarVenta();
+    
+    if (idVenta == 0) {
+        JOptionPane.showMessageDialog(null, "Seleccione una venta para eliminar.");
+    } else {
+        int confirmacion = JOptionPane.showConfirmDialog(
+            null,
+            "¿Está seguro que desea eliminar esta venta?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            if (controlVenta.eliminar(idVenta)) {
+                JOptionPane.showMessageDialog(null, "Venta eliminada correctamente.");
+                this.CargarTablaVentas();
+                this.Limpiar();
+                idVenta = 0;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar la venta.");
+            }
+        }
+    }
+
+    }//GEN-LAST:event_jButton_eliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_actualizar;
+    private javax.swing.JButton jButton_eliminar;
     private javax.swing.JComboBox<String> jComboBox_cliente;
-    private javax.swing.JComboBox<String> jComboBox_estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel_wallpaper;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -244,16 +260,16 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
         this.txt_total_pagar.setText("");
         this.txt_fecha.setText("");
         this.jComboBox_cliente.setSelectedItem("Seleccione Cliente:");
-        this.jComboBox_estado.setSelectedItem("Activo");
         idCliente = 0;
     }
 
     private void CargarTablaVentas() {
         Connection con = Conexion.conectar();
         DefaultTableModel model = new DefaultTableModel();
-        String sql = "select cv.idCabeceraVenta as id, concat(c.empresa, ' ', c.nombre) as cliente, "
-                + "cv.valorPagar as total, cv.fechaVenta as fecha, cv.estado "
-                + "from tb_cabecera_venta as cv, tb_cliente as c where cv.idCliente = c.idCliente;";
+        String sql = "SELECT cv.idCabeceraVenta AS id, CONCAT(c.empresa, ' ', c.nombre) AS cliente, "
+                + "cv.valorPagar AS total, cv.fechaVenta AS fecha "
+                + "FROM tb_cabecera_venta AS cv, tb_cliente AS c "
+                + "WHERE cv.idCliente = c.idCliente;";
         Statement st;
 
         try {
@@ -264,33 +280,22 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
 
             model.addColumn("N°");
             model.addColumn("Cliente");
-            model.addColumn("Total A Pagar");
-            model.addColumn("Fecha Venta");
-            model.addColumn("estado");
+            model.addColumn("Total a Pagar");
+            model.addColumn("Fecha de Venta");
 
             while (rs.next()) {
-                Object fila[] = new Object[5];
-                for (int i = 0; i < 5; i++) {
-                    if (i == 4) {
-                        String estado = String.valueOf(rs.getObject(i + 1));
-                        if (estado.equalsIgnoreCase("1")) {
-                            fila[i] = "Activo";
-                        } else {
-                            fila[i] = "Inactivo";
-                        }
-                    } else {
-                        fila[i] = rs.getObject(i + 1);
-                    }
-
+                Object fila[] = new Object[4];
+                for (int i = 0; i < 4; i++) {
+                    fila[i] = rs.getObject(i + 1);
                 }
                 model.addRow(fila);
-
             }
 
             con.close();
         } catch (SQLException e) {
             System.out.println("Error al llenar la tabla de ventas: " + e);
         }
+
         jTable_ventas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -302,7 +307,6 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
                     EnviarDatosVentaSelecionada(idVenta);
                 }
             }
-
         });
     }
 
@@ -310,31 +314,27 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
         try {
             Connection con = Conexion.conectar();
             PreparedStatement pst = con.prepareStatement(
-                    "select cv.idCabeceraVenta, cv.idCliente, concat(c.empresa, ' ', c.nombre) as cliente, "
-                            + " cv.valorPagar, cv.fechaVenta, cv.estado from tb_cabecera_venta as cv, "
-                            + "tb_cliente as c where cv.idCabeceraVenta = '" +idVenta + "' and  cv.idCliente = c.idCliente;");
+                    "SELECT cv.idCabeceraVenta, cv.idCliente, CONCAT(c.empresa, ' ', c.nombre) AS cliente, "
+                    + "cv.valorPagar, cv.fechaVenta "
+                    + "FROM tb_cabecera_venta AS cv, tb_cliente AS c "
+                    + "WHERE cv.idCabeceraVenta = '" + idVenta + "' AND cv.idCliente = c.idCliente;");
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
                 jComboBox_cliente.setSelectedItem(rs.getString("cliente"));
                 txt_total_pagar.setText(rs.getString("valorPagar"));
                 txt_fecha.setText(rs.getString("fechaVenta"));
-                int estado = rs.getInt("estado");
-                if(estado ==1){
-                    jComboBox_estado.setSelectedItem("Activo");
-                }else{
-                    jComboBox_estado.setSelectedItem("Inactivo");
-                }
             }
+
             con.close();
         } catch (SQLException e) {
             System.out.println("Error al seleccionar venta: " + e);
         }
     }
-    
+
     private void CargarComboClientes() {
         Connection cn = Conexion.conectar();
-        String sql = "select * from tb_cliente";
+        String sql = "SELECT * FROM tb_cliente";
         Statement st;
 
         try {
@@ -345,13 +345,11 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
 
             while (rs.next()) {
                 jComboBox_cliente.addItem(rs.getString("empresa") + " " + rs.getString("nombre"));
-
             }
-            cn.close();
 
+            cn.close();
         } catch (SQLException e) {
-            System.out.println("Error al cargar Clientes" + e);
+            System.out.println("Error al cargar clientes: " + e);
         }
     }
-
 }

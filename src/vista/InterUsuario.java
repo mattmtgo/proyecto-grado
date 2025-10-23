@@ -119,6 +119,11 @@ public class InterUsuario extends javax.swing.JInternalFrame {
                 jCheckBox_ver_claveMouseClicked(evt);
             }
         });
+        jCheckBox_ver_clave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_ver_claveActionPerformed(evt);
+            }
+        });
         getContentPane().add(jCheckBox_ver_clave, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, -1, -1));
 
         txt_password_visible.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -180,6 +185,10 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_jCheckBox_ver_claveMouseClicked
+
+    private void jCheckBox_ver_claveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_ver_claveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox_ver_claveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

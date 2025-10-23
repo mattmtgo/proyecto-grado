@@ -196,18 +196,30 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
         Ctrl_Producto controlProducto = new Ctrl_Producto();
-        if (idProducto == 0) {
-            JOptionPane.showMessageDialog(null, "Seleccione un Producto");
+
+if (idProducto == 0) {
+    JOptionPane.showMessageDialog(null, "Seleccione un producto para eliminar.");
+} else {
+    int confirmacion = JOptionPane.showConfirmDialog(
+        null,
+        "¿Está seguro que desea eliminar este producto?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        if (controlProducto.eliminar(idProducto)) {
+            JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+            this.CargarTablaProductos();
+            this.CargarComboCategoria();
+            this.Limpiar();
+            idProducto = 0;
         } else {
-            if (controlProducto.eliminar(idProducto)) {
-                JOptionPane.showMessageDialog(null, "Producto Eliminado");
-                this.CargarTablaProductos();
-                this.CargarComboCategoria();
-                this.Limpiar();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el roducto");
-            }
+            JOptionPane.showMessageDialog(null, "Error al eliminar el producto.");
         }
+    }
+}
+
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
@@ -349,67 +361,65 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
     double IVA = 0;
 
     private void CargarTablaProductos() {
-        Connection con = Conexion.conectar();
-        DefaultTableModel model = new DefaultTableModel();
-        String sql = "select p.idProducto, p.nombre, p.cantidad, p.precio, p.descripcion, p.porcentajeIva, c.descripcion, p.estado from tb_producto As p, tb_categoria As c where p.idCategoria = c.idCategoria;";
-        Statement st;
+    Connection con = Conexion.conectar();
+    DefaultTableModel model = new DefaultTableModel();
+    String sql = "SELECT p.idProducto, p.nombre, p.cantidad, p.precio, p.descripcion, p.porcentajeIva, c.descripcion "
+               + "FROM tb_producto AS p, tb_categoria AS c WHERE p.idCategoria = c.idCategoria;";
+    Statement st;
 
-        try {
-            st = con.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            InterGestionarProducto.jTable_productos = new JTable(model);
-            InterGestionarProducto.jScrollPane1.setViewportView(InterGestionarProducto.jTable_productos);
+    try {
+        st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        InterGestionarProducto.jTable_productos = new JTable(model);
+        InterGestionarProducto.jScrollPane1.setViewportView(InterGestionarProducto.jTable_productos);
 
-            model.addColumn("N°");
-            model.addColumn("Nombre");
-            model.addColumn("Cantidad");
-            model.addColumn("Precio");
-            model.addColumn("Descripción");
-            model.addColumn("Iva");
-            model.addColumn("Categoria");
-            model.addColumn("Estado");
+        // Columnas (ya sin estado)
+        model.addColumn("N°");
+        model.addColumn("Nombre");
+        model.addColumn("Cantidad");
+        model.addColumn("Precio");
+        model.addColumn("Descripción");
+        model.addColumn("IVA");
+        model.addColumn("Categoría");
 
-            while (rs.next()) {
+        while (rs.next()) {
+            precio = rs.getDouble("precio");
+            porcentajeIva = rs.getInt("porcentajeIva");
 
-                precio = rs.getDouble("precio");
-                porcentajeIva = rs.getInt("porcentajeIva");
+            Object fila[] = new Object[7];
 
-                Object fila[] = new Object[8];
-
-                for (int i = 0; i < 8; i++) {
-
-                    if (i == 5) {
-                        this.calcularIva(precio, porcentajeIva);
-                        fila[i] = IVA;
-                        rs.getObject(i + 1);
-                    } else {
-                        fila[i] = rs.getObject(i + 1);
-                    }
-
+            for (int i = 0; i < 7; i++) {
+                if (i == 5) { // columna IVA
+                    this.calcularIva(precio, porcentajeIva);
+                    fila[i] = IVA;
+                    rs.getObject(i + 1);
+                } else {
+                    fila[i] = rs.getObject(i + 1);
                 }
-                model.addRow(fila);
-
             }
 
-            con.close();
-
-        } catch (SQLException e) {
-            System.out.println("Error al llenar la tabla productos: " + e);
+            model.addRow(fila);
         }
-        jTable_productos.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int fila_point = jTable_productos.rowAtPoint(e.getPoint());
-                int columna_point = 0;
 
-                if (fila_point > -1) {
-                    idProducto = (int) model.getValueAt(fila_point, columna_point);
-                    EnviarDatosProductoSelecionado(idProducto);
-                }
-            }
+        con.close();
 
-        });
+    } catch (SQLException e) {
+        System.out.println("Error al llenar la tabla productos: " + e);
     }
+
+    jTable_productos.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            int fila_point = jTable_productos.rowAtPoint(e.getPoint());
+            int columna_point = 0;
+
+            if (fila_point > -1) {
+                idProducto = (int) model.getValueAt(fila_point, columna_point);
+                EnviarDatosProductoSelecionado(idProducto);
+            }
+        }
+    });
+}
 
     private double calcularIva(double precio, int iva) {
         int p_iva = iva;

@@ -1,4 +1,3 @@
-
 package controlador;
 
 import conexion.Conexion;
@@ -10,26 +9,21 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import modelo.DetalleVenta;
 
-
-
-/**
- *
- * @author Aide
- */
 public class Ctrl_RegistrarVenta {
-    
+
     public static int idCabeceraRegistrada;
     java.math.BigDecimal iDColVar;
-    
-    //metodo para guardar la cabecera de venta
-    
+
+    // Método para guardar la cabecera de venta
     public boolean guardar(CabeceraVenta objeto) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         try {
 
-            PreparedStatement consulta = cn.prepareStatement("insert into tb_cabecera_venta values(?,?,?,?,?)",
-                    Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement consulta = cn.prepareStatement(
+                    "INSERT INTO tb_cabecera_venta VALUES(?,?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
             consulta.setInt(1, 0);
             consulta.setInt(2, objeto.getIdCliente());
             consulta.setDouble(3, objeto.getValorPagar());
@@ -38,11 +32,10 @@ public class Ctrl_RegistrarVenta {
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
-
             }
-            
+
             ResultSet rs = consulta.getGeneratedKeys();
-            while(rs.next()){
+            while (rs.next()) {
                 iDColVar = rs.getBigDecimal(1);
                 idCabeceraRegistrada = iDColVar.intValue();
             }
@@ -51,17 +44,20 @@ public class Ctrl_RegistrarVenta {
 
         } catch (SQLException e) {
             System.out.println("Error al guardar cabecera de venta: " + e);
-
         }
 
         return respuesta;
     }
+
+    // Método para guardar detalle de venta
     public boolean guardarDetalle(DetalleVenta objeto) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         try {
 
-            PreparedStatement consulta = cn.prepareStatement("insert into tb_detalle_venta values(?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement consulta = cn.prepareStatement(
+                    "INSERT INTO tb_detalle_venta VALUES(?,?,?,?,?,?,?,?,?,?)"
+            );
             consulta.setInt(1, 0);
             consulta.setInt(2, idCabeceraRegistrada);
             consulta.setInt(3, objeto.getIdProducto());
@@ -75,37 +71,71 @@ public class Ctrl_RegistrarVenta {
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
-
             }
 
             cn.close();
 
         } catch (SQLException e) {
             System.out.println("Error al guardar detalle de venta: " + e);
-
         }
 
         return respuesta;
     }
-    
-    public boolean actualizar(CabeceraVenta objeto, int idCabeceraVenta){
+
+    // Método para actualizar cabecera de venta
+    public boolean actualizar(CabeceraVenta objeto, int idCabeceraVenta) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         try {
-            
-            PreparedStatement consulta = cn.prepareStatement("update tb_cabecera_venta set idCliente = ?, estado = ? where idCabeceraVenta ='" + idCabeceraVenta + "'");
+
+            PreparedStatement consulta = cn.prepareStatement(
+                    "UPDATE tb_cabecera_venta SET idCliente = ?, estado = ? WHERE idCabeceraVenta = ?"
+            );
             consulta.setInt(1, objeto.getIdCliente());
             consulta.setInt(2, objeto.getEstado());
-            
-            if (consulta.executeUpdate() >0) {
-                respuesta = true; 
+            consulta.setInt(3, idCabeceraVenta);
+
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
             }
+
             cn.close();
         } catch (SQLException e) {
-            System.out.println("Error al actualizar Cabecera de venta: " + e);
+            System.out.println("Error al actualizar cabecera de venta: " + e);
         }
-        
+
         return respuesta;
     }
-    
+
+    //Método para eliminar una venta
+    public boolean eliminar(int idVenta) {
+        boolean respuesta = false;
+        Connection cn = Conexion.conectar();
+        try {
+            //eliminamos los detalles de la venta
+            PreparedStatement pst1 = cn.prepareStatement(
+                    "DELETE FROM tb_detalle_venta WHERE idCabeceraVenta = ?"
+            );
+            pst1.setInt(1, idVenta);
+            pst1.executeUpdate();
+            pst1.close();
+
+            //eliminamos la cabecera de la venta
+            PreparedStatement pst2 = cn.prepareStatement(
+                    "DELETE FROM tb_cabecera_venta WHERE idCabeceraVenta = ?"
+            );
+            pst2.setInt(1, idVenta);
+            int filas = pst2.executeUpdate();
+            pst2.close();
+
+            if (filas > 0) {
+                respuesta = true;
+            }
+
+            cn.close();
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar venta: " + e);
+        }
+        return respuesta;
+    }
 }
