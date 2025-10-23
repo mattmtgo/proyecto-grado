@@ -21,8 +21,9 @@ public class FrmLogin extends javax.swing.JFrame {
         this.setSize(new Dimension(700, 500));
 
     }
+
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("img/plaza1.1.png"));
         return retValue;
     }
@@ -172,19 +173,19 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_passwordActionPerformed
 
     private void jButton_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IniciarSesionActionPerformed
-       this.Login(); // TODO add your handling code here:
+        this.Login(); // TODO add your handling code here:
     }//GEN-LAST:event_jButton_IniciarSesionActionPerformed
 
     private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
-       if(evt.getKeyCode() == evt.VK_ENTER){
-           txt_password.requestFocus();
-       }// TODO add your handling code here:
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            txt_password.requestFocus();
+        }// TODO add your handling code here:
     }//GEN-LAST:event_txt_usuarioKeyPressed
 
     private void txt_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passwordKeyPressed
-        if(evt.getKeyCode() == evt.VK_ENTER){
-           this.Login();
-       }/// TODO add your handling code here:
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            this.Login();
+        }/// TODO add your handling code here:
     }//GEN-LAST:event_txt_passwordKeyPressed
 
     /**
@@ -237,23 +238,49 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
 
-    private void Login (){
-        if (!txt_usuario.getText().isEmpty() && !txt_password.getText().isEmpty() ){
-            
-            Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
-            Usuario usuario = new Usuario();
-            usuario.setUsuario(txt_usuario.getText().trim());
-            usuario.setPassword(txt_password.getText().trim());
-           if (controlUsuario.loginUser(usuario)){
-               //JOptionPane.showMessageDialog(null, "Login Correcto... ");
-               FrmMenu menu = new FrmMenu();
-               menu.setVisible(true);
-               this.dispose();
-           }else{
-               JOptionPane.showMessageDialog(null, "Usuario o Clave Incorrectos ");
-           } 
-        }else{
+    private void Login() {
+        String usuarioTxt = txt_usuario.getText().trim();
+        String passwordTxt = new String(txt_password.getPassword()).trim();
+
+        // Validar campos vacíos
+        if (usuarioTxt.isEmpty() || passwordTxt.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese sus credenciales");
+            return;
+        }
+
+        // Expresión regular para validar contraseña segura:
+        // - Al menos una minúscula
+        // - Al menos una mayúscula
+        // - Al menos un número
+        // - Al menos un carácter especial
+        // - Longitud mínima de 8 caracteres
+        String regexPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_\\-])[A-Za-z\\d@$!%*?&.#_\\-]{8,}$";
+
+        if (!passwordTxt.matches(regexPassword)) {
+            JOptionPane.showMessageDialog(null,
+                    "La contraseña no cumple con los requisitos de seguridad:\n"
+                    + "- Al menos 1 mayúscula\n"
+                    + "- Al menos 1 minúscula\n"
+                    + "- Al menos 1 número\n"
+                    + "- Al menos 1 carácter especial (@$!%*?&.#_-)\n"
+                    + "- Mínimo 8 caracteres"
+            );
+            return;
+        }
+
+        // Si pasa la validación, continúa con el login normal
+        Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
+        Usuario usuario = new Usuario();
+        usuario.setUsuario(usuarioTxt);
+        usuario.setPassword(passwordTxt);
+
+        if (controlUsuario.loginUser(usuario)) {
+            FrmMenu menu = new FrmMenu();
+            menu.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario o clave incorrectos.");
         }
     }
+
 }
