@@ -142,84 +142,98 @@ public class InterProducto extends javax.swing.JInternalFrame {
 
     private void jButton_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GuardarActionPerformed
 
-        Producto producto = new Producto();
         Ctrl_Producto controlProducto = new Ctrl_Producto();
-        String iva = "";
-        String categoria = "";
-        iva = jComboBox_iva.getSelectedItem().toString().trim();
-        categoria = jComboBox_categoria.getSelectedItem().toString().trim();
+        Producto producto = new Producto();
 
-        //validar los campos//
-        if (txt_nombre.getText().equals("") || txt_cantidad.getText().equals("") || txt_precio.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos");
-        } else {
-            //consulta producto registrado//
-            if (!controlProducto.existeProducto(txt_nombre.getText().trim())) {
+        String nombre = txt_nombre.getText().trim();
+        String cantidadTxt = txt_cantidad.getText().trim();
+        String precioTxt = txt_precio.getText().trim();
+        String descripcion = txt_descripcion.getText().trim();
+        String iva = jComboBox_iva.getSelectedItem().toString().trim();
+        String categoria = jComboBox_categoria.getSelectedItem().toString().trim();
 
-                if (iva.equalsIgnoreCase("Seleccione IVA:")) {
-                    JOptionPane.showMessageDialog(null, "Seleccione IVA.");
-                } else {
-                    if (categoria.equalsIgnoreCase("Seleccione Categoría:")) {
-                        JOptionPane.showMessageDialog(null, "Seleccione Categoría");
-                    } else {
-                        try {
+        // 🔹 VALIDAR CAMPOS VACÍOS
+        if (nombre.isEmpty() || cantidadTxt.isEmpty() || precioTxt.isEmpty() || descripcion.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-                            producto.setNombre(txt_nombre.getText().trim());
-                            producto.setCantidad(Integer.parseInt(txt_cantidad.getText().trim()));
-                            String precioTXT = "";
-                            double Precio = 0.0;
-                            precioTXT = txt_precio.getText().trim();
-                            boolean aux = false;
-                            //si el usuario ingresa, como punto decimal lo transformamos a punto//
-
-                            for (int i = 0; i < precioTXT.length(); i++) {
-                                if (precioTXT.charAt(i) == ',') {
-                                    String precioNuevo = precioTXT.replace(",", ".");
-                                    Precio = Double.parseDouble(precioNuevo);
-                                    aux = true;
-                                }
-                            }
-                            //evaluar la condicion//
-
-                            if (aux == true) {
-                                producto.setPrecio(Precio);
-                            } else {
-                                Precio = Double.parseDouble(precioTXT);
-                                producto.setPrecio(Precio);
-                            }
-
-                            producto.setDescripcion(txt_descripcion.getText().trim());
-                            //porcentaje IVA//
-                            if (iva.equalsIgnoreCase("No grava IVA")) {
-                                producto.setPorcentajeIva(0);
-                            } else if ((iva.equalsIgnoreCase("19%"))) {
-                                producto.setPorcentajeIva(19);
-                            }
-
-                            //idcategoria //
-                            this.IdCategoria();
-                            producto.setIdCategoria(obtenerIdCategoriaCombo);
-                            producto.setEstado(1);
-
-                            if (controlProducto.guardar(producto)) {
-                                JOptionPane.showMessageDialog(null, "Registro Guardado");
-
-                                this.CargarComboCategorias();
-                                this.jComboBox_iva.setSelectedItem("Seleccione IVA:");
-                                this.Limpiar();
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Error al guardar");
-                            }
-
-                        } catch (HeadlessException | NumberFormatException e) {
-                            System.out.println("Error en:" + e);
-                        }
-                    }
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "El producto ya existe en la Base de Datos");
+        // 🔹 VALIDAR NÚMEROS
+        int cantidad = 0;
+        double precio = 0.0;
+        try {
+            cantidad = Integer.parseInt(cantidadTxt);
+            if (cantidad <= 0) {
+                JOptionPane.showMessageDialog(null, "La cantidad debe ser un número mayor que cero.", "Dato inválido", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "La cantidad debe ser un número válido (por ejemplo, 15).", "Formato incorrecto", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Cambiar coma por punto si el usuario lo escribe así
+            precioTxt = precioTxt.replace(",", ".");
+            precio = Double.parseDouble(precioTxt);
+            if (precio <= 0) {
+                JOptionPane.showMessageDialog(null, "El precio debe ser un número mayor que cero.", "Dato inválido", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El precio debe ser un número válido (por ejemplo, 15000 ).", "Formato incorrecto", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 🔹 VALIDAR IVA
+        if (iva.equalsIgnoreCase("Seleccione IVA:")) {
+            JOptionPane.showMessageDialog(null, "Por favor, selecciona un tipo de IVA.", "Dato faltante", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 🔹 VALIDAR CATEGORÍA
+        if (categoria.equalsIgnoreCase("Seleccione Categorías:") || categoria.equalsIgnoreCase("Seleccione Categoría:")) {
+            JOptionPane.showMessageDialog(null, "Por favor, selecciona una categoría.", "Dato faltante", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 🔹 VALIDAR SI EL PRODUCTO YA EXISTE
+        if (controlProducto.existeProducto(nombre)) {
+            JOptionPane.showMessageDialog(null, "El producto ya existe en la base de datos.", "Duplicado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 🔹 SI TODO ESTÁ BIEN, GUARDAR
+        try {
+            producto.setNombre(nombre);
+            producto.setCantidad(cantidad);
+            producto.setPrecio(precio);
+            producto.setDescripcion(descripcion);
+
+            // Porcentaje IVA
+            if (iva.equalsIgnoreCase("No grava IVA")) {
+                producto.setPorcentajeIva(0);
+            } else if (iva.equalsIgnoreCase("19%")) {
+                producto.setPorcentajeIva(19);
+            }
+
+            // ID categoría
+            this.IdCategoria();
+            producto.setIdCategoria(obtenerIdCategoriaCombo);
+            producto.setEstado(1);
+
+            if (controlProducto.guardar(producto)) {
+                JOptionPane.showMessageDialog(null, "Producto registrado exitosamente.");
+                this.CargarComboCategorias();
+                this.jComboBox_iva.setSelectedItem("Seleccione IVA:");
+                this.Limpiar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al guardar el producto. Intente nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado al guardar el producto.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Error en guardar producto: " + e);
         }
 
     }//GEN-LAST:event_jButton_GuardarActionPerformed

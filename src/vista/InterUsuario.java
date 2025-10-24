@@ -137,55 +137,92 @@ public class InterUsuario extends javax.swing.JInternalFrame {
 
     private void jButton_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GuardarActionPerformed
 
-        if (txt_nombre.getText().isEmpty()
-                || txt_apellido.getText().isEmpty()
-                || txt_usuario.getText().isEmpty()
-                || txt_password.getText().isEmpty()
-                || txt_telefono.getText().isEmpty()) {
+        if (txt_nombre.getText().trim().isEmpty()
+            || txt_apellido.getText().trim().isEmpty()
+            || txt_usuario.getText().trim().isEmpty()
+            || txt_password.getText().trim().isEmpty()
+            || txt_telefono.getText().trim().isEmpty()) {
 
-            JOptionPane.showMessageDialog(null, "Completa todos los campos");
-            return;
-        }
+        JOptionPane.showMessageDialog(null,
+                "Por favor, completa todos los campos obligatorios.",
+                "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        String password = txt_password.getText().trim();
+    if (!txt_nombre.getText().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+        JOptionPane.showMessageDialog(null,
+                "El nombre solo debe contener letras.",
+                "Formato inválido", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // ✅ Validar seguridad de la contraseña
-        if (!esPasswordSeguro(password)) {
+    if (!txt_apellido.getText().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+        JOptionPane.showMessageDialog(null,
+                "El apellido solo debe contener letras.",
+                "Formato inválido", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String telefono = txt_telefono.getText().trim();
+    if (!telefono.matches("\\d{7,15}")) {
+        JOptionPane.showMessageDialog(null,
+                "El teléfono debe contener solo números (mínimo 7 dígitos).",
+                "Teléfono inválido", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // 🔐 VALIDAR SEGURIDAD DE CONTRASEÑA
+    String password = txt_password.getText().trim();
+    if (!esPasswordSeguro(password)) {
+        JOptionPane.showMessageDialog(null,
+                "La contraseña debe cumplir los siguientes requisitos:\n"
+                + "- Mínimo 8 caracteres\n"
+                + "- Al menos 1 letra mayúscula\n"
+                + "- Al menos 1 letra minúscula\n"
+                + "- Al menos 1 número\n"
+                + "- Al menos 1 carácter especial (!@#$%^&* etc.)",
+                "Contraseña insegura", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // ✅ CREAR OBJETO USUARIO
+    Usuario usuario = new Usuario();
+    Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
+
+    usuario.setNombre(txt_nombre.getText().trim());
+    usuario.setApellido(txt_apellido.getText().trim());
+    usuario.setUsuario(txt_usuario.getText().trim());
+    usuario.setPassword(password);
+    usuario.setTelefono(telefono);
+    usuario.setEstado(1);
+
+    try {
+        // 🔎 VALIDAR SI EL USUARIO YA EXISTE
+        if (controlUsuario.existeUsuario(usuario.getUsuario())) {
             JOptionPane.showMessageDialog(null,
-                    "La contraseña debe cumplir los siguientes requisitos:\n"
-                    + "- Mínimo 8 caracteres\n"
-                    + "- Al menos 1 letra mayúscula\n"
-                    + "- Al menos 1 letra minúscula\n"
-                    + "- Al menos 1 número\n"
-                    + "- Al menos 1 carácter especial (!@#$%^&* etc.)");
+                    "El nombre de usuario ya está registrado. Intente con otro.",
+                    "Usuario duplicado", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        Usuario usuario = new Usuario();
-        Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
-
-        if (!controlUsuario.existeUsuario(txt_usuario.getText().trim())) {
-            usuario.setNombre(txt_nombre.getText().trim());
-            usuario.setApellido(txt_apellido.getText().trim());
-            usuario.setUsuario(txt_usuario.getText().trim());
-            usuario.setPassword(password);
-            usuario.setTelefono(txt_telefono.getText().trim());
-            usuario.setEstado(1);
-
-            if (controlUsuario.guardar(usuario)) {
-                JOptionPane.showMessageDialog(null, "Usuario Registrado Exitosamente");
-                txt_nombre.setText("");
-                txt_apellido.setText("");
-                txt_usuario.setText("");
-                txt_password.setText("");
-                txt_telefono.setText("");
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al Registrar Usuario");
-            }
-
+        // 💾 GUARDAR USUARIO
+        if (controlUsuario.guardar(usuario)) {
+            JOptionPane.showMessageDialog(null,
+                    "Usuario registrado exitosamente.",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            Limpiar();
         } else {
-            JOptionPane.showMessageDialog(null, "El Usuario ya está registrado, ingrese un nuevo Usuario");
+            JOptionPane.showMessageDialog(null,
+                    "Error al registrar el usuario. Intente nuevamente.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,
+                "Ocurrió un error inesperado al registrar el usuario.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+        System.err.println("Error en registro de usuario: " + e);
+    }
         this.Limpiar();
 
     }//GEN-LAST:event_jButton_GuardarActionPerformed
@@ -243,6 +280,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&._-])[A-Za-z\\d@$!%*?&._-]{8,}$";
         return password.matches(regex);
     }
+    
 
     //metodo para limpiar campos//
     private void Limpiar() {
