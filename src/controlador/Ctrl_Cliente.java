@@ -20,38 +20,35 @@ public class Ctrl_Cliente {
 
     //metodo para registrar nuevo cliente
     public boolean guardar(Cliente objeto) {
-        boolean respuesta = false;
-        Connection cn = Conexion.conectar();
+    boolean respuesta = false;
+    Connection cn = Conexion.conectar();
 
-        try {
-            // 🔑 Clave secreta (debe tener exactamente 16 caracteres para AES-128)
-            String claveSecreta = "ClaveSegura12345";
-            String cedulaCifrada = encriptarAES(objeto.getCedula(), claveSecreta);
+    try {
+        PreparedStatement consulta = cn.prepareStatement(
+                "INSERT INTO tb_cliente VALUES (?,?,?,?,?,?,?)"
+        );
+        consulta.setInt(1, 0); // idCliente
+        consulta.setString(2, objeto.getEmpresa());
+        consulta.setString(3, objeto.getNombre());
+        consulta.setString(4, objeto.getCedula()); 
+        consulta.setString(5, objeto.getTelefono());
+        consulta.setString(6, objeto.getDireccion());
+        consulta.setInt(7, objeto.getEstado());
 
-            PreparedStatement consulta = cn.prepareStatement(
-                    "INSERT INTO tb_cliente VALUES (?,?,?,?,?,?,?)"
-            );
-            consulta.setInt(1, 0);
-            consulta.setString(2, objeto.getEmpresa());
-            consulta.setString(3, objeto.getNombre());
-            consulta.setString(4, cedulaCifrada);
-            consulta.setString(5, objeto.getTelefono());
-            consulta.setString(6, objeto.getDireccion());
-            consulta.setInt(7, objeto.getEstado());
-
-            if (consulta.executeUpdate() > 0) {
-                respuesta = true;
-                System.out.println("Cliente guardado con cédula cifrada correctamente.");
-            }
-
-            cn.close();
-
-        } catch (Exception e) {
-            System.out.println("Error al guardar cliente: " + e);
+        if (consulta.executeUpdate() > 0) {
+            respuesta = true;
+            System.out.println("Cliente guardado correctamente sin cifrado.");
         }
 
-        return respuesta;
+        cn.close();
+
+    } catch (Exception e) {
+        System.out.println("Error al guardar cliente: " + e);
     }
+
+    return respuesta;
+}
+
 
     //metodo para consultar si existe la cliente 
     public boolean existeCliente(String cedula) {
@@ -115,12 +112,23 @@ public class Ctrl_Cliente {
 
         return respuesta;
     }
+    
+    public boolean existeTelefono(String telefono) {
+    boolean existe = false;
+    Connection cn = Conexion.conectar();
+    String sql = "SELECT telefono FROM tb_cliente WHERE telefono = ?";
+    try {
+        PreparedStatement pst = cn.prepareStatement(sql);
+        pst.setString(1, telefono);
+        ResultSet rs = pst.executeQuery();
 
-    private String encriptarAES(String texto, String clave) throws Exception {
-        SecretKeySpec secretKey = new SecretKeySpec(clave.getBytes("UTF-8"), "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte[] textoCifrado = cipher.doFinal(texto.getBytes("UTF-8"));
-        return Base64.getEncoder().encodeToString(textoCifrado);
+        if (rs.next()) {
+            existe = true; // el teléfono ya existe
+        }
+        cn.close();
+    } catch (SQLException e) {
+        System.out.println("Error al verificar teléfono: " + e);
     }
+    return existe;
+}
 }

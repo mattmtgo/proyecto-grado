@@ -29,7 +29,7 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
     public InterGestionarVentas() {
         initComponents();
         this.setSize(new Dimension(900, 500));
-        this.setTitle("Gestionar Ventas");
+        this.setTitle("Administrar Ventas");
 
         this.CargarComboClientes();
         this.CargarTablaVentas();
@@ -73,7 +73,7 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Gestionar Ventas");
+        jLabel1.setText("Administrar Ventas");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -195,10 +195,10 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
 
             if (controlRegistrarVenta.actualizar(cabeceraVenta, idVenta)) {
                 JOptionPane.showMessageDialog(null, "¡Registro actualizado!");
+                this.CargarTablaVentas(); // refresca la tabla
+                this.Limpiar();           // limpia los campos
             } else {
                 JOptionPane.showMessageDialog(null, "Error al actualizar datos");
-                this.CargarTablaVentas();
-                this.Limpiar();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un registro para actualizar datos");
@@ -210,30 +210,30 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox_clienteActionPerformed
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
-                                                        
-    Ctrl_RegistrarVenta controlVenta = new Ctrl_RegistrarVenta();
-    
-    if (idVenta == 0) {
-        JOptionPane.showMessageDialog(null, "Seleccione una venta para eliminar.");
-    } else {
-        int confirmacion = JOptionPane.showConfirmDialog(
-            null,
-            "¿Está seguro que desea eliminar esta venta?",
-            "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION
-        );
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            if (controlVenta.eliminar(idVenta)) {
-                JOptionPane.showMessageDialog(null, "Venta eliminada correctamente.");
-                this.CargarTablaVentas();
-                this.Limpiar();
-                idVenta = 0;
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar la venta.");
+        Ctrl_RegistrarVenta controlVenta = new Ctrl_RegistrarVenta();
+
+        if (idVenta == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione una venta para eliminar.");
+        } else {
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Está seguro que desea eliminar esta venta?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (controlVenta.eliminar(idVenta)) {
+                    JOptionPane.showMessageDialog(null, "Venta eliminada correctamente.");
+                    this.CargarTablaVentas();
+                    this.Limpiar();
+                    idVenta = 0;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar la venta.");
+                }
             }
         }
-    }
 
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 

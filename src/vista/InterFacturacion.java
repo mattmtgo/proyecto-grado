@@ -291,7 +291,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         txt_cambio.setEnabled(false);
         jPanel2.add(txt_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 180, 120, -1));
 
-        jButton_calcular_cambio.setBackground(new java.awt.Color(255, 255, 102));
+        jButton_calcular_cambio.setBackground(new java.awt.Color(51, 255, 51));
         jButton_calcular_cambio.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jButton_calcular_cambio.setText("Calcular Cambio");
         jButton_calcular_cambio.addActionListener(new java.awt.event.ActionListener() {
@@ -301,11 +301,8 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         });
         jPanel2.add(jButton_calcular_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 380, 210));
-
         jButton_RegistrarVenta.setBackground(new java.awt.Color(255, 255, 102));
         jButton_RegistrarVenta.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton_RegistrarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/facturar1.png"))); // NOI18N
         jButton_RegistrarVenta.setText("Registrar Venta");
         jButton_RegistrarVenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_RegistrarVenta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -314,7 +311,9 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                 jButton_RegistrarVentaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_RegistrarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 350, 180, 100));
+        jPanel2.add(jButton_RegistrarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 120, 30));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 380, 210));
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 610));
 
         pack();

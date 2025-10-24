@@ -72,10 +72,10 @@ public class Reportes {
                 }
 
             } catch (SQLException e) {
-                System.out.println("Error4 en: " + e);
+                System.out.println("Error en: " + e);
             }
             documento.close();
-            
+
             JOptionPane.showMessageDialog(null, "¡Reporte de Clientes Creado Exitosamente!, revisa tus descargas.");
         } catch (DocumentException e) {
             System.out.println("Error1 en: " + e);
@@ -85,8 +85,8 @@ public class Reportes {
             System.out.println("Error3 en: " + ex);
         }
     }
-    
-     public void ReportesProductos() {
+
+    public void ReportesProductos() {
         Document documento = new Document();
         try {
 
@@ -104,8 +104,8 @@ public class Reportes {
             documento.open();
             documento.add(header);
             documento.add(parrafo);
-            
-            float[] columnsWidths = {3, 5, 4, 5, 7, 5, 6};
+
+            float[] columnsWidths = {4, 5, 5, 5, 7, 5, 6};
 
             PdfPTable tabla = new PdfPTable(columnsWidths);
             tabla.addCell("Código");
@@ -138,7 +138,7 @@ public class Reportes {
                 System.out.println("Error4 en: " + e);
             }
             documento.close();
-            
+
             JOptionPane.showMessageDialog(null, "¡Reporte de Productos Creado Exitosamente!, revisa tus descargas.");
         } catch (DocumentException e) {
             System.out.println("Error1 en: " + e);
@@ -148,7 +148,7 @@ public class Reportes {
             System.out.println("Error3 en: " + ex);
         }
     }
-     
+
     public void ReportesCategorias() {
         Document documento = new Document();
         try {
@@ -168,11 +168,9 @@ public class Reportes {
             documento.add(header);
             documento.add(parrafo);
 
-            PdfPTable tabla = new PdfPTable(3);
+            PdfPTable tabla = new PdfPTable(2);
             tabla.addCell("Código");
             tabla.addCell("Descripción");
-            tabla.addCell("Estado");
-
 
             try {
                 Connection cn = Conexion.conectar();
@@ -182,7 +180,6 @@ public class Reportes {
                     do {
                         tabla.addCell(rs.getString(1));
                         tabla.addCell(rs.getString(2));
-                        tabla.addCell(rs.getString(3));
 
                     } while (rs.next());
                     documento.add(tabla);
@@ -193,7 +190,7 @@ public class Reportes {
                 System.out.println("Error4 en: " + e);
             }
             documento.close();
-            
+
             JOptionPane.showMessageDialog(null, "¡Reporte de Categorías Creado Exitosamente!, revisa tus descargas.");
         } catch (DocumentException e) {
             System.out.println("Error1 en: " + e);
@@ -202,75 +199,80 @@ public class Reportes {
         } catch (IOException ex) {
             System.out.println("Error3 en: " + ex);
         }
-    } 
-    
-   public void ReportesVentas() {
-    Document documento = new Document();
-    try {
+    }
 
-        String ruta = System.getProperty("user.home");
-        PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Downloads/Reportes_Ventas.pdf"));
-        Image header = Image.getInstance("src/img/Plazayterraza.jpg");
-        header.scaleToFit(650, 1000);
-        header.setAlignment(Chunk.ALIGN_CENTER);
-
-        Paragraph parrafo = new Paragraph();
-        parrafo.setAlignment(Paragraph.ALIGN_CENTER);
-        parrafo.add("Reporte Creado por \n Plaza Y Terraza S.A.S \n\n");
-        parrafo.setFont(FontFactory.getFont("Times New Roman", 18, Font.BOLD, BaseColor.DARK_GRAY));
-        parrafo.add("Reporte de Ventas \n\n");
-
-        documento.open();
-        documento.add(header);
-        documento.add(parrafo);
-
-        // --- Columnas sin "Estado" ---
-        float[] columnsWidths = {3, 9, 4, 5};
-        PdfPTable tabla = new PdfPTable(columnsWidths);
-
-        tabla.addCell("Código");
-        tabla.addCell("Cliente");
-        tabla.addCell("Total a Pagar");
-        tabla.addCell("Fecha");
-
+    public void ReportesVentas() {
+        Document documento = new Document();
         try {
-            Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement(
-                "SELECT cv.idCabeceraVenta AS id, " +
-                "CONCAT(c.empresa, ' ', c.nombre) AS cliente, " +
-                "cv.valorPagar AS total, " +
-                "cv.fechaVenta AS fecha " +
-                "FROM tb_cabecera_venta AS cv " +
-                "INNER JOIN tb_cliente AS c ON cv.idCliente = c.idCliente;"
-            );
+            String ruta = System.getProperty("user.home");
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Downloads/Reportes_Ventas.pdf"));
 
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                do {
-                    tabla.addCell(rs.getString("id"));
-                    tabla.addCell(rs.getString("cliente"));
-                    tabla.addCell(rs.getString("total"));
-                    tabla.addCell(rs.getString("fecha"));
-                } while (rs.next());
-                documento.add(tabla);
+            Image header = Image.getInstance("src/img/Plazayterraza.jpg");
+            header.scaleToFit(650, 1000);
+            header.setAlignment(Chunk.ALIGN_CENTER);
+
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("Reporte Creado por \n Plaza Y Terraza S.A.S \n\n");
+            parrafo.setFont(FontFactory.getFont("Times New Roman", 18, Font.BOLD, BaseColor.DARK_GRAY));
+            parrafo.add("Reporte de Ventas \n\n");
+
+            documento.open();
+            documento.add(header);
+            documento.add(parrafo);
+
+            // --- Columnas con "Productos" ---
+            float[] columnsWidths = {3, 9, 5, 6, 5}; 
+            PdfPTable tabla = new PdfPTable(columnsWidths);
+
+            tabla.addCell("Código");
+            tabla.addCell("Cliente");
+            tabla.addCell("Total a Pagar");
+            tabla.addCell("Fecha");
+            tabla.addCell("Productos");
+
+            try {
+                Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement(
+                        "SELECT cv.idCabeceraVenta AS id, "
+                        + "CONCAT(c.empresa, ' ', c.nombre) AS cliente, "
+                        + "cv.valorPagar AS total, "
+                        + "cv.fechaVenta AS fecha, "
+                        + "GROUP_CONCAT(p.nombre SEPARATOR ', ') AS productos "
+                        + "FROM tb_cabecera_venta AS cv "
+                        + "INNER JOIN tb_cliente AS c ON cv.idCliente = c.idCliente "
+                        + "INNER JOIN tb_detalle_venta AS dv ON cv.idCabeceraVenta = dv.idCabeceraVenta "
+                        + "INNER JOIN tb_producto AS p ON dv.idProducto = p.idProducto "
+                        + "GROUP BY cv.idCabeceraVenta;"
+                );
+
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    do {
+                        tabla.addCell(rs.getString("id"));
+                        tabla.addCell(rs.getString("cliente"));
+                        tabla.addCell(rs.getString("total"));
+                        tabla.addCell(rs.getString("fecha"));
+                        tabla.addCell(rs.getString("productos"));
+                    } while (rs.next());
+                    documento.add(tabla);
+                }
+
+                cn.close();
+
+            } catch (SQLException e) {
+                System.out.println("Error al obtener datos: " + e);
             }
 
-            cn.close();
+            documento.close();
+            JOptionPane.showMessageDialog(null, "¡Reporte de Ventas Creado Exitosamente!, revisa tus descargas.");
 
-        } catch (SQLException e) {
-            System.out.println("Error al obtener datos: " + e);
+        } catch (DocumentException e) {
+            System.out.println("Error al generar documento: " + e);
+        } catch (FileNotFoundException ex) {
+            System.out.println("Archivo no encontrado: " + ex);
+        } catch (IOException ex) {
+            System.out.println("Error al cargar imagen o archivo: " + ex);
         }
-
-        documento.close();
-        JOptionPane.showMessageDialog(null, "¡Reporte de Ventas Creado Exitosamente!, revisa tus descargas.");
-
-    } catch (DocumentException e) {
-        System.out.println("Error al generar documento: " + e);
-    } catch (FileNotFoundException ex) {
-        System.out.println("Archivo no encontrado: " + ex);
-    } catch (IOException ex) {
-        System.out.println("Error al cargar imagen o archivo: " + ex);
     }
 }
-}
-

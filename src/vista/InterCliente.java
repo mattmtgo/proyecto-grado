@@ -59,9 +59,9 @@ public class InterCliente extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Nombre:");
+        jLabel3.setText("Nombre Representante:");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 100, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 150, -1));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -120,29 +120,62 @@ public class InterCliente extends javax.swing.JInternalFrame {
         Cliente cliente = new Cliente();
         Ctrl_Cliente controlCliente = new Ctrl_Cliente();
 
-        if (!txt_empresa.getText().isEmpty() && !txt_nombre.getText().isEmpty() && !txt_cedula.getText().isEmpty()) {
+        String empresa = txt_empresa.getText().trim();
+        String nombre = txt_nombre.getText().trim();
+        String cedula = txt_cedula.getText().trim();
+        String telefono = txt_telefono.getText().trim();
+        String direccion = txt_direccion.getText().trim();
 
-            if (!controlCliente.existeCliente(txt_cedula.getText().trim())) {
+        // Validaciones básicas
+        if (empresa.isEmpty() || nombre.isEmpty() || cedula.isEmpty() || telefono.isEmpty() || direccion.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor completa todos los campos", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-                cliente.setEmpresa(txt_empresa.getText().trim());
-                cliente.setNombre(txt_nombre.getText().trim());
-                cliente.setCedula(txt_cedula.getText().trim());
-                cliente.setTelefono(txt_telefono.getText().trim());
-                cliente.setDireccion(txt_direccion.getText().trim());
-                cliente.setEstado(1);
+        if (!cedula.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "La cédula debe contener solo números", "Cédula inválida", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-                if (controlCliente.guardar(cliente)) {
-                    JOptionPane.showMessageDialog(null, "Registro Guardado");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al Guardar");
-                }
+        if (cedula.length() < 6) {
+            JOptionPane.showMessageDialog(null, "La cédula es demasiado corta", "Cédula inválida", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            } else {
-                JOptionPane.showMessageDialog(null, "El cliente ya esta registrado en la Base de Datos");
+        if (!telefono.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "El teléfono debe contener solo números", "Teléfono inválido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            }
+        if (telefono.length() < 7) {
+            JOptionPane.showMessageDialog(null, "El teléfono es demasiado corto", "Teléfono inválido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Verificar duplicados
+        if (controlCliente.existeCliente(cedula)) {
+            JOptionPane.showMessageDialog(null, "Ya existe un cliente con esa cédula", "Cliente existente", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (controlCliente.existeTelefono(telefono)) {
+            JOptionPane.showMessageDialog(null, "El número de teléfono ya está registrado", "Teléfono duplicado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Si pasa todas las validaciones, guardar el cliente
+        cliente.setEmpresa(empresa);
+        cliente.setNombre(nombre);
+        cliente.setCedula(cedula);
+        cliente.setTelefono(telefono);
+        cliente.setDireccion(direccion);
+        cliente.setEstado(1);
+
+        if (controlCliente.guardar(cliente)) {
+            JOptionPane.showMessageDialog(null, "Registro guardado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            Limpiar();
         } else {
-            JOptionPane.showMessageDialog(null, "Completa los campos");
+            JOptionPane.showMessageDialog(null, "Error al guardar el registro", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         this.Limpiar();

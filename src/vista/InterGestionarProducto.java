@@ -32,7 +32,7 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
     public InterGestionarProducto() {
         initComponents();
         this.setSize(new Dimension(900, 500));
-        this.setTitle("Gestionar Productos");
+        this.setTitle("Administrar Productos");
 
         this.CargarTablaProductos();
         this.CargarComboCategoria();

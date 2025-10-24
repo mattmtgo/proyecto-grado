@@ -28,7 +28,7 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
     public InterGestionarCliente() {
         initComponents();
         this.setSize(new Dimension(900, 500));
-        this.setTitle("Gestionar Clientes");
+        this.setTitle("Administrar Clientes");
 
         this.CargarTablaClientes();
 
@@ -75,7 +75,7 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Gestionar Clientes");
+        jLabel1.setText("Administrar Clientes");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

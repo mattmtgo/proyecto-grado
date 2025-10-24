@@ -30,7 +30,7 @@ public class InterGestionarUsuario extends javax.swing.JInternalFrame {
     public InterGestionarUsuario() {
         initComponents();
         this.setSize(new Dimension(900, 500));
-        this.setTitle("Gestionar Usuarios");
+        this.setTitle("Gestionar Administrador");
 
         this.CargarTablaUsuarios();
 
@@ -77,7 +77,7 @@ public class InterGestionarUsuario extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Gestionar Usuarios");
+        jLabel1.setText("Gestionar Administrador");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -161,6 +161,12 @@ public class InterGestionarUsuario extends javax.swing.JInternalFrame {
         jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 100, -1));
 
         txt_password.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txt_password.setEnabled(false);
+        txt_password.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_passwordActionPerformed(evt);
+            }
+        });
         jPanel3.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 170, -1));
 
         txt_apellido.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -239,6 +245,10 @@ if (idUsuario == 0) {
         }
 
     }//GEN-LAST:event_jButton_actualizarActionPerformed
+
+    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_passwordActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

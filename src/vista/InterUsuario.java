@@ -14,7 +14,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
     public InterUsuario() {
         initComponents();
         this.setSize(new Dimension(400, 300));
-        this.setTitle("Nuevo Usuario");
+        this.setTitle("Nuevo Administrador");
 
         txt_password.setVisible(true);
         txt_password_visible.setVisible(false);
@@ -51,7 +51,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Nuevo Usuario");
+        jLabel1.setText("Nuevo Administrador");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
