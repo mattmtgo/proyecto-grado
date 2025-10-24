@@ -45,6 +45,7 @@ public class FrmLogin extends javax.swing.JFrame {
         txt_password = new javax.swing.JPasswordField();
         jButton_IniciarSesion = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jCheckBox_ver_clave = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -95,6 +96,17 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setText("¡Hola, Bienvenido!");
 
+        jCheckBox_ver_clave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox_ver_claveMouseClicked(evt);
+            }
+        });
+        jCheckBox_ver_clave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_ver_claveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -111,11 +123,13 @@ public class FrmLogin extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txt_password)
                                 .addComponent(jButton_IniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
-                            .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox_ver_clave))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addComponent(jLabel4)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
@@ -137,14 +151,16 @@ public class FrmLogin extends javax.swing.JFrame {
                         .addComponent(jLabel5)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jCheckBox_ver_clave)
+                            .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(40, 40, 40)
                 .addComponent(jButton_IniciarSesion)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 420, 500));
@@ -188,6 +204,21 @@ public class FrmLogin extends javax.swing.JFrame {
         }/// TODO add your handling code here:
     }//GEN-LAST:event_txt_passwordKeyPressed
 
+    private void jCheckBox_ver_claveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox_ver_claveMouseClicked
+
+    }//GEN-LAST:event_jCheckBox_ver_claveMouseClicked
+
+    private void jCheckBox_ver_claveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_ver_claveActionPerformed
+                                                         
+    if (jCheckBox_ver_clave.isSelected()) {
+        txt_password.setEchoChar((char) 0); // ? Muestra la contraseña
+    } else {
+        txt_password.setEchoChar('•'); // Vuelve a ocultarla
+    }
+
+
+    }//GEN-LAST:event_jCheckBox_ver_claveActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -225,6 +256,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_IniciarSesion;
+    private javax.swing.JCheckBox jCheckBox_ver_clave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

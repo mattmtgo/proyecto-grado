@@ -15,7 +15,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         initComponents();
         this.setSize(new Dimension(400, 300));
         this.setTitle("Nuevo Usuario");
-        
+
         txt_password.setVisible(true);
         txt_password_visible.setVisible(false);
     }
@@ -137,30 +137,54 @@ public class InterUsuario extends javax.swing.JInternalFrame {
 
     private void jButton_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GuardarActionPerformed
 
-        if (txt_nombre.getText().isEmpty() || txt_apellido.getText().isEmpty() || txt_usuario.getText().isEmpty() || txt_password.getText().isEmpty() || txt_telefono.getText().isEmpty()) {
+        if (txt_nombre.getText().isEmpty()
+                || txt_apellido.getText().isEmpty()
+                || txt_usuario.getText().isEmpty()
+                || txt_password.getText().isEmpty()
+                || txt_telefono.getText().isEmpty()) {
+
             JOptionPane.showMessageDialog(null, "Completa todos los campos");
-        } else {
+            return;
+        }
 
-            Usuario usuario = new Usuario();
-            Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
-            if (!controlUsuario.existeUsuario(txt_usuario.getText().trim())) {
-                usuario.setNombre(txt_nombre.getText().trim());
-                usuario.setApellido(txt_apellido.getText().trim());
-                usuario.setUsuario(txt_usuario.getText().trim());
-                usuario.setPassword(txt_password.getText().trim());
-                usuario.setTelefono(txt_telefono.getText().trim());
-                usuario.setEstado(1);
+        String password = txt_password.getText().trim();
 
-                if (controlUsuario.guardar(usuario)) {
-                    JOptionPane.showMessageDialog(null, "Usuario Registrado Exitosamente");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al Registrar Usuario");
-                }
+        // ✅ Validar seguridad de la contraseña
+        if (!esPasswordSeguro(password)) {
+            JOptionPane.showMessageDialog(null,
+                    "La contraseña debe cumplir los siguientes requisitos:\n"
+                    + "- Mínimo 8 caracteres\n"
+                    + "- Al menos 1 letra mayúscula\n"
+                    + "- Al menos 1 letra minúscula\n"
+                    + "- Al menos 1 número\n"
+                    + "- Al menos 1 carácter especial (!@#$%^&* etc.)");
+            return;
+        }
+
+        Usuario usuario = new Usuario();
+        Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
+
+        if (!controlUsuario.existeUsuario(txt_usuario.getText().trim())) {
+            usuario.setNombre(txt_nombre.getText().trim());
+            usuario.setApellido(txt_apellido.getText().trim());
+            usuario.setUsuario(txt_usuario.getText().trim());
+            usuario.setPassword(password);
+            usuario.setTelefono(txt_telefono.getText().trim());
+            usuario.setEstado(1);
+
+            if (controlUsuario.guardar(usuario)) {
+                JOptionPane.showMessageDialog(null, "Usuario Registrado Exitosamente");
+                txt_nombre.setText("");
+                txt_apellido.setText("");
+                txt_usuario.setText("");
+                txt_password.setText("");
+                txt_telefono.setText("");
             } else {
-                JOptionPane.showMessageDialog(null, "El Usuario ya está registrado, ingrese un nuevo Usuario");
-
+                JOptionPane.showMessageDialog(null, "Error al Registrar Usuario");
             }
 
+        } else {
+            JOptionPane.showMessageDialog(null, "El Usuario ya está registrado, ingrese un nuevo Usuario");
         }
         this.Limpiar();
 
@@ -208,6 +232,17 @@ public class InterUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_telefono;
     private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
+
+    private boolean esPasswordSeguro(String password) {
+        // Longitud mínima 8
+        if (password.length() < 8) {
+            return false;
+        }
+
+        // Expresión regular para validar los requisitos
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&._-])[A-Za-z\\d@$!%*?&._-]{8,}$";
+        return password.matches(regex);
+    }
 
     //metodo para limpiar campos//
     private void Limpiar() {
