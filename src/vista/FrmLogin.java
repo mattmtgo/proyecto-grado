@@ -46,9 +46,8 @@ public class FrmLogin extends javax.swing.JFrame {
         jButton_IniciarSesion = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jCheckBox_ver_clave = new javax.swing.JCheckBox();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jButton_OlvidePassword = new javax.swing.JButton();
+        jLabel_wallpaper1 = new javax.swing.JLabel();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -96,6 +95,7 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setText("¡Hola, Bienvenido!");
 
+        jCheckBox_ver_clave.setText("Ver Contraseña");
         jCheckBox_ver_clave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox_ver_claveMouseClicked(evt);
@@ -106,6 +106,18 @@ public class FrmLogin extends javax.swing.JFrame {
                 jCheckBox_ver_claveActionPerformed(evt);
             }
         });
+
+        jButton_OlvidePassword.setBackground(new java.awt.Color(204, 153, 0));
+        jButton_OlvidePassword.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton_OlvidePassword.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_OlvidePassword.setText("Olvide mi Contraseña");
+        jButton_OlvidePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_OlvidePasswordActionPerformed(evt);
+            }
+        });
+
+        jLabel_wallpaper1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo6.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -119,67 +131,61 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txt_password)
-                                .addComponent(jButton_IniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
-                            .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txt_password, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton_IniciarSesion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(txt_usuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(jButton_OlvidePassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBox_ver_clave))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(74, 74, 74)
-                        .addComponent(jLabel4)))
-                .addContainerGap(37, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(123, 123, 123))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_wallpaper1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jLabel3)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(202, 202, 202)
+                                .addComponent(jLabel5)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(jLabel6))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jCheckBox_ver_clave)
+                                    .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(15, 15, 15)
+                        .addComponent(jButton_IniciarSesion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton_OlvidePassword)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
-                        .addComponent(jLabel5)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jCheckBox_ver_clave)
-                            .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(40, 40, 40)
-                .addComponent(jButton_IniciarSesion)
-                .addContainerGap(97, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel_wallpaper1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 420, 500));
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Gestión de Inventario");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/caja.jpg"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 182, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("© Plaza Y Terraza SAS");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 600, 500));
 
         jLabel_wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo6.png"))); // NOI18N
-        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 500));
+        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -209,15 +215,54 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox_ver_claveMouseClicked
 
     private void jCheckBox_ver_claveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_ver_claveActionPerformed
-                                                         
-    if (jCheckBox_ver_clave.isSelected()) {
-        txt_password.setEchoChar((char) 0); // ? Muestra la contraseña
-    } else {
-        txt_password.setEchoChar('•'); // Vuelve a ocultarla
-    }
+
+        if (jCheckBox_ver_clave.isSelected()) {
+            txt_password.setEchoChar((char) 0); // ? Muestra la contraseña
+        } else {
+            txt_password.setEchoChar('•'); // Vuelve a ocultarla
+        }
 
 
     }//GEN-LAST:event_jCheckBox_ver_claveActionPerformed
+
+    private void jButton_OlvidePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OlvidePasswordActionPerformed
+        String telefono = JOptionPane.showInputDialog("Ingrese su teléfono registrado:");
+
+        if (telefono == null || telefono.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un teléfono.");
+            return;
+        }
+
+        Ctrl_Usuario ctrl = new Ctrl_Usuario();
+
+        // Preguntar nueva contraseña
+        String nuevaPassword = JOptionPane.showInputDialog("Ingrese su nueva contraseña:");
+
+        if (nuevaPassword == null || nuevaPassword.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar una contraseña.");
+            return;
+        }
+
+        String regexPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_\\-])[A-Za-z\\d@$!%*?&.#_\\-]{8,}$";
+        if (!nuevaPassword.matches(regexPassword)) {
+            JOptionPane.showMessageDialog(null,
+                    "La contraseña no cumple con los requisitos de seguridad:\n"
+                    + "- Al menos 1 mayúscula\n"
+                    + "- Al menos 1 minúscula\n"
+                    + "- Al menos 1 número\n"
+                    + "- Al menos 1 carácter especial (@$!%*?&.#_-)\n"
+                    + "- Mínimo 8 caracteres");
+            return;
+        }
+
+        // Actualizar la contraseña en la base de datos
+        if (ctrl.actualizarPasswordPorTelefono(telefono, nuevaPassword)) {
+            JOptionPane.showMessageDialog(null, "Contraseña actualizada correctamente. Ahora puede iniciar sesión.");
+        } else {
+            JOptionPane.showMessageDialog(null, "El teléfono no está registrado en el sistema.");
+        }
+        
+    }//GEN-LAST:event_jButton_OlvidePasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -256,15 +301,14 @@ public class FrmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_IniciarSesion;
+    private javax.swing.JButton jButton_OlvidePassword;
     private javax.swing.JCheckBox jCheckBox_ver_clave;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel_wallpaper;
+    private javax.swing.JLabel jLabel_wallpaper1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_usuario;

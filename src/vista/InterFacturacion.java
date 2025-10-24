@@ -20,7 +20,6 @@ import modelo.CabeceraVenta;
 import modelo.DetalleVenta;
 import java.sql.PreparedStatement;
 
-
 public class InterFacturacion extends javax.swing.JInternalFrame {
 
     private DefaultTableModel modeloDatosProductos;
@@ -117,6 +116,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jComboBox_cliente = new javax.swing.JComboBox<>();
         jComboBox_producto = new javax.swing.JComboBox<>();
         txt_cliente_buscar = new javax.swing.JTextField();
@@ -167,8 +167,14 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Cantidad:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 80, -1));
+        jLabel4.setText("# Télefono:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 80, -1));
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel11.setText("Cantidad:");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 80, -1));
 
         jComboBox_cliente.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jComboBox_cliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Cliente: ", "Item 2", "Item 3", "Item 4" }));
@@ -317,27 +323,27 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
     private void jButton_busca_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_busca_clienteActionPerformed
 
         String clienteBuscar = txt_cliente_buscar.getText().trim();
-        Connection cn = Conexion.conectar();
-        String sql = "select empresa, nombre from tb_cliente where cedula = '" + clienteBuscar + "'";
-        Statement st;
+        String sql = "SELECT empresa, nombre FROM tb_cliente WHERE telefono = ?";
 
-        try {
+        try ( Connection cn = Conexion.conectar();  PreparedStatement ps = cn.prepareStatement(sql)) {
 
-            st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            ps.setString(1, clienteBuscar);
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 jComboBox_cliente.setSelectedItem(rs.getString("empresa") + " " + rs.getString("nombre"));
             } else {
                 jComboBox_cliente.setSelectedItem("Seleccione Cliente:");
-                JOptionPane.showMessageDialog(null, "La cédula del cliente no se encuentra en la Base de Datos :(");
+                JOptionPane.showMessageDialog(null,
+                        "El teléfono del cliente no se encuentra en la Base de Datos :(");
             }
+
             txt_cliente_buscar.setText("");
-            cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al buscar Cliente" + e);
+            System.out.println("Error al buscar Cliente: " + e);
         }
+
     }//GEN-LAST:event_jButton_busca_clienteActionPerformed
 
     private void jButton_añadir_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_añadir_productoActionPerformed
@@ -476,11 +482,11 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
                 if (controlVenta.guardar(cabeceraVenta)) {
                     JOptionPane.showMessageDialog(null, "¡Venta Registrada!");
-                    
+
                     VentaPDF pdf = new VentaPDF();
                     pdf.DatosCliete(idCliente);
                     pdf.generarFacturaPDF();
-                    
+
                     for (DetalleVenta elemento : listaProductos) {
                         detalleVenta.setIdDetalleVenta(0);
                         detalleVenta.setIdCabeceraVenta(0);
@@ -543,6 +549,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jComboBox_producto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

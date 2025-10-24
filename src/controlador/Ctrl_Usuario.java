@@ -138,4 +138,60 @@ public class Ctrl_Usuario {
 
         return respuesta;
     }
+
+    public boolean actualizarPasswordPorTelefono(String telefono, String nuevaPassword) {
+    boolean respuesta = false;
+
+    String sqlSelect = "SELECT password FROM tb_usuario WHERE telefono = ?";
+    String sqlUpdate = "UPDATE tb_usuario SET password = SHA2(?, 256) WHERE telefono = ?";
+
+    try (Connection cn = Conexion.conectar();
+         PreparedStatement psSelect = cn.prepareStatement(sqlSelect);
+         PreparedStatement psUpdate = cn.prepareStatement(sqlUpdate)) {
+
+        // 1️⃣ Verificamos si el teléfono existe y obtenemos la contraseña actual
+        psSelect.setString(1, telefono);
+        ResultSet rs = psSelect.executeQuery();
+
+        if (rs.next()) {
+            String passwordActualHash = rs.getString("password");
+
+            // 2️⃣ Calculamos el hash SHA2 de la nueva contraseña
+            String sqlHash = "SELECT SHA2(?, 256) AS nuevaHash";
+            PreparedStatement psHash = cn.prepareStatement(sqlHash);
+            psHash.setString(1, nuevaPassword);
+            ResultSet rsHash = psHash.executeQuery();
+
+            if (rsHash.next()) {
+                String nuevaHash = rsHash.getString("nuevaHash");
+
+                // 3️⃣ Comparamos hashes
+                if (nuevaHash.equals(passwordActualHash)) {
+                    JOptionPane.showMessageDialog(null,
+                            "No puede usar la misma contraseña que tenía antes.\nIngrese una diferente.");
+                    return false;
+                }
+            }
+
+            // 4️⃣ Si es diferente, actualizamos la contraseña
+            psUpdate.setString(1, nuevaPassword);
+            psUpdate.setString(2, telefono);
+            int filasAfectadas = psUpdate.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                respuesta = true;
+                System.out.println("✅ Contraseña actualizada correctamente");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "El teléfono no se encuentra registrado.");
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al actualizar contraseña: " + e);
+    }
+
+    return respuesta;
+}
+
 }
