@@ -5,8 +5,8 @@ import javax.swing.JTextField;
 import static vista.FrmMenu.jDestopPane_menu;
 
 public class InterGraficas extends javax.swing.JInternalFrame {
-    
-    public static String fecha_inicio = "", fecha_fin = ""; 
+
+    public static String fecha_inicio = "", fecha_fin = "";
 
     public InterGraficas() {
         initComponents();
@@ -80,14 +80,21 @@ public class InterGraficas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GuardarActionPerformed
-        
+
         fecha_inicio = ((JTextField) jDateChooser_fecha_inicio.getDateEditor().getUiComponent()).getText();
         fecha_fin = ((JTextField) jDateChooser_fecha_fin.getDateEditor().getUiComponent()).getText();
-        
-        InterGraficaVentas interGraficaVentas = new InterGraficaVentas();
-        jDestopPane_menu.add(interGraficaVentas);
-        interGraficaVentas.setVisible(true);
-   
+
+// Validaciones simples con alertas
+        if (fecha_inicio.isEmpty() || fecha_fin.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Debe seleccionar ambas fechas.");
+        } else if (fecha_inicio.compareTo(fecha_fin) > 0) {
+            javax.swing.JOptionPane.showMessageDialog(null, "La fecha inicial no puede ser posterior a la fecha final.");
+        } else {
+            InterGraficaVentas interGraficaVentas = new InterGraficaVentas();
+            jDestopPane_menu.add(interGraficaVentas);
+            interGraficaVentas.setVisible(true);
+        }
+
     }//GEN-LAST:event_jButton_GuardarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -101,5 +108,4 @@ public class InterGraficas extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     //metodo para limpiar campos//
-   
 }

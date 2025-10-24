@@ -4,15 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/controlador/Ctrl_Cliente.java</file>
-            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarVentas.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGraficas.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterProducto.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarUsuario.java</file>
-            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarCategoria.java</file>
-            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/modelo/Cliente.java</file>
-            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/controlador/Ctrl_Producto.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGraficaVentas.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarProducto.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/controlador/Ctrl_RegistrarVenta.java</file>
-            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarCliente.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/FrmLogin.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterUsuario.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarVentas.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/modelo/Cliente.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/modelo/Usuario.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/conexion/Conexion.java</file>
         </group>

@@ -1,4 +1,3 @@
-
 package controlador;
 
 import conexion.Conexion;
@@ -9,110 +8,101 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-
-
 /**
  *
  * @author Aide
  */
 public class Ctrl_Categoria {
-    
+
     //metodo para registrar nueva categoría
-    public boolean guardar(Categoria objeto){
+    public boolean guardar(Categoria objeto) {
         boolean respuesta = false;
         Connection cn = conexion.Conexion.conectar();
         try {
-            
+
             PreparedStatement consulta = cn.prepareStatement("insert into tb_categoria values(?,?,?)");
             consulta.setInt(1, 0);
-            consulta.setString(2,objeto.getDescripcion());
+            consulta.setString(2, objeto.getDescripcion());
             consulta.setInt(3, objeto.getEstado());
-            
-            if (consulta.executeUpdate() >0) {
-                respuesta = true;       
-                
+
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+
             }
-            
+
             cn.close();
-            
+
         } catch (SQLException e) {
             System.out.println("Error al guardar categoría: " + e);
-                    
+
         }
-        
+
         return respuesta;
     }
-    
-     //metodo para consultar si existe la categoria 
-     public boolean existeCategoria(String categoria){
+
+    //metodo para consultar si existe la categoria 
+    public boolean existeCategoria(String categoria) {
         boolean respuesta = false;
-        String sql ="select descripcion from tb_categoria where descripcion = '" + categoria+ "';";
+        String sql = "select descripcion from tb_categoria where descripcion = '" + categoria + "';";
         Statement st;
-        
+
         try {
             Connection cn = Conexion.conectar();
             st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 respuesta = true;
             }
-            
+
         } catch (SQLException e) {
             System.out.println("Error al consultar categoría: " + e);
-                    
+
         }
-        
+
         return respuesta;
     }
-     
-    
-    public boolean actualizar(Categoria objeto, int idCategoria){
+
+    public boolean actualizar(Categoria objeto, int idCategoria) {
         boolean respuesta = false;
         Connection cn = conexion.Conexion.conectar();
         try {
-            
+
             PreparedStatement consulta = cn.prepareStatement("update tb_categoria set descripcion=? where idCategoria ='" + idCategoria + "'");
             consulta.setString(1, objeto.getDescripcion());
-           
-            
-            if (consulta.executeUpdate() >0) {
-                respuesta = true;       
-                
+
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+
             }
-            
+
             cn.close();
-            
+
         } catch (SQLException e) {
             System.out.println("Error al actualizar categoría: " + e);
-                    
+
         }
-        
+
         return respuesta;
     }
-    
-    
-     public boolean eliminar(int idCategoria){
+
+    public boolean eliminar(int idCategoria) {
         boolean respuesta = false;
-        Connection cn = Conexion.conectar();
-        try {
-            
-            PreparedStatement consulta = cn.prepareStatement(
-                    "delete from tb_categoria where idCategoria ='" + idCategoria + "'");
-            consulta.executeUpdate();
-           
-            
-            if (consulta.executeUpdate() >0) {
-                respuesta = true;       
-                
+
+        String sql = "DELETE FROM tb_categoria WHERE idCategoria = ?";
+        try ( Connection cn = Conexion.conectar();  PreparedStatement ps = cn.prepareStatement(sql)) {
+
+            ps.setInt(1, idCategoria);
+            int filasAfectadas = ps.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                respuesta = true;
+                System.out.println("✅ Categoría eliminada correctamente");
             }
-            
-            cn.close();
-            
+
         } catch (SQLException e) {
             System.out.println("Error al eliminar categoría: " + e);
-                    
         }
-        
+
         return respuesta;
     }
 }

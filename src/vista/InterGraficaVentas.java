@@ -14,7 +14,6 @@ import java.sql.ResultSet;
  *
  * @author Aide
  */
-
 public class InterGraficaVentas extends javax.swing.JInternalFrame {
 
     ArrayList<Integer> listaCantidad = new ArrayList<>();
@@ -22,8 +21,6 @@ public class InterGraficaVentas extends javax.swing.JInternalFrame {
     int cantidadResultados = 0;
     String[] vector_fechaVenta;
     int[] vector_estatus_cantidad;
-    
-    
 
     public InterGraficaVentas() {
         initComponents();
