@@ -172,6 +172,7 @@ public class InterUsuario extends javax.swing.JInternalFrame {
         }
 
         String password = txt_password.getText().trim();
+
         if (!esPasswordSeguro(password)) {
             JOptionPane.showMessageDialog(null,
                     "La contraseña debe cumplir los siguientes requisitos:\n"
@@ -182,7 +183,6 @@ public class InterUsuario extends javax.swing.JInternalFrame {
                     + "- Al menos 1 carácter especial (!@#$%^&* etc.)",
                     "Contraseña insegura", JOptionPane.WARNING_MESSAGE);
             return;
-
         }
 
         // ✅ CREAR OBJETO USUARIO
@@ -270,15 +270,14 @@ public class InterUsuario extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private boolean esPasswordSeguro(String password) {
-        // Longitud mínima 8
-        if (password.length() < 8) {
-            return false;
-        }
+    if (password == null || password.length() < 8) return false;
+    if (!password.matches(".*[A-Z].*")) return false; // mayúscula
+    if (!password.matches(".*[a-z].*")) return false; // minúscula
+    if (!password.matches(".*\\d.*")) return false;   // número
+    // Verifica al menos 1 carácter especial: !@#$%^&*()_+-=[]{};':"\|,.<>/?
+        return password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*");
+}
 
-        // Expresión regular para validar los requisitos
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&._-])[A-Za-z\\d@$!%*?&._-]{8,}$";
-        return password.matches(regex);
-    }
 
     //metodo para limpiar campos//
     private void Limpiar() {
