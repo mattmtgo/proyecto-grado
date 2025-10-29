@@ -132,51 +132,50 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
         if (!txt_descripcion.getText().isEmpty()) {
-        Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
+            Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
 
-        int confirmacion = JOptionPane.showConfirmDialog(
-            null,
-            "¿Está seguro que desea eliminar esta categoría?",
-            "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION
-        );
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Está seguro que desea eliminar esta categoría?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            if (controlCategoria.eliminar(idCategoria)) {
-                JOptionPane.showMessageDialog(null, "Categoría eliminada correctamente.");
-                txt_descripcion.setText("");
-                this.CargarTablaCategorias();
-                idCategoria = 0;
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar la categoría.");
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (controlCategoria.eliminar(idCategoria)) {
+                    JOptionPane.showMessageDialog(null, "Categoría eliminada correctamente.");
+                    txt_descripcion.setText("");
+                    this.CargarTablaCategorias();
+                    idCategoria = 0;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar la categoría.");
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una categoría para eliminar.");
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "Seleccione una categoría para eliminar.");
-    }
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
-       
-        if(!txt_descripcion.getText().isEmpty()){
+
+        if (!txt_descripcion.getText().isEmpty()) {
             Categoria categoria = new Categoria();
             Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
-            
+
             categoria.setDescripcion(txt_descripcion.getText().trim());
             if (controlCategoria.actualizar(categoria, idCategoria)) {
-                 JOptionPane.showMessageDialog(null, "Categoría Actualizada");
-                 txt_descripcion.setText("");
-                 this.CargarTablaCategorias();
+                JOptionPane.showMessageDialog(null, "Categoría Actualizada");
+                txt_descripcion.setText("");
+                this.CargarTablaCategorias();
             } else {
                 JOptionPane.showMessageDialog(null, "Error al actualizar Categoría");
             }
-            
-            
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione una Categoría");
         }
-            
-        
+
+
     }//GEN-LAST:event_jButton_actualizarActionPerformed
 
 
@@ -197,26 +196,33 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
     private void CargarTablaCategorias() {
         Connection con = Conexion.conectar();
         DefaultTableModel model = new DefaultTableModel();
-        String sql = "select idCategoria, descripcion, estado from tb_categoria";
+        String sql = "SELECT idCategoria, descripcion, estado FROM tb_categoria";
         Statement st;
 
         try {
             st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            InterGestionarCategoria.jTable_categorias = new JTable(model);
+
+            // 🔒 Bloquea edición directa en la tabla
+            InterGestionarCategoria.jTable_categorias = new JTable(model) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false; // No permite editar celdas
+                }
+            };
+
             InterGestionarCategoria.jScrollPane1.setViewportView(InterGestionarCategoria.jTable_categorias);
 
+            // 🔹 Agregar columnas visibles
             model.addColumn("N°");
             model.addColumn("Descripción");
 
+            // 🔹 Llenar la tabla con los datos
             while (rs.next()) {
-                Object fila[] = new Object[3];
-
-                for (int i = 0; i < 2; i++) {
-                    fila[i] = rs.getObject(i + 1);
-                }
+                Object fila[] = new Object[2]; // solo necesitamos las 2 columnas visibles
+                fila[0] = rs.getObject("idCategoria");
+                fila[1] = rs.getObject("descripcion");
                 model.addRow(fila);
-
             }
 
             con.close();
@@ -224,6 +230,8 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
         } catch (SQLException e) {
             System.out.println("Error al llenar la tabla categorías: " + e);
         }
+
+        // 🔹 Evento de clic en la tabla
         jTable_categorias.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -235,24 +243,26 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
                     EnviarDatosCategoriaSelecionada(idCategoria);
                 }
             }
-
         });
+
     }
 
     private void EnviarDatosCategoriaSelecionada(int idCategoria) {
         try {
             Connection con = Conexion.conectar();
+
+            // 🔹 Se elimina el espacio extra en la consulta
             PreparedStatement pst = con.prepareStatement(
-                    "select * from tb_categoria where idCategoria = ' " + idCategoria + "'");
+                    "SELECT * FROM tb_categoria WHERE idCategoria = '" + idCategoria + "'");
             ResultSet rs = pst.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 txt_descripcion.setText(rs.getString("descripcion"));
             }
             con.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al seleccionar categoria: " + e);
+            System.out.println("Error al seleccionar categoría: " + e);
         }
     }
 }

@@ -47,6 +47,7 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_reportes_categorias = new javax.swing.JMenuItem();
         jMenuItem_reportes_productos = new javax.swing.JMenuItem();
         jMenuItem_reportes_ventas = new javax.swing.JMenuItem();
+        jMenuItem_reportes_proveedores = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem_nuevo_producto = new javax.swing.JMenuItem();
         jMenuItem_gestionar_producto = new javax.swing.JMenuItem();
@@ -60,12 +61,16 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem_nuevo_cliente = new javax.swing.JMenuItem();
         jMenuItem_gestionar_cliente = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuItem_nuevo_proveedor = new javax.swing.JMenuItem();
+        jMenuItem_gestionar_proveedor = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem_ver_historial = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem_cerrar_sesion = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(145, 50));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 102));
@@ -76,7 +81,8 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenu1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jMenu1.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu1.setMaximumSize(new java.awt.Dimension(130, 32767));
+        jMenu1.setPreferredSize(new java.awt.Dimension(145, 50));
         jMenu1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem1_nuevo_usuario.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -109,7 +115,8 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenu6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jMenu6.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu6.setMaximumSize(new java.awt.Dimension(130, 32767));
+        jMenu6.setPreferredSize(new java.awt.Dimension(145, 50));
         jMenu6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_reportes_clientes.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -156,6 +163,16 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem_reportes_ventas);
 
+        jMenuItem_reportes_proveedores.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jMenuItem_reportes_proveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/producto.png"))); // NOI18N
+        jMenuItem_reportes_proveedores.setText("Reportes Proveedores");
+        jMenuItem_reportes_proveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_reportes_proveedoresActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem_reportes_proveedores);
+
         jMenuBar1.add(jMenu6);
 
         jMenu2.setBackground(new java.awt.Color(255, 255, 153));
@@ -164,7 +181,8 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenu2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jMenu2.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu2.setMaximumSize(new java.awt.Dimension(130, 32767));
+        jMenu2.setPreferredSize(new java.awt.Dimension(145, 50));
         jMenu2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_nuevo_producto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -208,7 +226,8 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenu4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jMenu4.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu4.setMaximumSize(new java.awt.Dimension(130, 32767));
+        jMenu4.setPreferredSize(new java.awt.Dimension(145, 50));
         jMenu4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_nueva_categoria.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -241,7 +260,8 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenu5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jMenu5.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu5.setMaximumSize(new java.awt.Dimension(130, 32767));
+        jMenu5.setPreferredSize(new java.awt.Dimension(145, 50));
         jMenu5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_nueva_venta.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -274,7 +294,8 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenu3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jMenu3.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu3.setMaximumSize(new java.awt.Dimension(130, 32767));
+        jMenu3.setPreferredSize(new java.awt.Dimension(145, 50));
         jMenu3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_nuevo_cliente.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -300,14 +321,45 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
+        jMenu9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/product1.png"))); // NOI18N
+        jMenu9.setText("Proveedores");
+        jMenu9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jMenu9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jMenu9.setPreferredSize(new java.awt.Dimension(145, 50));
+        jMenu9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        jMenuItem_nuevo_proveedor.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jMenuItem_nuevo_proveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-cliente.png"))); // NOI18N
+        jMenuItem_nuevo_proveedor.setText("Nuevo Proveedor");
+        jMenuItem_nuevo_proveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_nuevo_proveedorActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem_nuevo_proveedor);
+
+        jMenuItem_gestionar_proveedor.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jMenuItem_gestionar_proveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/producto.png"))); // NOI18N
+        jMenuItem_gestionar_proveedor.setText("Administrar Proveedores");
+        jMenuItem_gestionar_proveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_gestionar_proveedorActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem_gestionar_proveedor);
+
+        jMenuBar1.add(jMenu9);
+
         jMenu7.setBackground(new java.awt.Color(255, 255, 153));
         jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hostorial.png"))); // NOI18N
         jMenu7.setText("Historial");
         jMenu7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenu7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jMenu7.setMaximumSize(new java.awt.Dimension(130, 32767));
         jMenu7.setMinimumSize(new java.awt.Dimension(180, 50));
-        jMenu7.setPreferredSize(new java.awt.Dimension(150, 50));
+        jMenu7.setPreferredSize(new java.awt.Dimension(145, 50));
         jMenu7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jMenuItem_ver_historial.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -325,10 +377,10 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenu8.setBackground(new java.awt.Color(255, 255, 153));
         jMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/apagar.png"))); // NOI18N
-        jMenu8.setText("Cerrar Sesión ");
+        jMenu8.setText("Salir");
         jMenu8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu8.setMinimumSize(new java.awt.Dimension(160, 50));
-        jMenu8.setPreferredSize(new java.awt.Dimension(200, 50));
+        jMenu8.setPreferredSize(new java.awt.Dimension(145, 50));
 
         jMenuItem_cerrar_sesion.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jMenuItem_cerrar_sesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/apagar.png"))); // NOI18N
@@ -444,6 +496,23 @@ public class FrmMenu extends javax.swing.JFrame {
         interGraficas.setVisible(true);
     }//GEN-LAST:event_jMenuItem_ver_historialActionPerformed
 
+    private void jMenuItem_nuevo_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_nuevo_proveedorActionPerformed
+        InterProveedor interProveedor = new InterProveedor();
+        jDestopPane_menu.add(interProveedor);
+        interProveedor.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_nuevo_proveedorActionPerformed
+
+    private void jMenuItem_gestionar_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_proveedorActionPerformed
+        InterGestionarProveedor interGestionarProveedor = new InterGestionarProveedor();
+        jDestopPane_menu.add(interGestionarProveedor);
+        interGestionarProveedor.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_gestionar_proveedorActionPerformed
+
+    private void jMenuItem_reportes_proveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_reportes_proveedoresActionPerformed
+        Reportes reporte = new Reportes();
+        reporte.ReportesProveedores();
+    }//GEN-LAST:event_jMenuItem_reportes_proveedoresActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -488,6 +557,7 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1_nuevo_usuario;
     private javax.swing.JMenuItem jMenuItem_actualizar_stock;
@@ -495,15 +565,18 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_gestionar_categoria;
     private javax.swing.JMenuItem jMenuItem_gestionar_cliente;
     private javax.swing.JMenuItem jMenuItem_gestionar_producto;
+    private javax.swing.JMenuItem jMenuItem_gestionar_proveedor;
     private javax.swing.JMenuItem jMenuItem_gestionar_usuario;
     private javax.swing.JMenuItem jMenuItem_gestionar_ventas;
     private javax.swing.JMenuItem jMenuItem_nueva_categoria;
     private javax.swing.JMenuItem jMenuItem_nueva_venta;
     private javax.swing.JMenuItem jMenuItem_nuevo_cliente;
     private javax.swing.JMenuItem jMenuItem_nuevo_producto;
+    private javax.swing.JMenuItem jMenuItem_nuevo_proveedor;
     private javax.swing.JMenuItem jMenuItem_reportes_categorias;
     private javax.swing.JMenuItem jMenuItem_reportes_clientes;
     private javax.swing.JMenuItem jMenuItem_reportes_productos;
+    private javax.swing.JMenuItem jMenuItem_reportes_proveedores;
     private javax.swing.JMenuItem jMenuItem_reportes_ventas;
     private javax.swing.JMenuItem jMenuItem_ver_historial;
     // End of variables declaration//GEN-END:variables

@@ -17,6 +17,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import modelo.Categoria;
 import modelo.Producto;
 
@@ -197,28 +198,28 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
         Ctrl_Producto controlProducto = new Ctrl_Producto();
 
-if (idProducto == 0) {
-    JOptionPane.showMessageDialog(null, "Seleccione un producto para eliminar.");
-} else {
-    int confirmacion = JOptionPane.showConfirmDialog(
-        null,
-        "¿Está seguro que desea eliminar este producto?",
-        "Confirmar eliminación",
-        JOptionPane.YES_NO_OPTION
-    );
-
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        if (controlProducto.eliminar(idProducto)) {
-            JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
-            this.CargarTablaProductos();
-            this.CargarComboCategoria();
-            this.Limpiar();
-            idProducto = 0;
+        if (idProducto == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un producto para eliminar.");
         } else {
-            JOptionPane.showMessageDialog(null, "Error al eliminar el producto.");
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Está seguro que desea eliminar este producto?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (controlProducto.eliminar(idProducto)) {
+                    JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+                    this.CargarTablaProductos();
+                    this.CargarComboCategoria();
+                    this.Limpiar();
+                    idProducto = 0;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el producto.");
+                }
+            }
         }
-    }
-}
 
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
@@ -361,65 +362,80 @@ if (idProducto == 0) {
     double IVA = 0;
 
     private void CargarTablaProductos() {
-    Connection con = Conexion.conectar();
-    DefaultTableModel model = new DefaultTableModel();
-    String sql = "SELECT p.idProducto, p.nombre, p.cantidad, p.precio, p.descripcion, p.porcentajeIva, c.descripcion "
-               + "FROM tb_producto AS p, tb_categoria AS c WHERE p.idCategoria = c.idCategoria;";
-    Statement st;
+        Connection con = Conexion.conectar();
 
-    try {
-        st = con.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        InterGestionarProducto.jTable_productos = new JTable(model);
-        InterGestionarProducto.jScrollPane1.setViewportView(InterGestionarProducto.jTable_productos);
+        // ✅ Modelo de tabla que no permite edición
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // 🔒 Ninguna celda editable
+            }
+        };
 
-        // Columnas (ya sin estado)
-        model.addColumn("N°");
-        model.addColumn("Nombre");
-        model.addColumn("Cantidad");
-        model.addColumn("Precio");
-        model.addColumn("Descripción");
-        model.addColumn("IVA");
-        model.addColumn("Categoría");
+        String sql = "SELECT p.idProducto, p.nombre, p.cantidad, p.precio, p.descripcion, p.porcentajeIva, c.descripcion "
+                + "FROM tb_producto AS p, tb_categoria AS c WHERE p.idCategoria = c.idCategoria;";
+        Statement st;
 
-        while (rs.next()) {
-            precio = rs.getDouble("precio");
-            porcentajeIva = rs.getInt("porcentajeIva");
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
 
-            Object fila[] = new Object[7];
+            // Asignar el modelo a la tabla y al scroll
+            InterGestionarProducto.jTable_productos = new JTable(model);
+            InterGestionarProducto.jScrollPane1.setViewportView(InterGestionarProducto.jTable_productos);
 
-            for (int i = 0; i < 7; i++) {
-                if (i == 5) { // columna IVA
-                    this.calcularIva(precio, porcentajeIva);
-                    fila[i] = IVA;
-                    rs.getObject(i + 1);
-                } else {
-                    fila[i] = rs.getObject(i + 1);
+            // Columnas
+            model.addColumn("N°");
+            model.addColumn("Nombre");
+            model.addColumn("Cantidad");
+            model.addColumn("Precio");
+            model.addColumn("Descripción");
+            model.addColumn("IVA");
+            model.addColumn("Categoría");
+
+            // Llenar filas
+            while (rs.next()) {
+                double precio = rs.getDouble("precio");
+                int porcentajeIva = rs.getInt("porcentajeIva");
+
+                Object fila[] = new Object[7];
+                fila[0] = rs.getObject(1); // idProducto
+                fila[1] = rs.getObject(2); // nombre
+                fila[2] = rs.getObject(3); // cantidad
+                fila[3] = rs.getObject(4); // precio
+                fila[4] = rs.getObject(5); // descripción
+                this.calcularIva(precio, porcentajeIva);
+                fila[5] = IVA; // IVA calculado
+                fila[6] = rs.getObject(7); // categoría
+
+                model.addRow(fila);
+            }
+
+            con.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al llenar la tabla productos: " + e);
+        }
+
+        // ✅ Permitir solo selección (no edición)
+        jTable_productos.getTableHeader().setReorderingAllowed(false); // No mover columnas
+        jTable_productos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Solo una fila a la vez
+
+        // Evento al hacer clic en una fila
+        jTable_productos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila_point = jTable_productos.rowAtPoint(e.getPoint());
+                int columna_point = 0;
+
+                if (fila_point > -1) {
+                    idProducto = (int) model.getValueAt(fila_point, columna_point);
+                    EnviarDatosProductoSelecionado(idProducto);
                 }
             }
+        });
 
-            model.addRow(fila);
-        }
-
-        con.close();
-
-    } catch (SQLException e) {
-        System.out.println("Error al llenar la tabla productos: " + e);
     }
-
-    jTable_productos.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            int fila_point = jTable_productos.rowAtPoint(e.getPoint());
-            int columna_point = 0;
-
-            if (fila_point > -1) {
-                idProducto = (int) model.getValueAt(fila_point, columna_point);
-                EnviarDatosProductoSelecionado(idProducto);
-            }
-        }
-    });
-}
 
     private double calcularIva(double precio, int iva) {
         int p_iva = iva;

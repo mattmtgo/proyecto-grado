@@ -180,54 +180,58 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
 
         Ctrl_Cliente controlCliente = new Ctrl_Cliente();
 
-    if (idCliente == 0) {
-        JOptionPane.showMessageDialog(null, "Seleccione un cliente para eliminar.");
-    } else {
-        int confirmacion = JOptionPane.showConfirmDialog(
-            null,
-            "¿Está seguro que desea eliminar este cliente?",
-            "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION
-        );
+        if (idCliente == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un cliente para eliminar.");
+        } else {
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Está seguro que desea eliminar este cliente?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            if (controlCliente.eliminar(idCliente)) {
-                JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.");
-                this.CargarTablaClientes();
-                this.Limpiar();
-                idCliente = 0;
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el cliente.");
-                this.Limpiar();
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (controlCliente.eliminar(idCliente)) {
+                    JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.");
+                    this.CargarTablaClientes();
+                    this.Limpiar();
+                    idCliente = 0;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el cliente.");
+                    this.Limpiar();
+                }
             }
         }
-    }
-        
+
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
-        
-        if(txt_empresa.getText().isEmpty() && txt_nombre.getText().isEmpty() && txt_cedula.getText().isEmpty() && txt_telefono.getText().isEmpty() && txt_direccion.getText().isEmpty()) {
+
+        if (txt_empresa.getText().isEmpty() || txt_nombre.getText().isEmpty()
+                || txt_cedula.getText().isEmpty() || txt_telefono.getText().isEmpty()
+                || txt_direccion.getText().isEmpty()) {
+
             JOptionPane.showMessageDialog(null, "Completa todos los campos");
+        } else if (idCliente == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un cliente de la tabla para actualizar.");
         } else {
-            
             Cliente cliente = new Cliente();
             Ctrl_Cliente controlCliente = new Ctrl_Cliente();
-            
+
             cliente.setEmpresa(txt_empresa.getText().trim());
             cliente.setNombre(txt_nombre.getText().trim());
             cliente.setCedula(txt_cedula.getText().trim());
             cliente.setTelefono(txt_telefono.getText().trim());
             cliente.setDireccion(txt_direccion.getText().trim());
-            
+
             if (controlCliente.actualizar(cliente, idCliente)) {
-                JOptionPane.showMessageDialog(null, "Datos Satisfactoriamente Actualizados");
+                JOptionPane.showMessageDialog(null, "Datos actualizados correctamente.");
                 this.CargarTablaClientes();
                 this.Limpiar();
+                idCliente = 0;
             } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar");
+                JOptionPane.showMessageDialog(null, "Error al actualizar el cliente.");
             }
-            
         }
 
     }//GEN-LAST:event_jButton_actualizarActionPerformed
@@ -266,23 +270,29 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
 
     private void CargarTablaClientes() {
         Connection con = Conexion.conectar();
-        DefaultTableModel model = new DefaultTableModel();
-        String sql = "select * from tb_cliente";
+
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // 🔒 Bloquea edición directa
+            }
+        };
+
+        String sql = "SELECT * FROM tb_cliente";
         Statement st;
 
         try {
             st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            InterGestionarCliente.jTable_clientes = new JTable(model);
-            InterGestionarCliente.jScrollPane1.setViewportView(InterGestionarCliente.jTable_clientes);
+            jTable_clientes = new JTable(model);
+            jScrollPane1.setViewportView(jTable_clientes);
 
             model.addColumn("N°");
             model.addColumn("Empresa");
             model.addColumn("Nombre");
-            model.addColumn("Cedula");
+            model.addColumn("Cédula");
             model.addColumn("Teléfono");
             model.addColumn("Dirección");
-            
 
             while (rs.next()) {
                 Object fila[] = new Object[6];
@@ -290,13 +300,14 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
                     fila[i] = rs.getObject(i + 1);
                 }
                 model.addRow(fila);
-
             }
 
             con.close();
         } catch (SQLException e) {
             System.out.println("Error al llenar la tabla clientes: " + e);
         }
+
+        // 🔹 Detectar clic sobre una fila
         jTable_clientes.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -304,19 +315,20 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
                 int columna_point = 0;
 
                 if (fila_point > -1) {
-                    idCliente = (int) model.getValueAt(fila_point, columna_point);
-                    EnviarDatosClienteSelecionado(idCliente);
+                    Object valor = model.getValueAt(fila_point, columna_point);
+                    idCliente = Integer.parseInt(valor.toString()); // ✅ conversión segura
+                    EnviarDatosClienteSeleccionado(idCliente);
                 }
             }
-
         });
     }
 
-    private void EnviarDatosClienteSelecionado(int idCliente) {
+    private void EnviarDatosClienteSeleccionado(int idCliente) {
         try {
             Connection con = Conexion.conectar();
             PreparedStatement pst = con.prepareStatement(
-                    "select * from tb_cliente where idCliente = ' " + idCliente + "'");
+                    "SELECT * FROM tb_cliente WHERE idCliente = ?");
+            pst.setInt(1, idCliente); // ✅ forma correcta y segura
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {

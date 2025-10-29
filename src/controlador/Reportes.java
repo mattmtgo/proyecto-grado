@@ -86,6 +86,80 @@ public class Reportes {
         }
     }
 
+    public void ReportesProveedores() {
+        Document documento = new Document();
+        try {
+            // Ruta de guardado
+            String ruta = System.getProperty("user.home");
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Downloads/Reportes_Proveedores.pdf"));
+
+            // Encabezado
+            Image header = Image.getInstance("src/img/Plazayterraza.jpg");
+            header.scaleToFit(650, 1000);
+            header.setAlignment(Chunk.ALIGN_CENTER);
+
+            // Título del reporte
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("Reporte Creado por \n Plaza Y Terraza S.A.S \n\n");
+            parrafo.setFont(FontFactory.getFont("Times New Roman", 18, Font.BOLD, BaseColor.DARK_GRAY));
+            parrafo.add("Reporte de Proveedores \n\n");
+
+            // Abrir documento
+            documento.open();
+            documento.add(header);
+            documento.add(parrafo);
+
+            // Tabla con columnas
+            PdfPTable tabla = new PdfPTable(5);
+            tabla.addCell("Código");
+            tabla.addCell("Empresa");
+            tabla.addCell("Nombre");
+            tabla.addCell("Teléfono");
+            tabla.addCell("Dirección");
+
+            // Consultar datos desde la base de datos
+            try {
+                Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement(
+                        "SELECT idProveedor, empresa, nombre, telefono, direccion FROM tb_proveedor"
+                );
+                ResultSet rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    do {
+                        tabla.addCell(rs.getString("idProveedor"));
+                        tabla.addCell(rs.getString("empresa"));
+                        tabla.addCell(rs.getString("nombre"));
+                        tabla.addCell(rs.getString("telefono"));
+                        tabla.addCell(rs.getString("direccion"));
+                    } while (rs.next());
+                    documento.add(tabla);
+                } else {
+                    Paragraph sinDatos = new Paragraph("No hay proveedores registrados actualmente.\n\n");
+                    sinDatos.setAlignment(Paragraph.ALIGN_CENTER);
+                    documento.add(sinDatos);
+                }
+
+                cn.close();
+            } catch (SQLException e) {
+                System.out.println("❌ Error al consultar proveedores: " + e);
+            }
+
+            // Cerrar documento
+            documento.close();
+
+            JOptionPane.showMessageDialog(null, "✅ ¡Reporte de Proveedores creado exitosamente! Revisa tu carpeta de descargas.");
+
+        } catch (DocumentException e) {
+            System.out.println("❌ Error DocumentException: " + e);
+        } catch (FileNotFoundException ex) {
+            System.out.println("❌ Error FileNotFoundException: " + ex);
+        } catch (IOException ex) {
+            System.out.println("❌ Error IOException: " + ex);
+        }
+    }
+
     public void ReportesProductos() {
         Document documento = new Document();
         try {
@@ -222,7 +296,7 @@ public class Reportes {
             documento.add(parrafo);
 
             // --- Columnas con "Productos" ---
-            float[] columnsWidths = {3, 9, 5, 6, 5}; 
+            float[] columnsWidths = {3, 9, 5, 6, 5};
             PdfPTable tabla = new PdfPTable(columnsWidths);
 
             tabla.addCell("Código");

@@ -264,42 +264,51 @@ public class InterGestionarVentas extends javax.swing.JInternalFrame {
     }
 
     private void CargarTablaVentas() {
-        Connection con = Conexion.conectar();
-        DefaultTableModel model = new DefaultTableModel();
-        String sql = "SELECT cv.idCabeceraVenta AS id, CONCAT(c.empresa, ' ', c.nombre) AS cliente, "
-                + "cv.valorPagar AS total, cv.fechaVenta AS fecha "
-                + "FROM tb_cabecera_venta AS cv, tb_cliente AS c "
-                + "WHERE cv.idCliente = c.idCliente;";
-        Statement st;
+    Connection con = Conexion.conectar();
+    DefaultTableModel model = new DefaultTableModel();
+    String sql = "SELECT cv.idCabeceraVenta AS id, CONCAT(c.empresa, ' ', c.nombre) AS cliente, "
+            + "cv.valorPagar AS total, cv.fechaVenta AS fecha "
+            + "FROM tb_cabecera_venta AS cv, tb_cliente AS c "
+            + "WHERE cv.idCliente = c.idCliente;";
+    Statement st;
 
-        try {
-            st = con.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            InterGestionarVentas.jTable_ventas = new JTable(model);
-            InterGestionarVentas.jScrollPane1.setViewportView(InterGestionarVentas.jTable_ventas);
+    try {
+        st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
 
-            model.addColumn("N°");
-            model.addColumn("Cliente");
-            model.addColumn("Total a Pagar");
-            model.addColumn("Fecha de Venta");
-
-            while (rs.next()) {
-                Object fila[] = new Object[4];
-                for (int i = 0; i < 4; i++) {
-                    fila[i] = rs.getObject(i + 1);
-                }
-                model.addRow(fila);
+        // 🔹 Evitar edición directa de la tabla
+        InterGestionarVentas.jTable_ventas = new JTable(model) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // 🔒 No editable
             }
+        };
 
-            con.close();
-        } catch (SQLException e) {
-            System.out.println("Error al llenar la tabla de ventas: " + e);
+        InterGestionarVentas.jScrollPane1.setViewportView(InterGestionarVentas.jTable_ventas);
+
+        model.addColumn("N°");
+        model.addColumn("Cliente");
+        model.addColumn("Total a Pagar");
+        model.addColumn("Fecha de Venta");
+
+        while (rs.next()) {
+            Object fila[] = new Object[4];
+            for (int i = 0; i < 4; i++) {
+                fila[i] = rs.getObject(i + 1);
+            }
+            model.addRow(fila);
         }
 
-        jTable_ventas.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int fila_point = jTable_ventas.rowAtPoint(e.getPoint());
+        con.close();
+    } catch (SQLException e) {
+        System.out.println("Error al llenar la tabla de ventas: " + e);
+    }
+
+    // 🔹 Detectar selección con clic, sin permitir edición
+    jTable_ventas.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            int fila_point = jTable_ventas.rowAtPoint(e.getPoint());
                 int columna_point = 0;
 
                 if (fila_point > -1) {

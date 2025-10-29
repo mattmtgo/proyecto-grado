@@ -16,6 +16,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import modelo.Cliente;
 import modelo.Usuario;
 
@@ -188,27 +189,27 @@ public class InterGestionarUsuario extends javax.swing.JInternalFrame {
 
         Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
 
-if (idUsuario == 0) {
-    JOptionPane.showMessageDialog(null, "Seleccione un Usuario para eliminar.");
-} else {
-    int confirmacion = JOptionPane.showConfirmDialog(
-        null,
-        "¿Está seguro que desea eliminar este usuario?",
-        "Confirmar eliminación",
-        JOptionPane.YES_NO_OPTION
-    );
-
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        if (controlUsuario.eliminar(idUsuario)) {
-            JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.");
-            this.CargarTablaUsuarios();
-            this.Limpiar();
-            idUsuario = 0;
+        if (idUsuario == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un Usuario para eliminar.");
         } else {
-            JOptionPane.showMessageDialog(null, "Error al eliminar el usuario.");
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Está seguro que desea eliminar este usuario?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (controlUsuario.eliminar(idUsuario)) {
+                    JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.");
+                    this.CargarTablaUsuarios();
+                    this.Limpiar();
+                    idUsuario = 0;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el usuario.");
+                }
+            }
         }
-    }
-}
 
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
@@ -235,7 +236,7 @@ if (idUsuario == 0) {
                     JOptionPane.showMessageDialog(null, "Actualización Exitosa");
                     this.Limpiar();
                     this.CargarTablaUsuarios();
-                    idUsuario =0;
+                    idUsuario = 0;
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al Actualizar Usuario");
                     this.Limpiar();
@@ -284,16 +285,27 @@ if (idUsuario == 0) {
 
     private void CargarTablaUsuarios() {
         Connection con = Conexion.conectar();
-        DefaultTableModel model = new DefaultTableModel();
-        String sql = "select * from tb_usuario";
+
+        // ✅ Modelo que no permite edición
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // 🔒 No se puede editar ninguna celda
+            }
+        };
+
+        String sql = "SELECT * FROM tb_usuario";
         Statement st;
 
         try {
             st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
+
+            // Asignar modelo a la tabla
             InterGestionarUsuario.jTable_usuarios = new JTable(model);
             InterGestionarUsuario.jScrollPane1.setViewportView(InterGestionarUsuario.jTable_usuarios);
 
+            // ✅ Columnas
             model.addColumn("N°");
             model.addColumn("Nombre");
             model.addColumn("Apellido");
@@ -301,19 +313,30 @@ if (idUsuario == 0) {
             model.addColumn("Password");
             model.addColumn("Teléfono");
 
+            // ✅ Llenar filas
             while (rs.next()) {
                 Object fila[] = new Object[6];
-                for (int i = 0; i < 6; i++) {
-                    fila[i] = rs.getObject(i + 1);
-                }
-                model.addRow(fila);
+                fila[0] = rs.getInt("idUsuario");
+                fila[1] = rs.getString("nombre");
+                fila[2] = rs.getString("apellido");
+                fila[3] = rs.getString("usuario");
+                fila[4] = rs.getString("password");
+                fila[5] = rs.getString("telefono");
 
+                model.addRow(fila);
             }
 
             con.close();
+
         } catch (SQLException e) {
             System.out.println("Error al llenar la tabla usuarios: " + e);
         }
+
+        // ✅ Solo selección, no edición
+        jTable_usuarios.getTableHeader().setReorderingAllowed(false); // No mover columnas
+        jTable_usuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Solo una fila
+
+        // ✅ Evento al hacer clic
         jTable_usuarios.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -325,7 +348,6 @@ if (idUsuario == 0) {
                     EnviarDatosUsuarioSelecionado(idUsuario);
                 }
             }
-
         });
     }
 
