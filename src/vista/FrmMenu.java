@@ -66,6 +66,7 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem_gestionar_proveedor = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem_ver_historial = new javax.swing.JMenuItem();
+        jMenuItem_historial_eliminados = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem_cerrar_sesion = new javax.swing.JMenuItem();
 
@@ -321,7 +322,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/product1.png"))); // NOI18N
+        jMenu9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/categorias.png"))); // NOI18N
         jMenu9.setText("Proveedores");
         jMenu9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -372,6 +373,16 @@ public class FrmMenu extends javax.swing.JFrame {
             }
         });
         jMenu7.add(jMenuItem_ver_historial);
+
+        jMenuItem_historial_eliminados.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jMenuItem_historial_eliminados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar-sesion.png"))); // NOI18N
+        jMenuItem_historial_eliminados.setText("Historial Eliminados");
+        jMenuItem_historial_eliminados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_historial_eliminadosActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem_historial_eliminados);
 
         jMenuBar1.add(jMenu7);
 
@@ -513,6 +524,12 @@ public class FrmMenu extends javax.swing.JFrame {
         reporte.ReportesProveedores();
     }//GEN-LAST:event_jMenuItem_reportes_proveedoresActionPerformed
 
+    private void jMenuItem_historial_eliminadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_historial_eliminadosActionPerformed
+        InterHistorialEliminados historial = new InterHistorialEliminados();
+        jDestopPane_menu.add(historial);
+        historial.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_historial_eliminadosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -568,6 +585,7 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_gestionar_proveedor;
     private javax.swing.JMenuItem jMenuItem_gestionar_usuario;
     private javax.swing.JMenuItem jMenuItem_gestionar_ventas;
+    private javax.swing.JMenuItem jMenuItem_historial_eliminados;
     private javax.swing.JMenuItem jMenuItem_nueva_categoria;
     private javax.swing.JMenuItem jMenuItem_nueva_venta;
     private javax.swing.JMenuItem jMenuItem_nuevo_cliente;
