@@ -8,15 +8,21 @@
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/FrmMenu.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/controlador/Ctrl_Usuario.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGraficaVentas.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/controlador/Ctrl_Producto.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarProveedor.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarProducto.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterProveedor.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/FrmLogin.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/modelo/Proveedor.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/controlador/VentaPDF.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/controlador/Reportes.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterHistorialEliminados.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterFacturacion.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterCliente.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterUsuario.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarVentas.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterActualizarStock.java</file>
+            <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/controlador/Ctrl_Proveedor.java</file>
             <file>file:/C:/Users/Aide/Documents/NetBeansProjects/SistemaDeVentasPlazayTerraza/src/vista/InterGestionarCliente.java</file>
         </group>
     </open-files>

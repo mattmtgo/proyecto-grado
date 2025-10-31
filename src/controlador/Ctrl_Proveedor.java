@@ -5,11 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import modelo.Proveedor;
 
 /**
- *
+ * Controlador para gestionar los proveedores
  * @author Mateo
  */
 public class Ctrl_Proveedor {
@@ -26,7 +25,7 @@ public class Ctrl_Proveedor {
             consulta.setInt(1, 0); // idProveedor
             consulta.setString(2, objeto.getEmpresa());
             consulta.setString(3, objeto.getNombre());
-            consulta.setString(4, objeto.getCedula());
+            consulta.setString(4, objeto.getNit()); // ✅ CAMBIO: cedula → nit
             consulta.setString(5, objeto.getTelefono());
             consulta.setString(6, objeto.getDireccion());
             consulta.setInt(7, objeto.getEstado());
@@ -45,12 +44,12 @@ public class Ctrl_Proveedor {
         return respuesta;
     }
 
-    // 🔹 Verificar si el proveedor ya existe (por cédula)
-    public boolean existeProveedor(String cedula) {
+    // 🔹 Verificar si el proveedor ya existe (por NIT)
+    public boolean existeProveedor(String nit) {
         boolean respuesta = false;
-        String sql = "SELECT cedula FROM tb_proveedor WHERE cedula = ?";
+        String sql = "SELECT nit FROM tb_proveedor WHERE nit = ?";
         try (Connection cn = Conexion.conectar(); PreparedStatement pst = cn.prepareStatement(sql)) {
-            pst.setString(1, cedula);
+            pst.setString(1, nit);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 respuesta = true;
@@ -67,11 +66,11 @@ public class Ctrl_Proveedor {
         Connection cn = Conexion.conectar();
         try {
             PreparedStatement consulta = cn.prepareStatement(
-                "UPDATE tb_proveedor SET empresa=?, nombre=?, cedula=?, telefono=?, direccion=?, estado=? WHERE idProveedor=?"
+                "UPDATE tb_proveedor SET empresa=?, nombre=?, nit=?, telefono=?, direccion=?, estado=? WHERE idProveedor=?"
             );
             consulta.setString(1, objeto.getEmpresa());
             consulta.setString(2, objeto.getNombre());
-            consulta.setString(3, objeto.getCedula());
+            consulta.setString(3, objeto.getNit()); // ✅ CAMBIO: cedula → nit
             consulta.setString(4, objeto.getTelefono());
             consulta.setString(5, objeto.getDireccion());
             consulta.setInt(6, objeto.getEstado());

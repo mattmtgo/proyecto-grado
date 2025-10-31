@@ -34,7 +34,7 @@ public class InterProveedor extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txt_empresa = new javax.swing.JTextField();
         txt_nombre = new javax.swing.JTextField();
-        txt_cedula = new javax.swing.JTextField();
+        txt_nit = new javax.swing.JTextField();
         txt_telefono = new javax.swing.JTextField();
         jButton_Guardar = new javax.swing.JButton();
         txt_direccion = new javax.swing.JTextField();
@@ -66,7 +66,7 @@ public class InterProveedor extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Cédula:");
+        jLabel4.setText("NIT:");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 100, -1));
 
@@ -90,8 +90,8 @@ public class InterProveedor extends javax.swing.JInternalFrame {
         txt_nombre.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         getContentPane().add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 170, -1));
 
-        txt_cedula.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        getContentPane().add(txt_cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 170, -1));
+        txt_nit.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        getContentPane().add(txt_nit, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 170, -1));
 
         txt_telefono.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         getContentPane().add(txt_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 170, -1));
@@ -121,23 +121,23 @@ public class InterProveedor extends javax.swing.JInternalFrame {
 
         String empresa = txt_empresa.getText().trim();
         String nombre = txt_nombre.getText().trim();
-        String cedula = txt_cedula.getText().trim();
+        String nit = txt_nit.getText().trim();
         String telefono = txt_telefono.getText().trim();
         String direccion = txt_direccion.getText().trim();
 
-// Validaciones básicas
-        if (empresa.isEmpty() || nombre.isEmpty() || cedula.isEmpty() || telefono.isEmpty() || direccion.isEmpty()) {
+        // 🔹 Validaciones básicas
+        if (empresa.isEmpty() || nombre.isEmpty() || nit.isEmpty() || telefono.isEmpty() || direccion.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor completa todos los campos", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (!cedula.matches("\\d+")) {
-            JOptionPane.showMessageDialog(null, "La cédula debe contener solo números", "Cédula inválida", JOptionPane.WARNING_MESSAGE);
+        if (!nit.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "El NIT debe contener solo números", "NIT inválido", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (cedula.length() < 6) {
-            JOptionPane.showMessageDialog(null, "La cédula es demasiado corta", "Cédula inválida", JOptionPane.WARNING_MESSAGE);
+        if (nit.length() < 6) {
+            JOptionPane.showMessageDialog(null, "El NIT es demasiado corto", "NIT inválido", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -151,9 +151,9 @@ public class InterProveedor extends javax.swing.JInternalFrame {
             return;
         }
 
-// Verificar duplicados
-        if (controlProveedor.existeProveedor(cedula)) {
-            JOptionPane.showMessageDialog(null, "Ya existe un proveedor con esa cédula", "Proveedor existente", JOptionPane.WARNING_MESSAGE);
+        // 🔹 Verificar duplicados
+        if (controlProveedor.existeProveedor(nit)) {
+            JOptionPane.showMessageDialog(null, "Ya existe un proveedor con ese NIT", "Proveedor existente", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -162,10 +162,10 @@ public class InterProveedor extends javax.swing.JInternalFrame {
             return;
         }
 
-// Guardar
+        // 🔹 Guardar datos
         proveedor.setEmpresa(empresa);
         proveedor.setNombre(nombre);
-        proveedor.setCedula(cedula);
+        proveedor.setNit(nit);
         proveedor.setTelefono(telefono);
         proveedor.setDireccion(direccion);
         proveedor.setEstado(1);
@@ -190,9 +190,9 @@ public class InterProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel_wallpaper;
-    private javax.swing.JTextField txt_cedula;
     private javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_empresa;
+    private javax.swing.JTextField txt_nit;
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
@@ -201,7 +201,7 @@ public class InterProveedor extends javax.swing.JInternalFrame {
     private void Limpiar() {
         txt_empresa.setText("");
         txt_nombre.setText("");
-        txt_cedula.setText("");
+        txt_nit.setText("");
         txt_telefono.setText("");
         txt_direccion.setText("");
 

@@ -24,6 +24,7 @@ public class InterHistorialEliminados extends javax.swing.JInternalFrame {
         cmb_tablaOrigen.addItem("Todos");
         cmb_tablaOrigen.addItem("Usuarios");
         cmb_tablaOrigen.addItem("Clientes");
+        cmb_tablaOrigen.addItem("Ventas");
         cmb_tablaOrigen.addItem("Proveedores");
         cmb_tablaOrigen.addItem("Productos");
         cmb_tablaOrigen.addItem("Categorías");
@@ -37,6 +38,7 @@ public class InterHistorialEliminados extends javax.swing.JInternalFrame {
         jLabel_wallpaper.setIcon(icono);
         this.repaint();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -123,7 +125,7 @@ public class InterHistorialEliminados extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_refrescarActionPerformed
 
     private void btn_filtrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_filtrarActionPerformed
-                                                 
+
         String seleccion = cmb_tablaOrigen.getSelectedItem().toString();
         CargarHistorial(seleccion);
 
@@ -148,67 +150,75 @@ public class InterHistorialEliminados extends javax.swing.JInternalFrame {
 
     // ================= MÉTODO PARA CARGAR HISTORIAL ==================
     private void CargarHistorial(String filtroTabla) {
-    Connection con = Conexion.conectar();
-    DefaultTableModel model = new DefaultTableModel();
-    String sql;
+        Connection con = Conexion.conectar();
+        DefaultTableModel model = new DefaultTableModel();
+        String sql;
 
-    if (filtroTabla.equals("Todos")) {
-        sql = "SELECT idHistorial, tabla_origen, idRegistroEliminado, datos, fechaEliminacion "
-            + "FROM tb_historial_eliminados ORDER BY fechaEliminacion DESC";
-    } else {
-        sql = "SELECT idHistorial, tabla_origen, idRegistroEliminado, datos, fechaEliminacion "
-            + "FROM tb_historial_eliminados WHERE tabla_origen = ? ORDER BY fechaEliminacion DESC";
-    }
-
-    try {
-        PreparedStatement pst = con.prepareStatement(sql);
-
-        if (!filtroTabla.equals("Todos")) {
-            // convertir el nombre del combo a la tabla real usando if/else (compatible con Java 8+)
-            String tabla = "";
-            if ("Usuarios".equals(filtroTabla)) {
-                tabla = "tb_usuario";
-            } else if ("Clientes".equals(filtroTabla)) {
-                tabla = "tb_cliente";
-            } else if ("Proveedores".equals(filtroTabla)) {
-                tabla = "tb_proveedor";
-            } else if ("Productos".equals(filtroTabla)) {
-                tabla = "tb_producto";
-            } else if ("Categorías".equals(filtroTabla) || "Categorias".equals(filtroTabla)) {
-                tabla = "tb_categoria";
-            } else {
-                tabla = filtroTabla; // fallback por si pones el nombre exacto de la tabla
-            }
-
-            pst.setString(1, tabla);
+        // Consulta base dependiendo del filtro
+        if ("Todos".equals(filtroTabla)) {
+            sql = "SELECT idHistorial, tabla_origen, idRegistroEliminado, datos, fechaEliminacion "
+                    + "FROM tb_historial_eliminados ORDER BY fechaEliminacion DESC";
+        } else {
+            sql = "SELECT idHistorial, tabla_origen, idRegistroEliminado, datos, fechaEliminacion "
+                    + "FROM tb_historial_eliminados WHERE tabla_origen = ? ORDER BY fechaEliminacion DESC";
         }
 
-        ResultSet rs = pst.executeQuery();
+        try ( PreparedStatement pst = con.prepareStatement(sql)) {
 
-        jTable_historial = new JTable(model);
-        jScrollPane1.setViewportView(jTable_historial);
+            if (!"Todos".equals(filtroTabla)) {
+                // 🔹 Conversión del nombre visible a nombre real de tabla
+                String tabla = "";
+                if ("Usuarios".equalsIgnoreCase(filtroTabla)) {
+                    tabla = "tb_usuario";
+                } else if ("Clientes".equalsIgnoreCase(filtroTabla)) {
+                    tabla = "tb_cliente";
+                } else if ("Proveedores".equalsIgnoreCase(filtroTabla)) {
+                    tabla = "tb_proveedor";
+                } else if ("Productos".equalsIgnoreCase(filtroTabla)) {
+                    tabla = "tb_producto";
+                } else if ("Categorías".equalsIgnoreCase(filtroTabla) || "Categorias".equalsIgnoreCase(filtroTabla)) {
+                    tabla = "tb_categoria";
+                } else if ("Ventas".equalsIgnoreCase(filtroTabla)) {
+                    tabla = "tb_cabecera_venta";
+                } else {
+                    tabla = filtroTabla; // fallback
+                }
 
-        model.addColumn("ID");
-        model.addColumn("Tabla");
-        model.addColumn("ID Eliminado");
-        model.addColumn("Datos");
-        model.addColumn("Fecha");
-
-        while (rs.next()) {
-            Object fila[] = new Object[5];
-            for (int i = 0; i < 5; i++) {
-                fila[i] = rs.getObject(i + 1);
+                pst.setString(1, tabla);
             }
-            model.addRow(fila);
+
+            try ( ResultSet rs = pst.executeQuery()) {
+                model.addColumn("ID");
+                model.addColumn("Tabla");
+                model.addColumn("ID Eliminado");
+                model.addColumn("Datos");
+                model.addColumn("Fecha");
+
+                while (rs.next()) {
+                    Object[] fila = new Object[5];
+                    for (int i = 0; i < 5; i++) {
+                        fila[i] = rs.getObject(i + 1);
+                    }
+                    model.addRow(fila);
+                }
+
+                // ✅ Asignar modelo sin cambiar el objeto JTable original
+                jTable_historial.setModel(model);
+
+                // Evitar edición
+                jTable_historial.setDefaultEditor(Object.class, null);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("❌ Error al cargar historial: " + e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("⚠️ Error al cerrar conexión: " + ex);
+            }
         }
-
-        con.close();
-
-        // Evitar edición de celdas
-        jTable_historial.setDefaultEditor(Object.class, null);
-
-    } catch (SQLException e) {
-        System.out.println("Error al cargar historial: " + e);
     }
-}
 }

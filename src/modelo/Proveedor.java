@@ -10,7 +10,7 @@ public class Proveedor {
     private int idProveedor;
     private String empresa;
     private String nombre;
-    private String cedula;
+    private String nit;
     private String telefono;
     private String direccion;
     private int estado;
@@ -20,18 +20,18 @@ public class Proveedor {
         this.idProveedor = 0;
         this.empresa = "";
         this.nombre = "";
-        this.cedula = "";
+        this.nit = "";
         this.telefono = "";
         this.direccion = "";
         this.estado = 0;
     }
 
     // 🔹 Constructor con parámetros
-    public Proveedor(int idProveedor, String empresa, String nombre, String cedula, String telefono, String direccion, int estado) {
+    public Proveedor(int idProveedor, String empresa, String nombre, String nit, String telefono, String direccion, int estado) {
         this.idProveedor = idProveedor;
         this.empresa = empresa;
         this.nombre = nombre;
-        this.cedula = cedula;
+        this.nit = nit;
         this.telefono = telefono;
         this.direccion = direccion;
         this.estado = estado;
@@ -62,12 +62,12 @@ public class Proveedor {
         this.nombre = nombre;
     }
 
-    public String getCedula() {
-        return cedula;
+    public String getNit() {
+        return nit;
     }
 
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
+    public void setNit(String nit) {
+        this.nit = nit;
     }
 
     public String getTelefono() {

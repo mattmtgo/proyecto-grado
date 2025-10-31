@@ -61,7 +61,7 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
         txt_telefono = new javax.swing.JTextField();
         txt_nombre = new javax.swing.JTextField();
         txt_direccion = new javax.swing.JTextField();
-        txt_cedula = new javax.swing.JTextField();
+        txt_nit = new javax.swing.JTextField();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setClosable(true);
@@ -150,7 +150,7 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Cédula:");
+        jLabel6.setText("Nit:");
         jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 100, -1));
 
         txt_telefono.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -162,8 +162,8 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
         txt_direccion.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jPanel3.add(txt_direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 170, -1));
 
-        txt_cedula.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jPanel3.add(txt_cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 165, -1));
+        txt_nit.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel3.add(txt_nit, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 165, -1));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 870, 100));
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 470));
@@ -179,11 +179,8 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Seleccione un proveedor para eliminar.");
         } else {
             int confirmacion = JOptionPane.showConfirmDialog(
-                    null,
-                    "¿Está seguro que desea eliminar este proveedor?",
-                    "Confirmar eliminación",
-                    JOptionPane.YES_NO_OPTION
-            );
+                    null, "¿Está seguro que desea eliminar este proveedor?",
+                    "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
                 if (controlProveedor.eliminar(idProveedor)) {
@@ -201,7 +198,7 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
 
-        if (txt_empresa.getText().isEmpty() || txt_nombre.getText().isEmpty() || txt_cedula.getText().isEmpty()
+        if (txt_empresa.getText().isEmpty() || txt_nombre.getText().isEmpty() || txt_nit.getText().isEmpty()
                 || txt_telefono.getText().isEmpty() || txt_direccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Completa todos los campos");
             return;
@@ -212,7 +209,7 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
 
         proveedor.setEmpresa(txt_empresa.getText().trim());
         proveedor.setNombre(txt_nombre.getText().trim());
-        proveedor.setCedula(txt_cedula.getText().trim());
+        proveedor.setNit(txt_nit.getText().trim());
         proveedor.setTelefono(txt_telefono.getText().trim());
         proveedor.setDireccion(txt_direccion.getText().trim());
         proveedor.setEstado(1);
@@ -244,9 +241,9 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     public static javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable_proveedores;
-    private javax.swing.JTextField txt_cedula;
     private javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_empresa;
+    private javax.swing.JTextField txt_nit;
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
@@ -256,8 +253,7 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
         txt_nombre.setText("");
         txt_telefono.setText("");
         txt_direccion.setText("");
-        txt_cedula.setText("");
-
+        txt_nit.setText("");
     }
 
     private void CargarTablaProveedores() {
@@ -265,11 +261,11 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
         DefaultTableModel model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // 🔒 Bloquea edición
+                return false;
             }
         };
 
-        String sql = "SELECT idProveedor, empresa, nombre, cedula, telefono, direccion FROM tb_proveedor";
+        String sql = "SELECT idProveedor, empresa, nombre, nit, telefono, direccion FROM tb_proveedor";
         Statement st;
 
         try {
@@ -281,7 +277,7 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
             model.addColumn("ID");
             model.addColumn("Empresa");
             model.addColumn("Nombre");
-            model.addColumn("Cédula");
+            model.addColumn("NIT");
             model.addColumn("Teléfono");
             model.addColumn("Dirección");
 
@@ -295,16 +291,15 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
 
             con.close();
         } catch (SQLException e) {
-            System.out.println("Error al llenar la tabla proveedores: " + e);
+            System.out.println("❌ Error al llenar la tabla proveedores: " + e);
         }
 
-        // 🔹 Capturar el click en la fila
+        // Click en fila
         jTable_proveedores.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int fila_point = jTable_proveedores.rowAtPoint(e.getPoint());
                 int columna_point = 0;
-
                 if (fila_point > -1) {
                     idProveedor = (int) model.getValueAt(fila_point, columna_point);
                     EnviarDatosProveedorSeleccionado(idProveedor);
@@ -314,23 +309,20 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
     }
 
     private void EnviarDatosProveedorSeleccionado(int idProveedor) {
-        try {
-            Connection con = Conexion.conectar();
-            PreparedStatement pst = con.prepareStatement(
-                    "SELECT * FROM tb_proveedor WHERE idProveedor = ?");
+        try ( Connection con = Conexion.conectar();  PreparedStatement pst = con.prepareStatement("SELECT * FROM tb_proveedor WHERE idProveedor = ?")) {
+
             pst.setInt(1, idProveedor);
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
                 txt_empresa.setText(rs.getString("empresa"));
                 txt_nombre.setText(rs.getString("nombre"));
-                txt_cedula.setText(rs.getString("cedula"));
+                txt_nit.setText(rs.getString("nit"));
                 txt_telefono.setText(rs.getString("telefono"));
                 txt_direccion.setText(rs.getString("direccion"));
             }
-            con.close();
         } catch (SQLException e) {
-            System.out.println("Error al seleccionar proveedor: " + e);
+            System.out.println("❌ Error al seleccionar proveedor: " + e);
         }
     }
 }
