@@ -25,10 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import vista.InterFacturacion;
 
-/**
- *
- * @author Aide
- */
 public class VentaPDF {
 
     private String empresaClinte;
@@ -38,6 +34,12 @@ public class VentaPDF {
     private String direccionCliente;
     private String fechaActual = "";
     private String nombreArchivoPDFventa;
+    private String tipoPago = "Efectivo"; // Atributo de la clase
+
+    // MÉTODO CORREGIDO (Línea 44 en tu traza de error)
+    public void setTipoPago(String tipoPago) {
+        this.tipoPago = tipoPago; // ✅ Asigna el valor del parámetro al atributo de la clase.
+    }
 
     public void DatosCliete(int idCliente) {
         Connection cn = Conexion.conectar();
@@ -145,6 +147,13 @@ public class VentaPDF {
             tablaCliente.addCell(direccionCliente);
 
             doc.add(tablaCliente);
+
+            // 🔹 Mostrar el tipo de pago (usa el atributo corregido)
+            Paragraph tipo = new Paragraph();
+            tipo.add(Chunk.NEWLINE);
+            tipo.add("Método de pago: " + tipoPago + "\n\n");
+            tipo.getFont().setStyle(Font.BOLDITALIC);
+            doc.add(tipo);
 
             // Espacio
             Paragraph espacio = new Paragraph();

@@ -56,6 +56,10 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         this.CargarComboProductos();
         this.inicializarTablaProducto();
 
+        jComboBox_tipoPago.addItem("Efectivo");
+        jComboBox_tipoPago.addItem("Nequi");
+        jComboBox_tipoPago.addItem("Daviplata");
+
         txt_efectivo.setEnabled(false);
         jButton_calcular_cambio.setEnabled(false);
 
@@ -141,6 +145,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         txt_cambio = new javax.swing.JTextField();
         jButton_calcular_cambio = new javax.swing.JButton();
         jButton_RegistrarVenta = new javax.swing.JButton();
+        jComboBox_tipoPago = new javax.swing.JComboBox<>();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setClosable(true);
@@ -187,6 +192,11 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
         jComboBox_producto.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jComboBox_producto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Producto:", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_productoActionPerformed(evt);
+            }
+        });
         getContentPane().add(jComboBox_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 208, -1));
 
         txt_cliente_buscar.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -299,7 +309,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                 jButton_calcular_cambioActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton_calcular_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, -1, -1));
+        jPanel2.add(jButton_calcular_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 150, 140, -1));
 
         jButton_RegistrarVenta.setBackground(new java.awt.Color(255, 255, 102));
         jButton_RegistrarVenta.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
@@ -311,9 +321,12 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                 jButton_RegistrarVentaActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton_RegistrarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 120, 30));
+        jPanel2.add(jButton_RegistrarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 140, 30));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 380, 210));
+        jComboBox_tipoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Método De Pago:" }));
+        jPanel2.add(jComboBox_tipoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 140, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 420, 210));
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 610));
 
         pack();
@@ -347,62 +360,78 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
     private void jButton_añadir_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_añadir_productoActionPerformed
 
-        String combo = this.jComboBox_producto.getSelectedItem().toString();
+        String combo = (this.jComboBox_producto.getSelectedItem() != null)
+                ? this.jComboBox_producto.getSelectedItem().toString() : "";
+
         if (combo.equalsIgnoreCase("Seleccione Producto:")) {
             JOptionPane.showMessageDialog(null, "Seleccione un Producto");
-        } else {
-            if (!txt_cantidad.getText().isEmpty()) {
-
-                boolean validacion = validar(txt_cantidad.getText());
-                if (validacion == true) {
-                    if (Integer.parseInt(txt_cantidad.getText()) > 0) {
-                        cantidad = Integer.parseInt(txt_cantidad.getText());
-                        this.DatosDelProducto();
-                        if (cantidad <= cantidadProductoBBDD) {
-
-                            subtotal = precioUnitario * cantidad;
-                            totalPagar = subtotal + iva + descuento;
-
-                            subtotal = (double) Math.round(subtotal * 100) / 100;
-                            iva = (double) Math.round(iva * 100) / 100;
-                            descuento = (double) Math.round(descuento * 100) / 100;
-                            totalPagar = (double) Math.round(totalPagar * 100) / 100;
-
-                            producto = new DetalleVenta(auxIdDetalle,
-                                    1,
-                                    idProducto,
-                                    nombre,
-                                    Integer.parseInt(txt_cantidad.getText()),
-                                    precioUnitario,
-                                    subtotal,
-                                    descuento,
-                                    iva,
-                                    totalPagar,
-                                    1
-                            );
-
-                            listaProductos.add(producto);
-                            JOptionPane.showMessageDialog(null, "Producto agregado exitosamente");
-                            auxIdDetalle++;
-                            txt_cantidad.setText("");
-                            this.CargarComboProductos();
-                            this.CalcularTotalPagar();
-                            txt_efectivo.setEnabled(true);
-                            jButton_calcular_cambio.setEnabled(true);
-
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Seleccione un Producto");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "La cantidad supera al Stock");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Sólo se admiten números");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingrese la cantidad de Productos");
-            }
+            return;
         }
+
+        if (txt_cantidad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese la cantidad de Productos");
+            return;
+        }
+
+        // validar que la cantidad sea un entero válido
+        boolean validacion = validar(txt_cantidad.getText().trim());
+        if (!validacion) {
+            JOptionPane.showMessageDialog(null, "Sólo se admiten números");
+            return;
+        }
+
+        int cantSolicitada = Integer.parseInt(txt_cantidad.getText().trim());
+        if (cantSolicitada <= 0) {
+            JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor a 0");
+            return;
+        }
+
+        // actualizar datos del producto desde BBDD (rellena cantidadProductoBBDD, precioUnitario, nombre, porcentajeIva, etc.)
+        this.DatosDelProducto();
+
+        // ahora verificar stock
+        if (cantSolicitada > cantidadProductoBBDD) {
+            JOptionPane.showMessageDialog(null,
+                    "Stock insuficiente.\nDisponible: " + cantidadProductoBBDD + " unidades\nSolicitado: " + cantSolicitada,
+                    "Stock insuficiente",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // si llega aquí, la cantidad es válida y hay stock suficiente
+        cantidad = cantSolicitada; // asigna al campo usado por CalcularIva si lo necesitas
+        subtotal = precioUnitario * cantidad;
+        // recalcula el IVA en función de la cantidad (tu método usa la variable 'cantidad')
+        iva = this.CalcularIva(precioUnitario, porcentajeIva);
+        // descuento ya lo calculas en otro sitio; si no, asegúrate de tener su valor (usé la variable descuento)
+        totalPagar = subtotal + iva - descuento; // ⚠️ descuento resta
+
+        subtotal = (double) Math.round(subtotal * 100) / 100;
+        iva = (double) Math.round(iva * 100) / 100;
+        descuento = (double) Math.round(descuento * 100) / 100;
+        totalPagar = (double) Math.round(totalPagar * 100) / 100;
+
+        producto = new DetalleVenta(auxIdDetalle,
+                1,
+                idProducto,
+                nombre,
+                cantidad,
+                precioUnitario,
+                subtotal,
+                descuento,
+                iva,
+                totalPagar,
+                1
+        );
+
+        listaProductos.add(producto);
+        JOptionPane.showMessageDialog(null, "Producto agregado exitosamente");
+        auxIdDetalle++;
+        txt_cantidad.setText("");
+        this.CargarComboProductos();
+        this.CalcularTotalPagar();
+        txt_efectivo.setEnabled(true);
+        jButton_calcular_cambio.setEnabled(true);
 
         this.listaTablaProductos();
 
@@ -462,28 +491,71 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
     private void jButton_RegistrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistrarVentaActionPerformed
 
         CabeceraVenta cabeceraVenta = new CabeceraVenta();
-        DetalleVenta detalleVenta = new DetalleVenta();
-        Ctrl_RegistrarVenta controlVenta = new Ctrl_RegistrarVenta();
+    DetalleVenta detalleVenta = new DetalleVenta();
+    Ctrl_RegistrarVenta controlVenta = new Ctrl_RegistrarVenta();
 
-        String fechaActual = "";
-        Date date = new Date();
-        fechaActual = new SimpleDateFormat("yyyy/MM/dd").format(date);
+    String fechaActual = "";
+    Date date = new Date();
+    fechaActual = new SimpleDateFormat("yyyy/MM/dd").format(date);
 
-        if (!jComboBox_cliente.getSelectedItem().equals("Seleccione Cliente:")) {
-            if (listaProductos.size() > 0) {
+    if (!jComboBox_cliente.getSelectedItem().equals("Seleccione Cliente:")) {
+        if (listaProductos.size() > 0) {
 
+            boolean stockSuficiente = true;
+
+            // 🔹 Validar stock antes de guardar
+            for (DetalleVenta elemento : listaProductos) {
+                int idProd = elemento.getIdProducto();
+                int cantidadSolicitada = elemento.getCantidad();
+
+                // consultar stock actual
+                int stockActual = 0;
+                try {
+                    Connection cn = Conexion.conectar();
+                    PreparedStatement pst = cn.prepareStatement("SELECT cantidad, nombre FROM tb_producto WHERE idProducto = ?");
+                    pst.setInt(1, idProd);
+                    ResultSet rs = pst.executeQuery();
+
+                    if (rs.next()) {
+                        stockActual = rs.getInt("cantidad");
+                        String nombreProducto = rs.getString("nombre");
+
+                        if (cantidadSolicitada > stockActual) {
+                            JOptionPane.showMessageDialog(null,
+                                    "⚠️ Stock insuficiente para el producto: " + nombreProducto
+                                    + "\nDisponible: " + stockActual + " unidades"
+                                    + "\nSolicitado: " + cantidadSolicitada,
+                                    "Stock insuficiente",
+                                    JOptionPane.WARNING_MESSAGE);
+                            stockSuficiente = false;
+                            break; // se detiene si un producto no tiene suficiente stock
+                        }
+                    }
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println("Error al validar stock: " + e);
+                }
+            }
+
+            // Si hay stock suficiente, proceder con el registro
+            if (stockSuficiente) {
                 this.ObtenerIdCliente();
+
                 cabeceraVenta.setIdCabeceraventa(0);
                 cabeceraVenta.setIdCliente(idCliente);
                 cabeceraVenta.setValorPagar(Double.parseDouble(txt_total_pagar.getText()));
                 cabeceraVenta.setFechaventa(fechaActual);
                 cabeceraVenta.setEstado(1);
 
+                // 🟢nuevo campo tipo de pago
+                cabeceraVenta.setTipoPago(jComboBox_tipoPago.getSelectedItem().toString());
+
                 if (controlVenta.guardar(cabeceraVenta)) {
                     JOptionPane.showMessageDialog(null, "¡Venta Registrada!");
 
                     VentaPDF pdf = new VentaPDF();
                     pdf.DatosCliete(idCliente);
+                    pdf.setTipoPago(jComboBox_tipoPago.getSelectedItem().toString());
                     pdf.generarFacturaPDF();
 
                     for (DetalleVenta elemento : listaProductos) {
@@ -499,8 +571,6 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                         detalleVenta.setEstado(1);
 
                         if (controlVenta.guardarDetalle(detalleVenta)) {
-                            //System.out.println("Detalle de Venta Registrado");
-
                             txt_subtotal.setText("0");
                             txt_iva.setText("0");
                             txt_descuento.setText("0");
@@ -511,11 +581,9 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
                             this.CargarComboClientes();
                             this.RestarStockProductos(elemento.getIdProducto(), elemento.getCantidad());
-
                         } else {
                             JOptionPane.showMessageDialog(null, "¡Error al guardar detalle de venta!");
                         }
-
                     }
 
                     listaProductos.clear();
@@ -523,20 +591,24 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "¡Error al guardar cabecera de venta!");
                 }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "¡Seleccione un producto!");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "¡Seleccione un cliente!");
-        }
 
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Seleccione un producto!");
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "¡Seleccione un cliente!");
+    }
 
     }//GEN-LAST:event_jButton_RegistrarVentaActionPerformed
 
     private void jComboBox_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_clienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_clienteActionPerformed
+
+    private void jComboBox_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_productoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_productoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -546,6 +618,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_calcular_cambio;
     private javax.swing.JComboBox<String> jComboBox_cliente;
     private javax.swing.JComboBox<String> jComboBox_producto;
+    private javax.swing.JComboBox<String> jComboBox_tipoPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -714,35 +787,49 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         }
     }
 
-    private void RestarStockProductos(int idProducto, int cantidad) {
-        int cantidadProductosBaseDeDatos = 0;
+    private boolean RestarStockProductos(int idProducto, int cantidadSolicitada) {
+        int cantidadDisponible = 0;
+
         try {
             Connection cn = Conexion.conectar();
-            String sql = "select idProducto, cantidad from tb_producto where idProducto = '" + idProducto + "'";
-            Statement st;
-            st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                cantidadProductosBaseDeDatos = rs.getInt("cantidad");
+            String sql = "SELECT cantidad FROM tb_producto WHERE idProducto = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, idProducto);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                cantidadDisponible = rs.getInt("cantidad");
             }
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al restar stock" + e);
+            System.out.println("❌ Error al consultar stock: " + e);
+            return false;
         }
 
+        // 🔹 Validar stock suficiente
+        if (cantidadSolicitada > cantidadDisponible) {
+            JOptionPane.showMessageDialog(null,
+                    "Stock insuficiente.\nCantidad disponible: " + cantidadDisponible,
+                    "Sin stock", JOptionPane.WARNING_MESSAGE);
+            return false; // ❌ No hay stock suficiente
+        }
+
+        // 🔹 Actualizar stock solo si hay suficiente
+        int cantidadNueva = cantidadDisponible - cantidadSolicitada;
         try {
             Connection cn = Conexion.conectar();
-            PreparedStatement consulta = cn.prepareStatement("update tb_producto set cantidad=? where idProducto = '" + idProducto + "'");
-            int cantidadNueva = cantidadProductosBaseDeDatos - cantidad;
-            consulta.setInt(1, cantidadNueva);
-            if (consulta.executeUpdate() > 0) {
-                System.out.println("Exito");
-            }
+            PreparedStatement pst = cn.prepareStatement(
+                    "UPDATE tb_producto SET cantidad = ? WHERE idProducto = ?"
+            );
+            pst.setInt(1, cantidadNueva);
+            pst.setInt(2, idProducto);
+            pst.executeUpdate();
             cn.close();
+            return true; // ✅ Stock actualizado correctamente
         } catch (SQLException e) {
-            System.out.println("Error al restar cantidad" + e);
-
+            System.out.println("❌ Error al actualizar stock: " + e);
+            return false;
         }
     }
 

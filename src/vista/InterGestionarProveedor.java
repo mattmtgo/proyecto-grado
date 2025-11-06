@@ -325,4 +325,5 @@ public class InterGestionarProveedor extends javax.swing.JInternalFrame {
             System.out.println("❌ Error al seleccionar proveedor: " + e);
         }
     }
+    
 }

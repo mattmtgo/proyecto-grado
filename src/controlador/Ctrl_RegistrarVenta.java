@@ -21,7 +21,7 @@ public class Ctrl_RegistrarVenta {
         try {
 
             PreparedStatement consulta = cn.prepareStatement(
-                    "INSERT INTO tb_cabecera_venta VALUES(?,?,?,?,?)",
+                    "INSERT INTO tb_cabecera_venta VALUES(?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS
             );
             consulta.setInt(1, 0);
@@ -29,6 +29,7 @@ public class Ctrl_RegistrarVenta {
             consulta.setDouble(3, objeto.getValorPagar());
             consulta.setString(4, objeto.getFechaventa());
             consulta.setInt(5, objeto.getEstado());
+            consulta.setString(6, objeto.getTipoPago());
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;

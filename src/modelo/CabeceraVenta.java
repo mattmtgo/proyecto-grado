@@ -1,23 +1,22 @@
-
 package modelo;
 
-
 public class CabeceraVenta {
-    
+
     //atribitos//
     private int idCabeceraventa;
     private int idCliente;
     private double valorPagar;
     private String fechaventa;
     private int estado;
-    
+    private String tipoPago;
+
     //constructor
-    
-    public CabeceraVenta(){
+    public CabeceraVenta() {
         this.idCabeceraventa = 0;
         this.idCliente = 0;
         this.valorPagar = 0;
         this.fechaventa = "";
+        this.tipoPago = "";
         this.estado = 0;
     }
 
@@ -30,7 +29,6 @@ public class CabeceraVenta {
     }
 
     //getter and setter//
-
     public int getIdCabeceraventa() {
         return idCabeceraventa;
     }
@@ -71,10 +69,22 @@ public class CabeceraVenta {
         this.estado = estado;
     }
 
+    public String getTipoPago() {
+        return tipoPago;
+    }
+
+    public void setTipoPago(String tipoPago) {
+        this.tipoPago = tipoPago;
+    }
+
     @Override
     public String toString() {
-        return "CabeceraVenta{" + "idCabeceraventa=" + idCabeceraventa + ", idCliente=" + idCliente + ", valorPagar=" + valorPagar + ", fechaventa=" + fechaventa + ", estado=" + estado + '}';
+        return "CabeceraVenta{" + "idCabeceraventa=" + idCabeceraventa
+                + ", idCliente=" + idCliente
+                + ", valorPagar=" + valorPagar
+                + ", fechaventa=" + fechaventa
+                + ", estado=" + estado
+                + ", tipoPago=" + tipoPago + '}';
     }
-    
-    
+
 }

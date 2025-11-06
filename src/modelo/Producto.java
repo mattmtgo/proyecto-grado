@@ -1,4 +1,3 @@
-
 package modelo;
 
 /**
@@ -6,28 +5,31 @@ package modelo;
  * @author Aide
  */
 public class Producto {
-    
+
     private int idProducto;
     private String nombre;
     private int cantidad;
     private double precio;
-    private String descripcion ;
+    private String descripcion;
     private int porcentajeIva;
     private int idCategoria;
     private int estado;
-    
-    public Producto(){
+    private int idProveedor; // 🔹 Nuevo campo
+
+    public Producto() {
         this.idProducto = 0;
-        this.nombre ="";
+        this.nombre = "";
         this.cantidad = 0;
         this.precio = 0.0;
-        this.descripcion ="";
+        this.descripcion = "";
         this.porcentajeIva = 0;
         this.idCategoria = 0;
-        this.estado = 0;   
+        this.estado = 0;
+        this.idProveedor = 0; // 🔹 Inicialización
     }
 
-    public Producto(int idProducto, String nombre, int cantidad, double precio, String descripcion, int porcentajeIva, int idCategoria, int estado) {
+    public Producto(int idProducto, String nombre, int cantidad, double precio, String descripcion,
+            int porcentajeIva, int idCategoria, int estado, int idProveedor) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -36,6 +38,7 @@ public class Producto {
         this.porcentajeIva = porcentajeIva;
         this.idCategoria = idCategoria;
         this.estado = estado;
+        this.idProveedor = idProveedor;
     }
 
     public int getIdProducto() {
@@ -101,7 +104,12 @@ public class Producto {
     public void setEstado(int estado) {
         this.estado = estado;
     }
-     
-    
-    
+
+    public int getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
+    }
 }

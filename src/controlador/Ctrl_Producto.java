@@ -19,8 +19,9 @@ public class Ctrl_Producto {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         try {
-
-            PreparedStatement consulta = cn.prepareStatement("insert into tb_producto values(?,?,?,?,?,?,?,?)");
+            PreparedStatement consulta = cn.prepareStatement(
+                    "INSERT INTO tb_producto VALUES (?,?,?,?,?,?,?,?,?)"
+            );
             consulta.setInt(1, 0);
             consulta.setString(2, objeto.getNombre());
             consulta.setInt(3, objeto.getCantidad());
@@ -29,17 +30,16 @@ public class Ctrl_Producto {
             consulta.setInt(6, objeto.getPorcentajeIva());
             consulta.setInt(7, objeto.getIdCategoria());
             consulta.setInt(8, objeto.getEstado());
+            consulta.setNull(9, java.sql.Types.INTEGER); // <-- agregamos el proveedor como NULL
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
-
             }
 
             cn.close();
 
         } catch (SQLException e) {
             System.out.println("Error al guardar producto: " + e);
-
         }
 
         return respuesta;
